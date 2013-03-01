@@ -4,3 +4,7 @@
 *.jar
 *.war
 *.ear
+
+# krens1
+.DS_Store
+*.swp
