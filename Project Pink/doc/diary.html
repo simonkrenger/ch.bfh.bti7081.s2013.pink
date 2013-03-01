@@ -21,6 +21,11 @@
       <div class="jumbotron">
         <h1>Project Diary</h1>
         <p class="lead">Success through positive attitude.</p>	
+		<div class="clearfix">
+			<ul class="task-filter nav nav-pills pull-left">
+				<li class="active"><a show-task="all">All Tasks</a></li>
+			</ul>
+		</div>		
 		<audio autoplay loop>
 		  <source src="audio/theme.mp3" type="audio/mpeg">
 		</audio>
@@ -30,8 +35,8 @@
 
       <div class="row-fluid marketing">
         <div class="span12">		
-			<table class="table">
-				<tr>
+			<table class="table diary-log">
+				<tr task="title">
 					<th>Time</th>
 					<th>Person</th>
 					<th>Comment</th>
@@ -56,40 +61,21 @@
 					<td>seilc1</td>
 					<td>Added audio theme to diary.</td>
 				</tr>
-				
-				<tr>
-					<th colspan="3"><a id="Task1"></a>Task1</th>
-					
-				</tr>
-				
-				<tr>
+				<tr task="1">
 					<td>2013-02-27</td>
 					<td>krens1</td>
 					<td>During class, we discussed CS Task 1. We identified target users, key features, critical success factors and defined a high-level architecture of our implementation of MHC-PMS.
-				</tr>		
-				
-				<tr>
-					<th colspan="3"><a id="Task2"></a>Task2</th>
-				</tr>
-				
-				<tr>
+				</tr>	
+				<tr task="2">
 					<td>2013-02-27</td>
 					<td>seilc1</td>
 					<td>Decided on a combination between plan-driven and agile project management, because of the law restriction and the agile health requirements.</td>
 				</tr>
-				
-				<tr>
-					<th colspan="3"><a id="Task1"></a>Task1</th>
-					
-				</tr>
-				<tr>
+				<tr task="1">
 					<td>2013-02-28</td>
 					<td>krens1</td>
 					<td>From the team document of CS Task 1, I created a presentation for friday.</td>
 				</tr>
-				
-				
-				
 				<!-- new diary entry -->
 			</table>
         </div>
@@ -105,5 +91,12 @@
 
 	<script src="http://code.jquery.com/jquery.js"></script>
     <script src="js/bootstrap.min.js"></script>
+    <script src="js/TaskFilter.js"></script>
+	<script>
+		$(function()
+		{
+			new Diary.Classes.TaskFilter($(".task-filter"),$(".diary-log"));
+		});
+	</script>
   </body>
 </html>
