@@ -1,0 +1,28 @@
+spontaneous or pink ideas for future use. 
+------------------------------------------
+------------------------------------------
+
+<3 Es könnte sein das auch mobile oder medizinische spezialgeräte im Einsatz sein.
+	-> 	Schnittstellen berücksichtigen, andere Betriebssysteme, 
+		resourcen könnten ein Problem sein.
+
+------------------------------------------
+
+<3 Frequentes Ausliefern des neuen Coeds and den Kunden zum testen 
+	-> ist das im Prozess? ev. Aufnehmen.
+
+------------------------------------------
+
+<3 Ist test driven im Prozess? 
+
+------------------------------------------
+
+<3 Report Engine; Daten sammeln und auswerten, ev. spezielle Hardware weil resourcenintensive, 
+ev. Re-use, wenn es schon eine passende report engine gibt.
+
+------------------------------------------
+
+
+
+
+
