@@ -1,0 +1,50 @@
+Use Cses
+
+Patient
+1abfragen des Geräte Status
+2abfragen der Blutwerte
+6quitieren von Alarmen
+
+
+Medizinisches Personal
+1 abfragen des Geräte Status
+2 abfragen der Blutwerte
+3 auffüllen des Insulin
+4 beziehen der Statistiken
+5 wechseln der Batterien 
+6 quitieren von Alarmen
+
+
+
+
+Name: abfragen des Geräte Status
+Nummer: 1
+Kurzbeschreibung: Der Status der Batterie, des Insulinrestbestandes und des Systemzustandes kann abgefragt werden. 
+Beteiligte Akteure: Patient oder Medizinisches Personal
+Auslöser / 
+Vorbedingung: Batterie darf nicht leer sein oder fehlen. 
+Ergebnisse /
+Nachbedingung: Keine 
+
+
+Name: abfragen der Blutwerte
+Nummer: 2
+Kurzbeschreibung: gibt den aktuellen Blutzuckerspiegel aus
+Beteiligte Akteure: Patient oder Medizinisches Personal
+Auslöser / 
+Vorbedingung: Batterie darf nicht leer sein oder fehlen. Gerät muss am Patienten angeschlosen sein. 
+Ergebnisse /
+Nachbedingung: Keine
+
+
+Ablauf Use Case 2 
+
+1 Benutzer 	auslösen der Abfragefunktion
+2 system 	erruiert letzten Blutzzuckerspiegelwert
+3 system 	zeigt letzten Blutzzuckerspiegelwert an
+
+
+
+
+
+
