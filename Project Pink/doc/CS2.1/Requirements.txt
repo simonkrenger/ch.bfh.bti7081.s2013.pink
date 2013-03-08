@@ -1,0 +1,28 @@
+User Requirements
+=================
+
+- Man sollte nicht sterben
+- Der Blutzuckerspiegel soll sich im sicheren Bereich befinden
+- Der Benutzer wird auf technische Probleme aufmerksam gemacht
+- Extrem stabil
+- Aktueller Zustand (Batterie/Insulin) ist abfragbar
+
+
+System Requirements
+===================
+
+Funktional
+----------
+
+- Berechnen der Insulinabgabe aufgrund des Blutzuckerverlaufs
+- Abgabe der berechneten Dosis Insulin
+- Messen der Blutzuckerwerte
+- Statistik zu Blutzucker/Insulinabgabe
+- Alarm bei zu tiefem Blutzucker
+
+Nichtfunktional
+---------------
+
+- Das Gerät (Display) sollte einfach zu bedienen sein
+- Die Software muss auf einer bestimmten Hardware laufen
+- Muss den gesetzlichen Richtlinien entsprechen
