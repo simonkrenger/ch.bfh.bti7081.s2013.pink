@@ -1,0 +1,9 @@
+Test
+
+Um sicherzustellen, dass das System die definierten Benutzeranforderungen erfüllt, werden zu jedem Requirement 
+entsprechende Tests definiert. Es sollen sowohl Funktionstests, Systemtests wie auch Sicherheitstets durchgeführt werden, welche
+die Funktinalität, die Robustheit, Fehlerfreiheit und sicherheit des Systems im Detail prüfen. 
+
+
+
+
