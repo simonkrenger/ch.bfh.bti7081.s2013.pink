@@ -1,0 +1,11 @@
+Ärzte Psychologen oder Psychiater welche Patienten Behandeln
+
+Software	Bezechnet ein Computerprogramm
+Patient		Bezeichnet im zusammenhang mit dem MHC-PMS Menschen mit Psychischen Krankheiten
+
+MHC-PMS		Medical Helath Care - Patient Management System
+Tablet		Bezeichnet einen Mobilen Computer mit Touchscreen
+Touchscreen	Ist ein Bildschirm über welchen die Eingabe mittesl den Händen oder einen speziellen Stiftes erfolgt
+Client
+Server
+
