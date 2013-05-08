@@ -6,7 +6,7 @@ import java.util.List;
 
 public class Session {
 	private Patient patient;
-	private List<Doctor> doctors = new LinkedList<Doctor>();
+	private Doctor doctors;
 
 	private Date timeStart;
 	private Date timeEnd;
