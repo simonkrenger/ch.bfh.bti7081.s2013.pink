@@ -22,7 +22,6 @@ public abstract class Person {
 		this.name = name;
 	}
 
-	@SuppressWarnings("unused")
 	protected Person() {
 		// Needed for Hibernate
 	}
