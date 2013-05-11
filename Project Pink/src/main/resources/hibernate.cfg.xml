@@ -31,9 +31,18 @@
 		<property name="hbm2ddl.auto">update</property>
 
 		<!-- Names the annotated entity class -->
-		<mapping class="ch.bfh.bti7081.s2013.pink.model.Note" />
+		<mapping class="ch.bfh.bti7081.s2013.pink.model.Allergy" />
+		<mapping class="ch.bfh.bti7081.s2013.pink.model.Diagnosis" />
 		<mapping class="ch.bfh.bti7081.s2013.pink.model.Doctor" />
-		<!-- <mapping class="ch.bfh.bti7081.s2013.pink.model.Patient" /> -->
+		<mapping class="ch.bfh.bti7081.s2013.pink.model.Dose" />
+		<mapping class="ch.bfh.bti7081.s2013.pink.model.Ingredient" />
+		<mapping class="ch.bfh.bti7081.s2013.pink.model.MedicationPrescription" />
+		<mapping class="ch.bfh.bti7081.s2013.pink.model.Medicine" />
+		<mapping class="ch.bfh.bti7081.s2013.pink.model.Note" />
+		<mapping class="ch.bfh.bti7081.s2013.pink.model.Patient" />
+		<mapping class="ch.bfh.bti7081.s2013.pink.model.Session" />
+		<mapping class="ch.bfh.bti7081.s2013.pink.model.Treatment" />
+		<mapping class="ch.bfh.bti7081.s2013.pink.model.Warning" />
 
 	</session-factory>
 </hibernate-configuration>

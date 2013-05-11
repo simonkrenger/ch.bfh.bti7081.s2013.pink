@@ -22,17 +22,28 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
+import ch.bfh.bti7081.s2013.pink.model.Allergy;
+import ch.bfh.bti7081.s2013.pink.model.Allergy.Severity;
 import ch.bfh.bti7081.s2013.pink.model.Doctor;
+import ch.bfh.bti7081.s2013.pink.model.Dose;
+import ch.bfh.bti7081.s2013.pink.model.Dose.Period;
+import ch.bfh.bti7081.s2013.pink.model.Ingredient;
+import ch.bfh.bti7081.s2013.pink.model.Medicine;
 import ch.bfh.bti7081.s2013.pink.model.Note;
+import ch.bfh.bti7081.s2013.pink.model.TestDataSource;
 
 import com.vaadin.Application;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.Label;
+import com.vaadin.ui.TextField;
 import com.vaadin.ui.Window;
 
 /**
+ * Please don't hesitate to remove or radically change this class, it's just
+ * here so we can do some minor tests.
+ * 
  * The Application's "main" class
  */
 @SuppressWarnings("serial")
@@ -70,6 +81,7 @@ public class MyVaadinApplication extends Application {
 		window.addComponent(button);
 		final SessionFactory sessionFactory = new Configuration().configure()
 				.buildSessionFactory();
+
 		button = new Button("Add note");
 		button.addListener(new Button.ClickListener() {
 			public void buttonClick(ClickEvent event) {
@@ -81,6 +93,7 @@ public class MyVaadinApplication extends Application {
 			}
 		});
 		window.addComponent(button);
+
 		button = new Button("Add doctor");
 		button.addListener(new Button.ClickListener() {
 			public void buttonClick(ClickEvent event) {
@@ -95,30 +108,114 @@ public class MyVaadinApplication extends Application {
 			}
 		});
 		window.addComponent(button);
-		button = new Button("Get note");
+
+		button = new Button("Add allergy");
 		button.addListener(new Button.ClickListener() {
 			public void buttonClick(ClickEvent event) {
 				Session session = sessionFactory.openSession();
 				session.beginTransaction();
-				@SuppressWarnings("unchecked")
-				List<Note> result = session.createQuery("from Note").list();
-				for (Note n : result) {
-					window.addComponent(new Label(n.getTimestamp() + ": "
-							+ n.getText()));
-				}
+				Ingredient i = new Ingredient("Hay");
+				session.persist(i);
+				Allergy a = new Allergy(i, Severity.SEVERE);
+				session.persist(a);
 				session.getTransaction().commit();
 				session.close();
 			}
 		});
 		window.addComponent(button);
-		button = new Button("Get doctors");
+
+		button = new Button("Add medicine");
+		button.addListener(new Button.ClickListener() {
+			public void buttonClick(ClickEvent event) {
+				Session session = sessionFactory.openSession();
+				session.beginTransaction();
+				Ingredient i = new Ingredient("Placebium");
+				session.persist(i);
+				Medicine m = new Medicine("Placebo");
+				m.addIngredient(i);
+				m.addEffect("effect");
+				m.addEffect("another effect");
+				m.addSideeffect("tough luck");
+				session.persist(m);
+				session.getTransaction().commit();
+				session.close();
+			}
+		});
+		window.addComponent(button);
+
+		button = new Button("Add prescription");
+		button.addListener(new Button.ClickListener() {
+			public void buttonClick(ClickEvent event) {
+				Session session = sessionFactory.openSession();
+				session.beginTransaction();
+				session.persist(TestDataSource.getPrescription());
+				session.getTransaction().commit();
+				session.close();
+			}
+		});
+		window.addComponent(button);
+
+		button = new Button("Add patient");
+		button.addListener(new Button.ClickListener() {
+			public void buttonClick(ClickEvent event) {
+				Session session = sessionFactory.openSession();
+				session.beginTransaction();
+				session.persist(TestDataSource.getPatient());
+				session.getTransaction().commit();
+				session.close();
+			}
+		});
+		window.addComponent(button);
+
+		button = new Button("Add dose");
+		button.addListener(new Button.ClickListener() {
+			public void buttonClick(ClickEvent event) {
+				Session session = sessionFactory.openSession();
+				session.beginTransaction();
+				session.persist(new Dose(5, 2, Period.DAY));
+				session.getTransaction().commit();
+				session.close();
+			}
+		});
+		window.addComponent(button);
+
+		button = new Button("Add diagnosis");
+		button.addListener(new Button.ClickListener() {
+			public void buttonClick(ClickEvent event) {
+				Session session = sessionFactory.openSession();
+				session.beginTransaction();
+				session.persist(TestDataSource.getDiagnosis());
+				session.getTransaction().commit();
+				session.close();
+			}
+		});
+		window.addComponent(button);
+
+		button = new Button("Add session");
+		button.addListener(new Button.ClickListener() {
+			public void buttonClick(ClickEvent event) {
+				Session session = sessionFactory.openSession();
+				session.beginTransaction();
+				session.persist(TestDataSource.getSession());
+				session.getTransaction().commit();
+				session.close();
+			}
+		});
+		window.addComponent(button);
+
+		final TextField query = new TextField();
+		query.setValue("from Session");
+		window.addComponent(query);
+
+		button = new Button("Run query");
 		button.addListener(new Button.ClickListener() {
 			public void buttonClick(ClickEvent event) {
 				Session session = sessionFactory.openSession();
 				session.beginTransaction();
 				@SuppressWarnings("unchecked")
-				List<Doctor> result = session.createQuery("from Doctor").list();
-				for (Doctor n : result) {
+				List<Object> result = session.createQuery(
+						query.getValue().toString()).list();
+				for (Object n : result) {
 					window.addComponent(new Label(n.toString()));
 				}
 				session.getTransaction().commit();
