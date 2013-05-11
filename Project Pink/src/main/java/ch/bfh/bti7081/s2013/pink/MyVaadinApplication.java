@@ -79,6 +79,8 @@ public class MyVaadinApplication extends Application {
 			}
 		});
 		window.addComponent(button);
+
+		// Let's save some entities!
 		final SessionFactory sessionFactory = new Configuration().configure()
 				.buildSessionFactory();
 
