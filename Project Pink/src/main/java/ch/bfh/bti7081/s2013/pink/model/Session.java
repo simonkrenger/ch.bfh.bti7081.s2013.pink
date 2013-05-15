@@ -26,38 +26,20 @@ public class Session {
 	private Date timeStart;
 	private Date timeEnd;
 
-	private SessionState sessionState = SessionState.INVALID;
+	private Type type;
 
 	@OneToMany(cascade = CascadeType.PERSIST)
 	private List<Note> notes = new LinkedList<Note>();
 
-	public Session(Patient patient, Doctor doctor) {
+	public Session(Patient patient, Doctor doctor, Type type) {
 		this.patient = patient;
 		this.doctor = doctor;
-		this.sessionState = SessionState.PLANNED;
+		this.type = type;
 	}
 
 	@SuppressWarnings("unused")
 	private Session() {
 		// needed for Hibernate
-	}
-
-	public SessionState getSessionState() {
-		return sessionState;
-	}
-
-	public void changeState(SessionState type) {
-		if (isTranslationPossible(type)) {
-			sessionState = type;
-		}
-	}
-
-	public boolean isTranslationPossible(SessionState type) {
-		return sessionState.getPossibleNextStateType().contains(type);
-	}
-
-	public boolean isEditable() {
-		return sessionState.isEditable();
 	}
 
 	public Patient getPatient() {
@@ -76,11 +58,19 @@ public class Session {
 		return timeEnd;
 	}
 
+	public Type getType() {
+		return type;
+	}
+
 	public void addNote(Note note) {
 		notes.add(note);
 	}
 
 	public List<Note> getNotes() {
 		return notes;
+	}
+
+	public static enum Type {
+		// TODO
 	}
 }

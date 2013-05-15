@@ -24,13 +24,13 @@ import org.hibernate.cfg.Configuration;
 
 import ch.bfh.bti7081.s2013.pink.model.Allergy;
 import ch.bfh.bti7081.s2013.pink.model.Allergy.Severity;
+import ch.bfh.bti7081.s2013.pink.model.TestDataSource;
 import ch.bfh.bti7081.s2013.pink.model.Doctor;
 import ch.bfh.bti7081.s2013.pink.model.Dose;
 import ch.bfh.bti7081.s2013.pink.model.Dose.Period;
 import ch.bfh.bti7081.s2013.pink.model.Ingredient;
 import ch.bfh.bti7081.s2013.pink.model.Medicine;
 import ch.bfh.bti7081.s2013.pink.model.Note;
-import ch.bfh.bti7081.s2013.pink.model.TestDataSource;
 
 import com.vaadin.Application;
 import com.vaadin.ui.Button;
@@ -41,9 +41,6 @@ import com.vaadin.ui.TextField;
 import com.vaadin.ui.Window;
 
 /**
- * Please don't hesitate to remove or radically change this class, it's just
- * here so we can do some minor tests.
- * 
  * The Application's "main" class
  */
 @SuppressWarnings("serial")
@@ -79,8 +76,6 @@ public class MyVaadinApplication extends Application {
 			}
 		});
 		window.addComponent(button);
-
-		// Let's save some entities!
 		final SessionFactory sessionFactory = new Configuration().configure()
 				.buildSessionFactory();
 

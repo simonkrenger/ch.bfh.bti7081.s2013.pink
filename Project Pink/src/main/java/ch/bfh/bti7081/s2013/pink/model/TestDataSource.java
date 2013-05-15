@@ -87,7 +87,7 @@ public class TestDataSource {
 	}
 
 	public static Session getSession() {
-		Session s = new Session(getPatient(), getDoctor());
+		Session s = new Session(getPatient(), getDoctor(), null);
 		s.addNote(getNote());
 		return s;
 	}
