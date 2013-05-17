@@ -17,7 +17,7 @@ public enum SessionStateType
     /**
      * Session is being planed.
      */
-    Planed,
+    Planned,
 
     /**
      * Session has started and is in progress.

@@ -10,17 +10,24 @@ import ch.bfh.bti7081.s2013.pink.model.Patient;
 
 public class Session {
 	private Patient patient;
-	private Doctor doctors;
+	private Doctor doctor;
 
 	private Date timeStart;
 	private Date timeEnd;
 
 	private SessionStateType sessionStateType = SessionStateType.Invalid;
-    private ISessionState sessionState;
+	public ISessionState sessionState;
 
 	private List<Note> notes = new LinkedList<Note>();
 
-    public SessionStateType getSessionStateType() { return sessionStateType; }
+	public Session(Patient patient, Doctor doctor) {
+		this.patient = patient;
+		this.doctor = doctor;
+	}
+
+	public SessionStateType getSessionStateType() {
+		return sessionStateType;
+	}
 
     public void getSessionStateType(SessionStateType type) { sessionStateType = type; }
 
@@ -32,12 +39,20 @@ public class Session {
 		return sessionState.getDescription();
 	}
 
+	public void addNote(Note n) {
+		if (sessionState.isEditable()) {
+			notes.add(n);
+		} else {
+			throw new RuntimeException("Note is not editable!");
+		}
+	}
+
 	public Patient getPatient() {
 		return patient;
 	}
 
 	public Doctor getDoctor() {
-		return doctors;
+		return doctor;
 	}
 
     public ISessionState getSessionState()
@@ -58,12 +73,17 @@ public class Session {
             case Cancelled: return new SessionStateCancelled();
             case Finished:  return new SessionStateFinished();
             case Reopened:  return new SessionStateReopened();
-            case Planed:    return new SessionStatePlaned();
+            case Planned:    return new SessionStatePlanned();
 
             default:
             case Started:   return new SessionStateStarted();
         }
     }
+
+	public void proceedToDefaultNextState() {
+		sessionState = resolveSessionStateType(sessionState
+				.getDefaultNextState());
+	}
 
     public void changeState(SessionStateType type)
     {

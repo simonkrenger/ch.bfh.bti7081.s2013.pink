@@ -5,6 +5,7 @@ import java.util.List;
 
 import ch.bfh.bti7081.s2013.pink.model.Allergy.Severity;
 import ch.bfh.bti7081.s2013.pink.model.Dose.Period;
+import ch.bfh.bti7081.s2013.pink.model.PatientSession.Session;
 
 public class TestDataSource {
 	private static int noteNumber;
@@ -87,7 +88,7 @@ public class TestDataSource {
 	}
 
 	public static Session getSession() {
-		Session s = new Session(getPatient(), getDoctor(), null);
+		Session s = new Session(getPatient(), getDoctor());
 		s.addNote(getNote());
 		return s;
 	}

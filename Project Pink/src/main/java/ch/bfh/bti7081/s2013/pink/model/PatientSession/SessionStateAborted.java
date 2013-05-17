@@ -18,7 +18,7 @@ public class SessionStateAborted extends EditableSessionState {
     @Override
     public LinkedList<SessionStateType> getPossibleNextStateType() {
         final LinkedList<SessionStateType> sessionStateTypes = new LinkedList<SessionStateType>();
-        sessionStateTypes.add(SessionStateType.Planed);
+		sessionStateTypes.add(SessionStateType.Planned);
         sessionStateTypes.add(SessionStateType.Finished);
         sessionStateTypes.add(SessionStateType.Started);
 
@@ -27,7 +27,7 @@ public class SessionStateAborted extends EditableSessionState {
 
     @Override
     public SessionStateType getDefaultNextState() {
-        return SessionStateType.Planed;
+		return SessionStateType.Planned;
     }
 
     @Override

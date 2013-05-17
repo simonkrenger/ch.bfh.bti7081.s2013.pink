@@ -9,17 +9,17 @@ import java.util.LinkedList;
  * Time: 11:03
  * To change this template use File | Settings | File Templates.
  */
-public class SessionStatePlaned extends EditableSessionState {
+public class SessionStatePlanned extends EditableSessionState {
     @Override
     public SessionStateType getStateType() {
-        return SessionStateType.Planed;
+        return SessionStateType.Planned;
     }
 
     @Override
     public LinkedList<SessionStateType> getPossibleNextStateType() {
         final LinkedList<SessionStateType> sessionStateTypes = new LinkedList<SessionStateType>();
         sessionStateTypes.add(SessionStateType.Cancelled);
-        sessionStateTypes.add(SessionStateType.Planed);
+        sessionStateTypes.add(SessionStateType.Planned);
         sessionStateTypes.add(SessionStateType.Started);
 
         return sessionStateTypes;
