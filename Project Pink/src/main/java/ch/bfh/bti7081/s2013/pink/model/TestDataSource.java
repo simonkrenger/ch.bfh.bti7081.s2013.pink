@@ -1,5 +1,6 @@
 package ch.bfh.bti7081.s2013.pink.model;
 
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -88,6 +89,10 @@ public class TestDataSource {
 
 	public static Session getSession() {
 		Session s = new Session(getPatient(), getDoctor());
+		Date startTime = new Date();
+		Date endTime = new Date();
+		s.setTimeStart(startTime);
+		s.setTimeEnd(endTime);
 		s.addNote(getNote());
 		return s;
 	}

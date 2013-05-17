@@ -30,4 +30,12 @@ public abstract class Person {
 	public String toString() {
 		return firstName + " " + name;
 	}
+
+	public String getFirstName() {
+		return firstName;
+	}
+
+	public String getName() {
+		return name;
+	}
 }
