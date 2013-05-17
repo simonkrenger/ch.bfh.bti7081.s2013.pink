@@ -1,12 +1,12 @@
 package ch.bfh.bti7081.s2013.pink.model.PatientSession;
 
-import ch.bfh.bti7081.s2013.pink.model.Doctor;
-import ch.bfh.bti7081.s2013.pink.model.Note;
-import ch.bfh.bti7081.s2013.pink.model.Patient;
-
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
+
+import ch.bfh.bti7081.s2013.pink.model.Doctor;
+import ch.bfh.bti7081.s2013.pink.model.Note;
+import ch.bfh.bti7081.s2013.pink.model.Patient;
 
 public class Session {
 	private Patient patient;
@@ -23,6 +23,22 @@ public class Session {
     public SessionStateType getSessionStateType() { return sessionStateType; }
 
     public void getSessionStateType(SessionStateType type) { sessionStateType = type; }
+
+	public String getName() {
+		return sessionState.getName();
+	}
+
+	public String getDescription() {
+		return sessionState.getDescription();
+	}
+
+	public Patient getPatient() {
+		return patient;
+	}
+
+	public Doctor getDoctor() {
+		return doctors;
+	}
 
     public ISessionState getSessionState()
     {
