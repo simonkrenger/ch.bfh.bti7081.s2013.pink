@@ -26,6 +26,14 @@ public abstract class Person {
 		// Needed for Hibernate
 	}
 
+	public String getName() {
+		return name;
+	}
+
+	public String getFirstName() {
+		return firstName;
+	}
+
 	@Override
 	public String toString() {
 		return firstName + " " + name;
