@@ -40,7 +40,7 @@ public class MyVaadinApplication extends Application {
 		session = testenvironment.getSession();
 		patient = session.getPatient();
 		patient = testenvironment.getPatient();
-		window = new Window("Patient overview");
+		window = new Window("Upcoming sessions");
 		setMainWindow(window);
 		window.getContent().setSizeFull();
 
