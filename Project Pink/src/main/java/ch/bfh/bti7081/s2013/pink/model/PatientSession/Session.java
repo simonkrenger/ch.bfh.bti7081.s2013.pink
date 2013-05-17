@@ -23,6 +23,7 @@ public class Session {
 	public Session(Patient patient, Doctor doctor) {
 		this.patient = patient;
 		this.doctor = doctor;
+		this.sessionState = resolveSessionStateType(sessionStateType);
 	}
 
 	public SessionStateType getSessionStateType() {
