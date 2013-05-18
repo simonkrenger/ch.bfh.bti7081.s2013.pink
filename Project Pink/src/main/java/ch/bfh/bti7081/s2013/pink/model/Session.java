@@ -68,6 +68,14 @@ public class Session {
 		return doctor;
 	}
 
+	public void setTimeStart(Date startTime) {
+		this.timeStart = startTime;
+	}
+
+	public void setTimeEnd(Date endTime) {
+		this.timeEnd = endTime;
+	}
+
 	public Date getTimeStart() {
 		return timeStart;
 	}
