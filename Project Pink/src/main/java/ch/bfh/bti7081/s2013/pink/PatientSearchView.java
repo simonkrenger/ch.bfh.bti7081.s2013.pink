@@ -1,3 +1,8 @@
+/**
+ * Class that shows the upcomming sessions with the patients
+ *
+ * @author	Marco Berger	<lostchall@gmail.com>
+ */
 package ch.bfh.bti7081.s2013.pink;
 
 import ch.bfh.bti7081.s2013.pink.model.Patient;
@@ -87,8 +92,10 @@ public class PatientSearchView extends CustomComponent {
 		/** Handle search events for the button. */
 		public void buttonClick(Button.ClickEvent event) {
 			// Open Search
-			PatientDetailView detailledPatientView = new PatientDetailView(
-					patient);
+			// PatientDetailView detailledPatientView = new PatientDetailView(
+			// patient);
+			// mainLayout.addComponent(detailledPatientView);
+
 		}
 	}
 

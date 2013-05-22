@@ -1,3 +1,9 @@
+/**
+ * Class that shows the upcomming sessions with the patients
+ *
+ * @author	Marco Berger	<lostchall@gmail.com>
+ */
+
 package ch.bfh.bti7081.s2013.pink;
 
 import ch.bfh.bti7081.s2013.pink.model.Patient;
@@ -26,9 +32,8 @@ public class PatientOverview extends CustomComponent {
 	private Label nameValue;
 	private Label prenameValue;
 	private Label sessionBeginValue;
-	private String test;
-	private int positionX;
-	private int positionY;
+	private int positionX; // used to place patient elements
+	private int positionY; // used to place patient elements
 	private Patient patient;
 	private Session session;
 
@@ -63,7 +68,7 @@ public class PatientOverview extends CustomComponent {
 		// Set BG
 		Resource res = new ThemeResource("img/patient_bg.png");
 
-		// Display the image without caption
+		// Display the patient image
 		Image bgImage = new Image(null, res);
 		positionY -= 60;
 		mainLayout.addComponent(bgImage, "top:" + positionX + "px;left:"
@@ -74,8 +79,6 @@ public class PatientOverview extends CustomComponent {
 		// Name
 		name = new Label();
 		name.setImmediate(false);
-		name.setWidth("-1px");
-		name.setHeight("-1px");
 		name.setValue("Name");
 		mainLayout.addComponent(name, "top:" + positionX + "px;left:"
 				+ positionY + "px;");
@@ -83,8 +86,6 @@ public class PatientOverview extends CustomComponent {
 		// Name Value
 		nameValue = new Label();
 		nameValue.setImmediate(false);
-		nameValue.setWidth("-1px");
-		nameValue.setHeight("-1px");
 		nameValue.setValue(patient.getName());
 		positionY += 100;
 		mainLayout.addComponent(nameValue, "top:" + positionX + "px;left:"
@@ -94,8 +95,6 @@ public class PatientOverview extends CustomComponent {
 		// Prename
 		prename = new Label();
 		prename.setImmediate(false);
-		prename.setWidth("-1px");
-		prename.setHeight("-1px");
 		prename.setValue("Prename");
 		mainLayout.addComponent(prename, "top:" + positionX + "px;left:"
 				+ positionY + "px;");
@@ -103,22 +102,19 @@ public class PatientOverview extends CustomComponent {
 		// Prename Value
 		prenameValue = new Label();
 		prenameValue.setImmediate(false);
-		prenameValue.setWidth("-1px");
-		prenameValue.setHeight("-1px");
 		prenameValue.setValue(patient.getFirstName());
 		positionY += 100;
 		mainLayout.addComponent(prenameValue, "top:" + positionX + "px;left:"
 				+ positionY + "px;");
 		positionY -= 100;
 
+		// Adds the button to start the patient session
 		Button button = new Button("Show details");
-
 		positionY += 400;
-
 		mainLayout.addComponent(button, "top:" + positionX + "px;left:"
 				+ positionY + "px;");
-
 		positionY -= 400;
+
 		// Serve the image from the theme
 		Resource res2 = new ThemeResource("img/mascot.png");
 
@@ -132,8 +128,6 @@ public class PatientOverview extends CustomComponent {
 		// SessionBegin
 		sessionBegin = new Label();
 		sessionBegin.setImmediate(false);
-		sessionBegin.setWidth("-1px");
-		sessionBegin.setHeight("-1px");
 		sessionBegin.setValue("Session begin:");
 		mainLayout.addComponent(sessionBegin, "top:" + positionX + "px;left:"
 				+ positionY + "px;");
@@ -142,14 +136,66 @@ public class PatientOverview extends CustomComponent {
 		// SessionBegin Value
 		sessionBeginValue = new Label();
 		sessionBeginValue.setImmediate(false);
-		sessionBeginValue.setWidth("-1px");
-		sessionBeginValue.setHeight("-1px");
 		// TODO: Date formatting
 		sessionBeginValue.setValue(String.valueOf(session.getTimeStart()));
 		mainLayout.addComponent(sessionBeginValue, "top:" + positionX
 				+ "px;left:" + positionY + "px;");
 
+		// Adds the button to start the patient session
+		Button startSession = new Button("Start Session");
+		positionY += 300;
+		mainLayout.addComponent(startSession, "top:" + positionX + "px;left:"
+				+ positionY + "px;");
+
 		return mainLayout;
 	}
 
+	// Custom button for showing patient details
+	public class ShowPatientDetailsButton extends CustomComponent implements
+			Button.ClickListener {
+		Button showPatientDetailsButton;
+
+		public ShowPatientDetailsButton() {
+			// Create a Button with the given caption.
+			showPatientDetailsButton = new Button("Search");
+
+			// Listen for ClickEvents.
+			showPatientDetailsButton.addListener(this);
+
+			setCompositionRoot(showPatientDetailsButton);
+		}
+
+		/** Handle search events for the button. */
+		public void buttonClick(Button.ClickEvent event) {
+			// Open Search
+			PatientDetailView detailledPatientView = new PatientDetailView(
+					patient);
+			// mainLayout.addComponent(detailledPatientView);
+		}
+
+		// Custom button to start patient session
+		public class StartSessionButton extends CustomComponent implements
+				Button.ClickListener {
+			Button startSessionButton;
+
+			public StartSessionButton() {
+				// Create a Button with the given caption.
+				startSessionButton = new Button("Search");
+
+				// Listen for ClickEvents.
+				startSessionButton.addListener(this);
+
+				setCompositionRoot(startSessionButton);
+			}
+
+			/** Handle search events for the button. */
+			public void buttonClick(Button.ClickEvent event) {
+				// Open Search
+				PatientDetailView detailledPatientView = new PatientDetailView(
+						patient);
+				// mainLayout.addComponent(detailledPatientView);
+			}
+		}
+
+	}
 }
