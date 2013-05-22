@@ -8,6 +8,8 @@ import com.vaadin.ui.UI;
 
 /**
  * The Application's "main" class
+ * 
+ * @author Christian Meyer
  */
 @SuppressWarnings("serial")
 public class MyVaadinUI extends UI {
@@ -24,5 +26,4 @@ public class MyVaadinUI extends UI {
 		navigator.addView(MAINVIEW,
 				new PatientDetailView(TestDataSource.getPatient()));
 	}
-
 }
