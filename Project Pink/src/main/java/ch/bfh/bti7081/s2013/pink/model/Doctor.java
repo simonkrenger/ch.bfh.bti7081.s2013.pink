@@ -34,6 +34,6 @@ public class Doctor extends Person {
 
 	@Override
 	public String toString() {
-		return "Dr. " + super.toString() + ": " + specializations.size();
+		return "Dr. med. " + super.toString() + ": " + specializations.size();
 	}
 }

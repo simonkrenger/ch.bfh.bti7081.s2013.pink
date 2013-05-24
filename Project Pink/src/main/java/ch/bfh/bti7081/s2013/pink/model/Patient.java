@@ -5,20 +5,28 @@ import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
+
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 @Entity
 public class Patient extends Person {
-	@OneToMany(cascade = CascadeType.PERSIST)
+	@Fetch(FetchMode.SUBSELECT)
+	@OneToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
 	private List<Allergy> allergies = new LinkedList<Allergy>();
 
-	@OneToMany(cascade = CascadeType.PERSIST)
+	@Fetch(FetchMode.SUBSELECT)
+	@OneToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
 	private List<Warning> warnings = new LinkedList<Warning>();
 
-	@OneToMany(cascade = CascadeType.PERSIST)
+	@Fetch(FetchMode.SUBSELECT)
+	@OneToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
 	private List<MedicationPrescription> prescriptions = new LinkedList<MedicationPrescription>();
 
-	@OneToMany(cascade = CascadeType.PERSIST)
+	@Fetch(FetchMode.SUBSELECT)
+	@OneToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
 	private List<Note> notes = new LinkedList<Note>();
 
 	public Patient(String firstName, String name, String imageUrl) {
