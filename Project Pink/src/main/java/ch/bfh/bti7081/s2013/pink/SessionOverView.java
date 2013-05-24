@@ -1,11 +1,11 @@
 package ch.bfh.bti7081.s2013.pink;
 
 import ch.bfh.bti7081.s2013.pink.model.HibernateDataSource;
+import ch.bfh.bti7081.s2013.pink.model.Patient;
 import ch.bfh.bti7081.s2013.pink.model.Session;
 
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
-import com.vaadin.ui.Label;
 import com.vaadin.ui.VerticalLayout;
 
 /**
@@ -16,10 +16,10 @@ import com.vaadin.ui.VerticalLayout;
 @SuppressWarnings("serial")
 public class SessionOverView extends VerticalLayout implements View {
 	private int posX;
-	private int posY;
 
 	public SessionOverView() {
 		// new TestDataSource().clearTableAndCreateTestData();
+
 		posX = 0;
 
 		setSizeFull();
@@ -44,7 +44,8 @@ public class SessionOverView extends VerticalLayout implements View {
 
 	public void buildPatientSearch() {
 
-		PatientSearchView patientSearchView = new PatientSearchView(patient);
+		PatientSearchView patientSearchView = new PatientSearchView(
+				HibernateDataSource.getInstance().findAll(Patient.class).get(0));
 
 		addComponent(patientSearchView);
 	}

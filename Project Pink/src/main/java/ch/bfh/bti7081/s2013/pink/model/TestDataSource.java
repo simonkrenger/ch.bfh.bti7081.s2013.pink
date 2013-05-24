@@ -200,7 +200,7 @@ public class TestDataSource {
 	}
 
 	public static Patient getPatient() {
-		Patient p = new Patient("Christian", "Meyer");
+		Patient p = new Patient("Pink", "Panter");
 		p.addAllergy(new Allergy(new Ingredient("Bullshit"),
 				Allergy.Severity.BENIGN));
 		p.addAllergy(getAllergy());
