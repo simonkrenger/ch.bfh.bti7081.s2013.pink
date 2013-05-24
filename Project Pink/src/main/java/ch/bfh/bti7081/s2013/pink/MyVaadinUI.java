@@ -2,6 +2,7 @@ package ch.bfh.bti7081.s2013.pink;
 
 import ch.bfh.bti7081.s2013.pink.model.TestDataSource;
 
+import com.vaadin.annotations.Theme;
 import com.vaadin.navigator.Navigator;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.ui.UI;
@@ -11,6 +12,7 @@ import com.vaadin.ui.UI;
  * 
  * @author Christian Meyer
  */
+@Theme("mobiletheme")
 @SuppressWarnings("serial")
 public class MyVaadinUI extends UI {
 	Navigator navigator;

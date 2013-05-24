@@ -17,6 +17,11 @@
 			<param-name>UI</param-name>
 			<param-value>ch.bfh.bti7081.s2013.pink.MyVaadinUI</param-value>
 		</init-param>
+		<init-param>
+			<description>Widget Set to Use</description>
+			<param-name>widgetset</param-name>
+			<param-value>ch.bfh.bti7081.s2013.pink.AppWidgetSet</param-value>
+		</init-param>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>Vaadin Application Servlet</servlet-name>

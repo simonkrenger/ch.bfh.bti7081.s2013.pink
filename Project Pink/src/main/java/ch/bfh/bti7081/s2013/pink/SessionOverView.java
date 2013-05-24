@@ -4,6 +4,7 @@ import ch.bfh.bti7081.s2013.pink.model.HibernateDataSource;
 import ch.bfh.bti7081.s2013.pink.model.Session;
 import ch.bfh.bti7081.s2013.pink.model.TestDataSource;
 
+import com.vaadin.addon.touchkit.ui.NavigationView;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.ui.Button;
@@ -16,13 +17,12 @@ import com.vaadin.ui.VerticalLayout;
  * @author Marco Berger <lostchall@gmail.com>
  */
 @SuppressWarnings("serial")
-public class SessionOverView extends VerticalLayout implements View {
+public class SessionOverView extends NavigationView implements View {
 	private int posX;
 
 	public SessionOverView() {
 		posX = 0;
 
-		setSizeFull();
 		buildPatientSearch();
 		showPatients();
 
@@ -33,10 +33,11 @@ public class SessionOverView extends VerticalLayout implements View {
 						new TestDataSource().clearTableAndCreateTestData();
 					}
 				});
-		addComponent(test);
+		// addComponent(test);
 	}
 
 	public void showPatients() {
+		VerticalLayout l = new VerticalLayout();
 		// loop trough the next 3 patients
 		int i = 0;
 		for (Session session : HibernateDataSource.getInstance().findAll(
@@ -45,12 +46,13 @@ public class SessionOverView extends VerticalLayout implements View {
 				break;
 			PatientOverview patientOverview = new PatientOverview(posX, 200,
 					session.getPatient(), session);
-			addComponent(patientOverview);
+			l.addComponent(patientOverview);
 		}
+		setContent(l);
 	}
 
 	public void buildPatientSearch() {
-		addComponent(new PatientSearchView());
+		setToolbar(new PatientSearchView());
 	}
 
 	@Override
