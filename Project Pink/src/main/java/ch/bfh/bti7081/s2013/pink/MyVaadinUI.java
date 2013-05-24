@@ -22,7 +22,7 @@ public class MyVaadinUI extends UI {
 
 		navigator = new Navigator(this, this);
 
-		navigator.addView("", SessionView.class);
+		navigator.addView("", SessionOverView.class);
 		navigator.addView(MAINVIEW,
 				new PatientDetailView(TestDataSource.getPatient()));
 	}

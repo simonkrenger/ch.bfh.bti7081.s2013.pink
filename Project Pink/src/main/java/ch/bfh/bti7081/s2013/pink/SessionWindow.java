@@ -14,6 +14,7 @@ import com.vaadin.server.Resource;
 import com.vaadin.server.ThemeResource;
 import com.vaadin.ui.AbsoluteLayout;
 import com.vaadin.ui.Button;
+import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.CustomComponent;
 import com.vaadin.ui.Image;
 import com.vaadin.ui.Label;
@@ -99,18 +100,48 @@ public class SessionWindow extends CustomComponent {
 		mainLayout.addComponent(title, "top:130px;left:270px;");
 
 		// add add Note button
-		AddNoteButton addNote = new AddNoteButton();
-		addNote.setWidth("140px");
+		Button addNote = new Button("Add note", new Button.ClickListener() {
+			@Override
+			public void buttonClick(ClickEvent event) {
+				// Open Search
+				PatientDetailView detailedPatientView = new PatientDetailView(
+						patient);
+				getUI().getNavigator().addView("patientDetail",
+						detailedPatientView);
+				getUI().getNavigator().navigateTo("patientDetail");
+			}
+		});
 		mainLayout.addComponent(addNote, "top:530px;left:200px");
 
 		// add add medicdation button
-		CloseSessionButton closeSessionButton = new CloseSessionButton();
-		closeSessionButton.setWidth("140px");
+		Button closeSessionButton = new Button("End session",
+				new Button.ClickListener() {
+					@Override
+					public void buttonClick(ClickEvent event) {
+						// Open Search
+						PatientDetailView detailedPatientView = new PatientDetailView(
+								patient);
+						getUI().getNavigator().addView("patientDetail",
+								detailedPatientView);
+						getUI().getNavigator().navigateTo("patientDetail");
+					}
+				});
 		mainLayout.addComponent(closeSessionButton, "top:70px;left:450px");
 		// closeSessionButton.addListener(new ClickListener());
 
 		// add end session button
-		AddMedicationButton addMedicationButton = new AddMedicationButton();
+		Button addMedicationButton = new Button("Add medication",
+				new Button.ClickListener() {
+					@Override
+					public void buttonClick(ClickEvent event) {
+						// Open Search
+						PatientDetailView detailedPatientView = new PatientDetailView(
+								patient);
+						getUI().getNavigator().addView("patientDetail",
+								detailedPatientView);
+						getUI().getNavigator().navigateTo("patientDetail");
+					}
+				});
 		mainLayout.addComponent(addMedicationButton, "top:100px;left:450px");
 
 		// Create an opener extension
@@ -120,73 +151,10 @@ public class SessionWindow extends CustomComponent {
 
 		// Attach it to a button
 		Button warnings = new Button("Show warnings");
-		warnings.setWidth("140px");
 		warnings.setIcon(new ThemeResource("img/warning.png"));
 		opener.extend(warnings);
 		mainLayout.addComponent(warnings, "top:130px;left:450px");
 		return mainLayout;
 	}
 
-	public class AddNoteButton extends CustomComponent implements
-			Button.ClickListener {
-		Button searchbutton;
-
-		public AddNoteButton() {
-			// Create a Button with the given caption.
-			searchbutton = new Button("Add note");
-
-			// Listen for ClickEvents.
-			searchbutton.addListener(this);
-
-			setCompositionRoot(searchbutton);
-		}
-
-		/** Handle search events for the button. */
-		public void buttonClick(Button.ClickEvent event) {
-			// noteValue = tf.title.setCaption(tf.getValue());
-
-		}
-	}
-
-	public class CloseSessionButton extends CustomComponent implements
-			Button.ClickListener {
-		Button closeSessionButton;
-
-		public CloseSessionButton() {
-			// Create a Button with the given caption.
-			closeSessionButton = new Button("End session");
-
-			// Listen for ClickEvents.
-			closeSessionButton.addListener(this);
-
-			setCompositionRoot(closeSessionButton);
-		}
-
-		/** Handle search events for the button. */
-		public void buttonClick(Button.ClickEvent event) {
-			// noteValue = tf.title.setCaption(tf.getValue());
-
-		}
-	}
-
-	public class AddMedicationButton extends CustomComponent implements
-			Button.ClickListener {
-		Button addMedicationButton;
-
-		public AddMedicationButton() {
-			// Create a Button with the given caption.
-			addMedicationButton = new Button("Add medication");
-
-			// Listen for ClickEvents.
-			addMedicationButton.addListener(this);
-
-			setCompositionRoot(addMedicationButton);
-		}
-
-		/** Handle search events for the button. */
-		public void buttonClick(Button.ClickEvent event) {
-			// noteValue = tf.title.setCaption(tf.getValue());
-
-		}
-	}
 }

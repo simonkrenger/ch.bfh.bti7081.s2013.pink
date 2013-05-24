@@ -157,10 +157,11 @@ public class PatientOverview extends CustomComponent {
 					@Override
 					public void buttonClick(ClickEvent event) {
 						// Open Search
-						// PatientDetailView detailedPatientView = new
-						// PatientDetailView(patient);
-						// getUI().getNavigator().addView("sessionDetail", de)
-						// mainLayout.addComponent(detailledPatientView);
+						SessionView sessionView = new SessionView(session,
+								patient);
+						getUI().getNavigator().addView("sessionView",
+								sessionView);
+						getUI().getNavigator().navigateTo("sessionView");
 					}
 				});
 		positionY += 300;

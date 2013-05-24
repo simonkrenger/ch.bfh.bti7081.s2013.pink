@@ -30,9 +30,9 @@ public class SessionView extends VerticalLayout implements View {
 	private Label medication;
 	private Label compliance;
 
-	public SessionView() {
-		session = testenvironment.getSession();
-		patient = session.getPatient();
+	public SessionView(Session session, Patient patient) {
+		this.session = testenvironment.getSession();
+		this.patient = session.getPatient();
 		patient = testenvironment.getPatient();
 
 		setSizeFull();
