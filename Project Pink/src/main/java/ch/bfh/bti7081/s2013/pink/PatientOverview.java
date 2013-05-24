@@ -1,9 +1,3 @@
-/**
- * Class that shows the upcomming sessions with the patients
- *
- * @author	Marco Berger	<lostchall@gmail.com>
- */
-
 package ch.bfh.bti7081.s2013.pink;
 
 import ch.bfh.bti7081.s2013.pink.model.Patient;
@@ -14,10 +8,16 @@ import com.vaadin.server.Resource;
 import com.vaadin.server.ThemeResource;
 import com.vaadin.ui.AbsoluteLayout;
 import com.vaadin.ui.Button;
+import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.CustomComponent;
 import com.vaadin.ui.Image;
 import com.vaadin.ui.Label;
 
+/**
+ * Class that shows the upcomming sessions with the patients
+ * 
+ * @author Marco Berger <lostchall@gmail.com>
+ */
 @SuppressWarnings("serial")
 public class PatientOverview extends CustomComponent {
 
@@ -109,7 +109,17 @@ public class PatientOverview extends CustomComponent {
 		positionY -= 100;
 
 		// Adds the button to start the patient session
-		Button button = new Button("Show details");
+		Button button = new Button("Show details", new Button.ClickListener() {
+			@Override
+			public void buttonClick(ClickEvent event) {
+				// Open Search
+				PatientDetailView detailedPatientView = new PatientDetailView(
+						patient);
+				getUI().getNavigator().addView("patientDetail",
+						detailedPatientView);
+				getUI().getNavigator().navigateTo("patientDetail");
+			}
+		});
 		positionY += 400;
 		mainLayout.addComponent(button, "top:" + positionX + "px;left:"
 				+ positionY + "px;");
@@ -142,60 +152,21 @@ public class PatientOverview extends CustomComponent {
 				+ "px;left:" + positionY + "px;");
 
 		// Adds the button to start the patient session
-		Button startSession = new Button("Start Session");
+		Button startSession = new Button("Start Session",
+				new Button.ClickListener() {
+					@Override
+					public void buttonClick(ClickEvent event) {
+						// Open Search
+						// PatientDetailView detailedPatientView = new
+						// PatientDetailView(patient);
+						// getUI().getNavigator().addView("sessionDetail", de)
+						// mainLayout.addComponent(detailledPatientView);
+					}
+				});
 		positionY += 300;
 		mainLayout.addComponent(startSession, "top:" + positionX + "px;left:"
 				+ positionY + "px;");
 
 		return mainLayout;
-	}
-
-	// Custom button for showing patient details
-	public class ShowPatientDetailsButton extends CustomComponent implements
-			Button.ClickListener {
-		Button showPatientDetailsButton;
-
-		public ShowPatientDetailsButton() {
-			// Create a Button with the given caption.
-			showPatientDetailsButton = new Button("Search");
-
-			// Listen for ClickEvents.
-			showPatientDetailsButton.addListener(this);
-
-			setCompositionRoot(showPatientDetailsButton);
-		}
-
-		/** Handle search events for the button. */
-		public void buttonClick(Button.ClickEvent event) {
-			// Open Search
-			PatientDetailView detailledPatientView = new PatientDetailView(
-					patient);
-			// mainLayout.addComponent(detailledPatientView);
-		}
-
-		// Custom button to start patient session
-		public class StartSessionButton extends CustomComponent implements
-				Button.ClickListener {
-			Button startSessionButton;
-
-			public StartSessionButton() {
-				// Create a Button with the given caption.
-				startSessionButton = new Button("Search");
-
-				// Listen for ClickEvents.
-				startSessionButton.addListener(this);
-
-				setCompositionRoot(startSessionButton);
-			}
-
-			/** Handle search events for the button. */
-			public void buttonClick(Button.ClickEvent event) {
-				// Open Search
-				PatientDetailView detailledPatientView = new PatientDetailView(
-						patient);
-				// mainLayout.addComponent(detailledPatientView);
-			}
-		}
-
 	}
 }

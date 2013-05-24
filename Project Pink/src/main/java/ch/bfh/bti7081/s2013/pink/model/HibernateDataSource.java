@@ -13,9 +13,9 @@ import org.hibernate.service.ServiceRegistryBuilder;
 public class HibernateDataSource {
 	private static final HibernateDataSource INSTANCE = new HibernateDataSource();
 
-	private final SessionFactory sessionFactory;
+	protected final SessionFactory sessionFactory;
 
-	private HibernateDataSource() {
+	protected HibernateDataSource() {
 		Configuration configuration = new Configuration();
 		configuration.configure();
 		ServiceRegistry serviceRegistry = new ServiceRegistryBuilder()
@@ -28,8 +28,9 @@ public class HibernateDataSource {
 		Session session = sessionFactory.openSession();
 		session.beginTransaction();
 
+		Criteria crit = session.createCriteria(clazz);
 		@SuppressWarnings("unchecked")
-		List<T> result = session.createCriteria(clazz).list();
+		List<T> result = crit.list();
 
 		session.getTransaction().commit();
 		session.close();

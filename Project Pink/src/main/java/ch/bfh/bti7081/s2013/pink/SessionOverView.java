@@ -1,7 +1,6 @@
 package ch.bfh.bti7081.s2013.pink;
 
 import ch.bfh.bti7081.s2013.pink.model.HibernateDataSource;
-import ch.bfh.bti7081.s2013.pink.model.Patient;
 import ch.bfh.bti7081.s2013.pink.model.Session;
 import ch.bfh.bti7081.s2013.pink.model.TestDataSource;
 
@@ -47,17 +46,11 @@ public class SessionOverView extends VerticalLayout implements View {
 			PatientOverview patientOverview = new PatientOverview(posX, 200,
 					session.getPatient(), session);
 			addComponent(patientOverview);
-			// SessionView test = new SessionView(session, patient);
-			// addComponent(test);
 		}
 	}
 
 	public void buildPatientSearch() {
-
-		PatientSearchView patientSearchView = new PatientSearchView(
-				HibernateDataSource.getInstance().findAll(Patient.class).get(0));
-
-		addComponent(patientSearchView);
+		addComponent(new PatientSearchView());
 	}
 
 	@Override
