@@ -21,7 +21,7 @@ public class TestDataSource {
 	}
 
 	public static Doctor getDoctor() {
-		Doctor dr = new Doctor("Gregory", "House");
+		Doctor dr = new Doctor("Gregory", "House", "house.png");
 		dr.addSpecialization("diagnostics");
 		dr.addSpecialization("sociopath");
 		return dr;
@@ -56,7 +56,7 @@ public class TestDataSource {
 	}
 
 	public static Patient getPatient() {
-		Patient p = new Patient("Pink", "Panter");
+		Patient p = new Patient("Pink", "Panter", "mascot.png");
 		p.addAllergy(new Allergy(new Ingredient("Bullshit"),
 				Allergy.Severity.BENIGN));
 		p.addAllergy(getAllergy());

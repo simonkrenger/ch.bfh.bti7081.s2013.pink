@@ -16,8 +16,8 @@ public class Doctor extends Person {
 	@Column(name = "specialization")
 	private List<String> specializations = new LinkedList<String>();
 
-	public Doctor(String firstName, String name) {
-		super(firstName, name);
+	public Doctor(String firstName, String name, String imageUrl) {
+		super(firstName, name, imageUrl);
 	}
 
 	protected Doctor() {

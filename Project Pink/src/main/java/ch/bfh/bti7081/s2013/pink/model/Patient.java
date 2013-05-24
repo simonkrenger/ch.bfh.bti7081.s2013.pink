@@ -21,8 +21,8 @@ public class Patient extends Person {
 	@OneToMany(cascade = CascadeType.PERSIST)
 	private List<Note> notes = new LinkedList<Note>();
 
-	public Patient(String firstName, String name) {
-		super(firstName, name);
+	public Patient(String firstName, String name, String imageUrl) {
+		super(firstName, name, imageUrl);
 	}
 
 	@SuppressWarnings("unused")

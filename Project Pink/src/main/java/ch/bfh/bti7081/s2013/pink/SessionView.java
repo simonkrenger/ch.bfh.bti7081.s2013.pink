@@ -37,18 +37,6 @@ public class SessionView extends VerticalLayout implements View {
 
 		setSizeFull();
 		buildSessionWindow();
-		showPatients();
-	}
-
-	public void showPatients() {
-		// loop trough the next 3 patients
-		for (int i = 0; i < 3; i++) {
-			//PatientOverview patientOverview = new PatientOverview(posX, 200,
-			// patient, session);
-			//addComponent(patientOverview);
-			// SessionView test = new SessionView(session, patient);
-			// addComponent(test);
-		}
 	}
 
 	public void buildSessionWindow() {
@@ -64,4 +52,3 @@ public class SessionView extends VerticalLayout implements View {
 		// view is opened.
 	}
 }
-

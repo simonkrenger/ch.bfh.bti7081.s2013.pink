@@ -16,10 +16,12 @@ public abstract class Person {
 
 	private String name;
 	private String firstName;
+	private String imageUrl;
 
-	public Person(String firstName, String name) {
+	public Person(String firstName, String name, String imageUrl) {
 		this.firstName = firstName;
 		this.name = name;
+		this.imageUrl = imageUrl;
 	}
 
 	protected Person() {
@@ -32,6 +34,10 @@ public abstract class Person {
 
 	public String getFirstName() {
 		return firstName;
+	}
+
+	public String getImageUrl() {
+		return imageUrl;
 	}
 
 	@Override
