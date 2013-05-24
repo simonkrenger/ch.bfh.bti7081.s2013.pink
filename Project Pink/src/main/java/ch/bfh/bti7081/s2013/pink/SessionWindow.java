@@ -100,16 +100,18 @@ public class SessionWindow extends CustomComponent {
 
 		// add add Note button
 		AddNoteButton addNote = new AddNoteButton();
+		addNote.setWidth("140px");
 		mainLayout.addComponent(addNote, "top:530px;left:200px");
 
 		// add add medicdation button
 		CloseSessionButton closeSessionButton = new CloseSessionButton();
-		mainLayout.addComponent(closeSessionButton, "top:70px;left:580px");
+		closeSessionButton.setWidth("140px");
+		mainLayout.addComponent(closeSessionButton, "top:70px;left:450px");
 		// closeSessionButton.addListener(new ClickListener());
 
 		// add end session button
 		AddMedicationButton addMedicationButton = new AddMedicationButton();
-		mainLayout.addComponent(addMedicationButton, "top:70px;left:450px");
+		mainLayout.addComponent(addMedicationButton, "top:100px;left:450px");
 
 		// Create an opener extension
 		BrowserWindowOpener opener = new BrowserWindowOpener(
@@ -117,9 +119,11 @@ public class SessionWindow extends CustomComponent {
 		opener.setFeatures("height=200,width=300,resizable");
 
 		// Attach it to a button
-		Button button = new Button("Pop It Up");
-		opener.extend(button);
-		mainLayout.addComponent(button);
+		Button warnings = new Button("Show warnings");
+		warnings.setWidth("140px");
+		warnings.setIcon(new ThemeResource("img/warning.png"));
+		opener.extend(warnings);
+		mainLayout.addComponent(warnings, "top:130px;left:450px");
 		return mainLayout;
 	}
 
