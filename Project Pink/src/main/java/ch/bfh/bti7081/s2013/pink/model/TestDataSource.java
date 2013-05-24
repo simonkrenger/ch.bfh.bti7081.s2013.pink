@@ -1,6 +1,8 @@
 package ch.bfh.bti7081.s2013.pink.model;
 
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
@@ -45,6 +47,8 @@ public class TestDataSource {
 		for (Object o : session.createCriteria(Medicine.class).list())
 			session.delete(o);
 		for (Object o : session.createCriteria(Ingredient.class).list())
+			session.delete(o);
+		for (Object o : session.createCriteria(Session.class).list())
 			session.delete(o);
 
 		// Create Ingredients
@@ -125,18 +129,22 @@ public class TestDataSource {
 		}
 
 		// Create Sessions
+		Calendar cal = new GregorianCalendar();
+		cal.set(Calendar.MINUTE, 0);
+		cal.add(Calendar.HOUR, 1);
 		for (Object o : session.createCriteria(Patient.class).list()) {
 			if (random.nextBoolean() || random.nextBoolean())
-				break;
+				continue;
 			Patient p = (Patient) o;
 			Session s = new Session(p, getRandom(doctors));
 			// TODO: better dates
-			s.setTimeStart(new Date());
-			s.setTimeEnd(new Date());
+			s.setTimeStart(cal.getTime());
+			cal.add(Calendar.HOUR, 1);
+			s.setTimeEnd(cal.getTime());
 			if (random.nextBoolean() && random.nextBoolean()
 					&& random.nextBoolean())
-				s.addNote(new Note(
-						"Think of this as a witty note.\nBest regards,\nYour Doctor"));
+				s.addNote(new Note("Your lucky number is "
+						+ random.nextInt(100)));
 			session.persist(s);
 		}
 
