@@ -3,7 +3,6 @@ package ch.bfh.bti7081.s2013.pink.model;
 import java.util.LinkedList;
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.CollectionTable;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
@@ -17,7 +16,7 @@ public class Medicine {
 	@Id
 	private String name;
 
-	@ManyToMany(cascade = { CascadeType.PERSIST })
+	@ManyToMany
 	private List<Ingredient> ingredients = new LinkedList<Ingredient>();
 
 	@ElementCollection

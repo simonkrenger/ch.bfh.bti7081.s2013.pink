@@ -3,7 +3,6 @@ package ch.bfh.bti7081.s2013.pink.model;
 import java.util.LinkedList;
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -16,7 +15,7 @@ public class Allergy {
 	@GeneratedValue
 	private Long id;
 
-	@ManyToOne(cascade = CascadeType.PERSIST)
+	@ManyToOne
 	private Ingredient trigger;
 	private Severity severity;
 
