@@ -84,20 +84,19 @@ public class TestDataSource {
 				"Geisler", "Salzmann", "Jähn", "Seidel", "Seifert", "Trub",
 				"Bauer", "Becker", "Jufer", "Eigenwillig", "Gutknecht",
 				"Niederberger", "Schmid", "Zimmermann", "Fröhlich" };
-		String[] firstNames = new String[] { "Adler", "Bachmann", "Bauer",
-				"Baum", "Becker", "Dietz", "Eberhardt", "Eigenwillig",
-				"Eiholzer", "Fischer", "Fröhlich", "Gehringer", "Geisler",
-				"Gutknecht", "Haas", "Hartmann", "Hess", "Jähn", "Jufer",
-				"Kästner", "Koch", "Kramer", "Lehmann", "Loosli", "Mangold",
-				"Meier", "Meyer", "Müller", "Nause", "Niederberger",
-				"Osterwalder", "Pohl", "Pulizer", "Reinhard", "Rindlisbacher",
-				"Sager", "Salzmann", "Sauber", "Schmid", "Seidel", "Seifert",
-				"Spiess", "Stadelmann", "Trub", "Unold", "von Wartburg",
-				"Wagner", "Wolf", "Wirth", "Walter", "Zimmermann" };
+		String[] firstNames = new String[] { "Elias", "Léa", "Ben", "Emma",
+				"Lena", "Alina", "Leon", "Robin", "Matteo", "Lia", "Charlotte",
+				"Levin", "Elena", "Emilie", "Noah", "Sara", "Olivia", "Lara",
+				"Alice", "Lukas", "Emma", "Jan", "Luca", "Nico", "Nina", "Eva",
+				"Clara", "Jonas", "Alicia", "Leandro", "Lara", "Sofia", "Gian",
+				"Dario", "Anna", "Sara", "David", "Camille", "Zoé", "Laura",
+				"Sophia", "Lionel", "Jade", "Elin", "Samuel", "Lucie", "Jana",
+				"Chloé", "Mia", "Julian", "Julie", "Chiara", "Lea", "Elisa",
+				"Tim", "Sophie", "Lina", "Julia", "Leonie", "Anaïs" };
 		String[] warnings = new String[] {
 				"Ist an Dienstagen leicht gewalttätig.", "Nicht füttern!",
 				"Meint er sei Programmierer.", "\"; -- SELECT * FROM Notes;",
-				"Findet Dilbert lustig." };
+				"Findet Dilbert lustig.", "Mag Visual Basic." };
 		List<Patient> patients = new LinkedList<Patient>();
 		for (int i = 0; i < names.length; i++) {
 			Patient p = new Patient(firstNames[i], names[i]);
