@@ -7,7 +7,7 @@ Installation
 ------------
 1. Check out the project from github
 2. Using Maven, run the following command:
-    mvn clean install tomcat:run
+    `mvn clean install tomcat:run`
 
 If you want to run the project on a server other than Tomcat, modify the above command to fit your environment.
 
