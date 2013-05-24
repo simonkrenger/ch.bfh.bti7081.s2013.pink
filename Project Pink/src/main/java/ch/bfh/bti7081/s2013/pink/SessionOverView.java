@@ -33,7 +33,19 @@ public class SessionOverView extends VerticalLayout implements View {
 						new TestDataSource().clearTableAndCreateTestData();
 					}
 				});
+
 		addComponent(test);
+
+        final Session dummySession = HibernateDataSource.getInstance().findAll(Session.class).get(0);
+        addComponent(new Button("Medical Prescription Dummy", new Button.ClickListener() {
+            @Override
+            public void buttonClick(ClickEvent event) {
+                // Open Search
+                MedicalPrescriptionView mpv = new MedicalPrescriptionView(dummySession);
+                getUI().getNavigator().addView("medicalPrescription", mpv);
+                getUI().getNavigator().navigateTo("medicalPrescription");
+            }
+        }));
 	}
 
 	public void showPatients() {
