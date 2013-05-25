@@ -21,6 +21,8 @@ import com.vaadin.ui.VerticalLayout;
 @SuppressWarnings("serial")
 public class SessionOverView extends NavigationView implements View {
 	public SessionOverView() {
+		setCaption("Upcoming Sessions");
+
 		// TODO: buildPatientSearch();
 		VerticalLayout layout = new VerticalLayout();
 		// loop trough the next 3 patients
@@ -46,7 +48,6 @@ public class SessionOverView extends NavigationView implements View {
 		Toolbar toolbar = new Toolbar();
 		toolbar.addComponent(test);
 		setToolbar(toolbar);
-
 	}
 
 	@Override
