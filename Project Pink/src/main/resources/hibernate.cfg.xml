@@ -6,13 +6,7 @@
 	<session-factory>
 
 		<!-- Database connection settings -->
-		<property name="connection.driver_class">org.h2.Driver</property>
-		<!-- Warning, creates a database and lock file in the home directory called "pinkDB*" -->
-		<!-- Not quite sure if this will work with windows... -->
-		<property name="connection.url">jdbc:h2:~/pinkDB</property>
-		<!-- <property name="connection.url">jdbc:h2:mem:db1;DB_CLOSE_DELAY=-1;MVCC=TRUE</property> -->
-		<property name="connection.username">user</property>
-		<property name="connection.password">password</property>
+		<property name="hibernate.connection.datasource">java:comp/env/jdbc/database</property>
 
 		<!-- JDBC connection pool (use the built-in) -->
 		<property name="connection.pool_size">1</property>

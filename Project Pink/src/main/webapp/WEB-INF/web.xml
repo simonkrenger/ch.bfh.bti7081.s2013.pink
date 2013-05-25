@@ -27,4 +27,8 @@
 		<servlet-name>Vaadin Application Servlet</servlet-name>
 		<url-pattern>/*</url-pattern>
 	</servlet-mapping>
+	<resource-env-ref>
+		<resource-env-ref-name>jdbc/database</resource-env-ref-name>
+		<resource-env-ref-type>javax.sql.DataSource</resource-env-ref-type>
+	</resource-env-ref>
 </web-app>

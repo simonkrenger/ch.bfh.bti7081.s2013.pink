@@ -13,6 +13,8 @@ import org.hibernate.annotations.FetchMode;
 
 @Entity
 public class Patient extends Person {
+	private static final long serialVersionUID = 6206530937924052846L;
+
 	@Fetch(FetchMode.SUBSELECT)
 	@OneToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
 	private List<Allergy> allergies = new LinkedList<Allergy>();

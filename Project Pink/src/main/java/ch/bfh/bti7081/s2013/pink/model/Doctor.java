@@ -11,6 +11,8 @@ import javax.persistence.JoinColumn;
 
 @Entity
 public class Doctor extends Person {
+	private static final long serialVersionUID = -1992284814080337920L;
+
 	@ElementCollection
 	@CollectionTable(name = "Specializations", joinColumns = @JoinColumn(name = "id"))
 	@Column(name = "specialization")

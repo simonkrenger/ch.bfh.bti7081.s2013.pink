@@ -1,4 +1,4 @@
-package ch.bfh.bti7081.s2013.pink;
+package ch.bfh.bti7081.s2013.pink.view;
 
 import ch.bfh.bti7081.s2013.pink.model.HibernateDataSource;
 import ch.bfh.bti7081.s2013.pink.model.Session;
@@ -31,8 +31,7 @@ public class SessionOverView extends NavigationView implements View {
 				Session.class)) {
 			if (i++ > 3)
 				break;
-			PatientOverview patientOverview = new PatientOverview(0, 200,
-					session.getPatient(), session);
+			PatientOverview patientOverview = new PatientOverview(session);
 			layout.addComponent(patientOverview);
 		}
 		setContent(layout);

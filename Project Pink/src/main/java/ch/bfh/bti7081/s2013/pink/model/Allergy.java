@@ -1,5 +1,6 @@
 package ch.bfh.bti7081.s2013.pink.model;
 
+import java.io.Serializable;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -10,7 +11,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 @Entity
-public class Allergy {
+public class Allergy implements Serializable {
+	private static final long serialVersionUID = -7947437825782406243L;
+
 	@Id
 	@GeneratedValue
 	private Long id;

@@ -1,5 +1,6 @@
 package ch.bfh.bti7081.s2013.pink.model;
 
+import java.io.Serializable;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -10,7 +11,9 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
 @Entity
-public class Warning {
+public class Warning implements Serializable {
+	private static final long serialVersionUID = 58666746010984225L;
+
 	@Id
 	@GeneratedValue
 	private Long id;

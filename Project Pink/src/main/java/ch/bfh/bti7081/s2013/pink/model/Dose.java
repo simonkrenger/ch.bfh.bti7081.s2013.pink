@@ -1,5 +1,6 @@
 package ch.bfh.bti7081.s2013.pink.model;
 
+import java.io.Serializable;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -9,7 +10,9 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
 @Entity
-public class Dose {
+public class Dose implements Serializable {
+	private static final long serialVersionUID = 9091291159459047509L;
+
 	@Id
 	@GeneratedValue
 	private Long id;

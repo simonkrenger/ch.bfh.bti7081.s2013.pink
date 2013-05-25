@@ -1,5 +1,6 @@
 package ch.bfh.bti7081.s2013.pink.model;
 
+import java.io.Serializable;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -12,7 +13,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 
 @Entity
-public class Medicine {
+public class Medicine implements Serializable {
+	private static final long serialVersionUID = 8422980973382356404L;
+
 	@Id
 	private String name;
 
