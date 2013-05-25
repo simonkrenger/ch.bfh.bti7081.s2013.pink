@@ -13,9 +13,9 @@ import org.hibernate.service.ServiceRegistryBuilder;
 public class HibernateDataSource {
 	private static final HibernateDataSource INSTANCE = new HibernateDataSource();
 
-	private final SessionFactory sessionFactory;
+	protected final SessionFactory sessionFactory;
 
-	private HibernateDataSource() {
+	protected HibernateDataSource() {
 		Configuration configuration = new Configuration();
 		configuration.configure();
 		ServiceRegistry serviceRegistry = new ServiceRegistryBuilder()
