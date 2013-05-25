@@ -107,9 +107,8 @@ public class SessionWindow extends CustomComponent {
 				// Open Search
 				PatientDetailView detailedPatientView = new PatientDetailView(
 						patient);
-				getUI().getNavigator().addView("patientDetail",
+				MyVaadinUI.getNavigationManager().navigateTo(
 						detailedPatientView);
-				getUI().getNavigator().navigateTo("patientDetail");
 			}
 		});
 		mainLayout.addComponent(addNote, "top:530px;left:200px");
@@ -122,9 +121,8 @@ public class SessionWindow extends CustomComponent {
 						// Open Search
 						PatientDetailView detailedPatientView = new PatientDetailView(
 								patient);
-						getUI().getNavigator().addView("patientDetail",
+						MyVaadinUI.getNavigationManager().navigateTo(
 								detailedPatientView);
-						getUI().getNavigator().navigateTo("patientDetail");
 					}
 				});
 		mainLayout.addComponent(closeSessionButton, "top:70px;left:450px");
@@ -138,9 +136,8 @@ public class SessionWindow extends CustomComponent {
 						// Open Search
 						PatientDetailView detailedPatientView = new PatientDetailView(
 								patient);
-						getUI().getNavigator().addView("patientDetail",
+						MyVaadinUI.getNavigationManager().navigateTo(
 								detailedPatientView);
-						getUI().getNavigator().navigateTo("patientDetail");
 					}
 				});
 		mainLayout.addComponent(addMedicationButton, "top:100px;left:450px");

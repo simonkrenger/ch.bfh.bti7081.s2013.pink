@@ -5,13 +5,13 @@
  */
 package ch.bfh.bti7081.s2013.pink.view;
 
+import ch.bfh.bti7081.s2013.pink.model.Allergy;
 import ch.bfh.bti7081.s2013.pink.model.Note;
 import ch.bfh.bti7081.s2013.pink.model.Patient;
 import ch.bfh.bti7081.s2013.pink.model.Warning;
 
 import com.vaadin.addon.touchkit.ui.NavigationView;
-import com.vaadin.navigator.View;
-import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
+import com.vaadin.addon.touchkit.ui.VerticalComponentGroup;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Layout;
 import com.vaadin.ui.Notification;
@@ -25,7 +25,7 @@ import com.vaadin.ui.VerticalLayout;
  * The Application's "main" class
  */
 @SuppressWarnings("serial")
-public class PatientDetailView extends NavigationView implements View {
+public class PatientDetailView extends NavigationView {
 	private Patient patient;
 
 	public PatientDetailView(Patient patient) {
@@ -35,21 +35,29 @@ public class PatientDetailView extends NavigationView implements View {
 		Layout layout = new VerticalLayout();
 
 		setCaption(patient.getFirstName() + " " + patient.getName());
-		layout.addComponent(new Label(patient.getFirstName() + " "
-				+ patient.getName()));
-		// TODO: add buttons, warnings
-		if (patient.getAllergies().size() > 0)
-			; // TODO: show allergy warning
 
-		for (Note note : patient.getNotes()) {
-			layout.addComponent(new Label("Date: " + note.getTimestamp()));
-			layout.addComponent(new Label(note.getText()));
+		// TODO: add buttons, warnings
+		if (patient.getAllergies().size() > 0) {
+			VerticalComponentGroup allergies = new VerticalComponentGroup(
+					"Allergies");
+			allergies.setWidth("100%");
+			for (Allergy a : patient.getAllergies())
+				// TODO: show prettier allergy warning
+				allergies.addComponent(new Label(a.toString()));
+			layout.addComponent(allergies);
+		}
+
+		for (Note n : patient.getNotes()) {
+			Label note = new Label(n.getText());
+			note.setCaption("Date: " + n.getTimestamp());
+			layout.addComponent(note);
 		}
 		setContent(layout);
 	}
 
 	@Override
-	public void enter(ViewChangeEvent event) {
+	protected void onBecomingVisible() {
+		super.onBecomingVisible();
 		for (Warning warning : patient.getWarnings())
 			Notification.show(warning.getText(), Type.WARNING_MESSAGE);
 	}

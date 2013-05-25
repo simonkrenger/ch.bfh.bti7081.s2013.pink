@@ -15,6 +15,12 @@ import org.hibernate.service.ServiceRegistryBuilder;
 import ch.bfh.bti7081.s2013.pink.model.Allergy.Severity;
 import ch.bfh.bti7081.s2013.pink.model.Dose.Period;
 
+/**
+ * Helper class to create some test entities or fill the database with some test
+ * data.
+ * 
+ * @author Christian Meyer <chrigu.meyer@gmail.com>
+ */
 public class TestDataSource {
 	private static int noteNumber;
 
@@ -30,11 +36,23 @@ public class TestDataSource {
 		sessionFactory = configuration.buildSessionFactory(serviceRegistry);
 	}
 
+	/**
+	 * Deletes existing data and creates new entries for
+	 * <ul>
+	 * <li>Doctor
+	 * <li>Patient
+	 * <li>Allergy
+	 * <li>Medicine
+	 * <li>Ingredient
+	 * <li>Session
+	 * </ul>
+	 * Most data is randomized to some degree.
+	 */
 	public void clearTableAndCreateTestData() {
 		org.hibernate.Session session = sessionFactory.openSession();
 		session.beginTransaction();
 
-		// FIXME: Delete existing data
+		// Delete existing data
 		for (Object o : session.createCriteria(MedicationPrescription.class)
 				.list())
 			session.delete(o);
@@ -104,8 +122,8 @@ public class TestDataSource {
 		for (int i = 0; i < names.length; i++) {
 			Patient p = new Patient(firstNames[i], names[i],
 					"/images/mascot.png");
-			// Several allergies are possible, so there are two chances
-			for (int j = 0; j < 2; j++) {
+			// Several allergies are possible, so there are three chances
+			for (int j = 0; j < 3; j++) {
 				if (random.nextBoolean() && random.nextBoolean()) {
 					Allergy a = new Allergy(getRandom(ingredients),
 							getRandom(Severity.values()));
@@ -155,10 +173,18 @@ public class TestDataSource {
 		session.close();
 	}
 
+	/**
+	 * @param list
+	 * @return one random element out of the given array
+	 */
 	private <T> T getRandom(T[] list) {
 		return list[random.nextInt(list.length)];
 	}
 
+	/**
+	 * @param list
+	 * @return one random element out of the given list
+	 */
 	private <T> T getRandom(List<T> list) {
 		return list.get(random.nextInt(list.size()));
 	}
