@@ -5,8 +5,10 @@ import ch.bfh.bti7081.s2013.pink.model.Session;
 import ch.bfh.bti7081.s2013.pink.model.TestDataSource;
 
 import com.vaadin.addon.touchkit.ui.NavigationView;
+import com.vaadin.addon.touchkit.ui.Toolbar;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
+import com.vaadin.server.ClassResource;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.VerticalLayout;
@@ -18,41 +20,33 @@ import com.vaadin.ui.VerticalLayout;
  */
 @SuppressWarnings("serial")
 public class SessionOverView extends NavigationView implements View {
-	private int posX;
-
 	public SessionOverView() {
-		posX = 0;
-
-		buildPatientSearch();
-		showPatients();
-
-		Button test = new Button("Clear DB and create test data",
-				new Button.ClickListener() {
-					@Override
-					public void buttonClick(ClickEvent event) {
-						new TestDataSource().clearTableAndCreateTestData();
-					}
-				});
-		// addComponent(test);
-	}
-
-	public void showPatients() {
-		VerticalLayout l = new VerticalLayout();
+		// TODO: buildPatientSearch();
+		VerticalLayout layout = new VerticalLayout();
 		// loop trough the next 3 patients
 		int i = 0;
 		for (Session session : HibernateDataSource.getInstance().findAll(
 				Session.class)) {
 			if (i++ > 3)
 				break;
-			PatientOverview patientOverview = new PatientOverview(posX, 200,
+			PatientOverview patientOverview = new PatientOverview(0, 200,
 					session.getPatient(), session);
-			l.addComponent(patientOverview);
+			layout.addComponent(patientOverview);
 		}
-		setContent(l);
-	}
+		setContent(layout);
 
-	public void buildPatientSearch() {
-		setToolbar(new PatientSearchView());
+		// Toolbar
+		Button test = new Button(null, new Button.ClickListener() {
+			@Override
+			public void buttonClick(ClickEvent event) {
+				new TestDataSource().clearTableAndCreateTestData();
+			}
+		});
+		test.setIcon(new ClassResource("/images/mascot.png"));
+		Toolbar toolbar = new Toolbar();
+		toolbar.addComponent(test);
+		setToolbar(toolbar);
+
 	}
 
 	@Override
