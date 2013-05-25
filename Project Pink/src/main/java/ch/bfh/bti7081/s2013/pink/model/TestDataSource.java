@@ -99,7 +99,7 @@ public class TestDataSource {
 				"Findet Dilbert lustig.", "Mag Visual Basic." };
 		List<Patient> patients = new LinkedList<Patient>();
 		for (int i = 0; i < names.length; i++) {
-			Patient p = new Patient(firstNames[i], names[i]);
+			Patient p = new Patient(firstNames[i], names[i], "img/mascot.png");
 			// Several allergies are possible, so there are two chances
 			for (int j = 0; j < 2; j++) {
 				if (random.nextBoolean() && random.nextBoolean()) {
@@ -161,7 +161,7 @@ public class TestDataSource {
 
 	private Doctor createDoctor(String firstName, String name,
 			String... specializations) {
-		Doctor result = new Doctor(firstName, name);
+		Doctor result = new Doctor(firstName, name, "img/house.png");
 		for (String specialization : specializations)
 			result.addSpecialization(specialization);
 		return result;
@@ -172,7 +172,7 @@ public class TestDataSource {
 	}
 
 	public static Doctor getDoctor() {
-		Doctor dr = new Doctor("Gregory", "House");
+		Doctor dr = new Doctor("Gregory", "House", "house.png");
 		dr.addSpecialization("diagnostics");
 		dr.addSpecialization("sociopath");
 		return dr;
@@ -207,7 +207,7 @@ public class TestDataSource {
 	}
 
 	public static Patient getPatient() {
-		Patient p = new Patient("Pink", "Panter");
+		Patient p = new Patient("Pink", "Panter", "mascot.png");
 		p.addAllergy(new Allergy(new Ingredient("Bullshit"),
 				Allergy.Severity.BENIGN));
 		p.addAllergy(getAllergy());

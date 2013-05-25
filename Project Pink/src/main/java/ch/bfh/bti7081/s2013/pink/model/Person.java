@@ -20,10 +20,12 @@ public abstract class Person implements Serializable {
 
 	private String name;
 	private String firstName;
+	private String imageUrl;
 
-	public Person(String firstName, String name) {
+	public Person(String firstName, String name, String imageUrl) {
 		this.firstName = firstName;
 		this.name = name;
+		this.imageUrl = imageUrl;
 	}
 
 	public Long getId() {
@@ -40,6 +42,10 @@ public abstract class Person implements Serializable {
 
 	public String getFirstName() {
 		return firstName;
+	}
+
+	public String getImageUrl() {
+		return imageUrl;
 	}
 
 	@Override
