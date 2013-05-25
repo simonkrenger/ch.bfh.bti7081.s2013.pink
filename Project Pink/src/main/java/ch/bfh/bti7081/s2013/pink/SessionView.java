@@ -1,9 +1,3 @@
-/**
- * Class that shows the upcomming sessions with the patients
- *
- * @author	Marco Berger	<lostchall@gmail.com>
- */
-
 package ch.bfh.bti7081.s2013.pink;
 
 import ch.bfh.bti7081.s2013.pink.model.Patient;
@@ -16,7 +10,10 @@ import com.vaadin.ui.Label;
 import com.vaadin.ui.VerticalLayout;
 
 /**
- * The Application's "main" class
+ * View class for Sessions
+ * 
+ * @author Marco Berger
+ * 
  */
 @SuppressWarnings("serial")
 public class SessionView extends VerticalLayout implements View {
@@ -41,6 +38,7 @@ public class SessionView extends VerticalLayout implements View {
 	}
 
 	public void showPatients() {
+		// TODO: Show patients
 		// loop trough the next 3 patients
 		for (int i = 0; i < 3; i++) {
 			//PatientOverview patientOverview = new PatientOverview(posX, 200,

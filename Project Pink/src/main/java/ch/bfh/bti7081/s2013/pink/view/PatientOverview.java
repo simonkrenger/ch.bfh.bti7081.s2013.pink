@@ -19,7 +19,7 @@ import com.vaadin.ui.Layout;
 import com.vaadin.ui.VerticalLayout;
 
 /**
- * Displays an overview of the next session/patient.
+ * VIew class to display an overview of the next session/patient.
  * 
  * @author Marco Berger <lostchall@gmail.com>
  */

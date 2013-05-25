@@ -7,6 +7,13 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
+/**
+ * Class to represent a note that can be added to another entity (for example to
+ * a <code>Patient</code> or <code>Session</code>.
+ * 
+ * @author chris
+ * 
+ */
 @Entity
 public class Note implements Serializable {
 	private static final long serialVersionUID = 8351635897658965640L;
@@ -16,6 +23,10 @@ public class Note implements Serializable {
 	private Long id;
 
 	private Date timestamp;
+
+	/**
+	 * Text in the note
+	 */
 	private String text;
 
 	public Note(String text) {

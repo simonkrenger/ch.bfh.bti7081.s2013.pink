@@ -12,6 +12,13 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
+/**
+ * Class to represent a session with a <code>Doctor</code> and a
+ * <code>Patient</code>
+ * 
+ * @author chris
+ * 
+ */
 @Entity
 public class Session implements Serializable {
 	private static final long serialVersionUID = 4037114189034652676L;
@@ -55,10 +62,24 @@ public class Session implements Serializable {
 		}
 	}
 
+	/**
+	 * Checks if the transition between the current state and a new state is
+	 * possible.
+	 * 
+	 * @param type
+	 *            The type of the new state
+	 * @return Returns TRUE if the transition is possible, else the method
+	 *         returns FALSE.
+	 */
 	public boolean isTranslationPossible(SessionState type) {
 		return sessionState.getPossibleNextStateType().contains(type);
 	}
 
+	/**
+	 * Method to check if a session is editable
+	 * 
+	 * @return Returns TRUE if the session is editable
+	 */
 	public boolean isEditable() {
 		return sessionState.isEditable();
 	}
@@ -88,7 +109,12 @@ public class Session implements Serializable {
 	}
 
 	public void addNote(Note note) {
+		if(this.isEditable()) {
 		notes.add(note);
+		} else {
+			throw new RuntimeException(
+					"Failed to add note, current state is not editable.");
+		}
 	}
 
 	public List<Note> getNotes() {

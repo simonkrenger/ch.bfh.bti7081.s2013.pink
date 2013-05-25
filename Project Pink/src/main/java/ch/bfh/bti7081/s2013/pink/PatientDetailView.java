@@ -1,8 +1,3 @@
-/**
- * Class that shows the upcomming sessions with the patients
- *
- * @author	Marco Berger	<lostchall@gmail.com>
- */
 package ch.bfh.bti7081.s2013.pink;
 
 import ch.bfh.bti7081.s2013.pink.model.Note;
@@ -19,15 +14,21 @@ import com.vaadin.ui.Notification.Type;
 import com.vaadin.ui.VerticalLayout;
 
 /**
- * Please don't hesitate to remove or radically change this class, it's just
- * here so we can do some minor tests.
+ * View class to show detailed information about a patient.
  * 
- * The Application's "main" class
+ * @author Marco Berger <lostchall@gmail.com>
  */
 @SuppressWarnings("serial")
 public class PatientDetailView extends NavigationView implements View {
 	private Patient patient;
 
+	/**
+	 * Constructor for the view class. Takes the patient to be displayed as an
+	 * argument.
+	 * 
+	 * @param patient
+	 *            The patient whose information is displayed in the detail view.
+	 */
 	public PatientDetailView(Patient patient) {
 		setSizeFull();
 		this.patient = patient;

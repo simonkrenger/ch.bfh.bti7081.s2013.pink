@@ -2,10 +2,9 @@ package ch.bfh.bti7081.s2013.pink.model;
 
 /**
  * Application Context.
- *
+ * 
  * @author Christoph Seiler (christoph.seiler@gmail.com)
- * Date: 22.05.13
- * Time: 19:14
+ * 
  */
 public class Context
 {
@@ -47,6 +46,7 @@ public class Context
      */
     public Doctor getDoctor()
     {
+		// TODO: Return this.doctor
         return new Doctor("Hansi", "Hinterseher");
     }
 }

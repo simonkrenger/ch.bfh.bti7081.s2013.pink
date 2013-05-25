@@ -12,6 +12,12 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 
+/**
+ * Class to represent a medication
+ * 
+ * @author chris
+ * 
+ */
 @Entity
 public class Medicine implements Serializable {
 	private static final long serialVersionUID = 8422980973382356404L;

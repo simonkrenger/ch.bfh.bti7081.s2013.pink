@@ -11,6 +11,12 @@ import javax.persistence.OneToMany;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
+/**
+ * Class that represents a patient.
+ * 
+ * @author chris
+ * 
+ */
 @Entity
 public class Patient extends Person {
 	private static final long serialVersionUID = 6206530937924052846L;
@@ -71,4 +77,12 @@ public class Patient extends Person {
 	public List<Note> getNotes() {
 		return notes;
 	}
+
+	@Override
+	public String toString() {
+		return "Patient [name=" + getFirstName() + " " + getName()
+				+ ", allergies=" + allergies + ", warnings=" + warnings
+				+ ", prescriptions=" + prescriptions + ", notes=" + notes + "]";
+	}
+
 }

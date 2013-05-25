@@ -9,6 +9,14 @@ import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 
+/**
+ * Class to represent a doctor. A doctor has a list of specializations. Note
+ * that as a special "feature", our application assumes all doctors have the
+ * title "Dr. med.". This will have to be fixed in future releases.
+ * 
+ * @author chris
+ * 
+ */
 @Entity
 public class Doctor extends Person {
 	private static final long serialVersionUID = -1992284814080337920L;
@@ -17,6 +25,11 @@ public class Doctor extends Person {
 	@CollectionTable(name = "Specializations", joinColumns = @JoinColumn(name = "id"))
 	@Column(name = "specialization")
 	private List<String> specializations = new LinkedList<String>();
+
+	/**
+	 * Doctors title
+	 */
+	private String title = "Dr. med.";
 
 	public Doctor(String firstName, String name) {
 		super(firstName, name);
@@ -34,8 +47,13 @@ public class Doctor extends Person {
 		return specializations;
 	}
 
+	/**
+	 * Returns the name of the doctor with the number of his / her
+	 * specializations. Note that all doctors have the title "Dr. med." by
+	 * default. This is to be fixed in a future release.
+	 */
 	@Override
 	public String toString() {
-		return "Dr. med. " + super.toString() + ": " + specializations.size();
+		return title + " " + super.toString() + ": " + specializations.size();
 	}
 }
