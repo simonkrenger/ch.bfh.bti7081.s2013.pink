@@ -3,7 +3,7 @@
  *
  * @author	Marco Berger	<lostchall@gmail.com>
  */
-package ch.bfh.bti7081.s2013.pink;
+package ch.bfh.bti7081.s2013.pink.view;
 
 import ch.bfh.bti7081.s2013.pink.model.Note;
 import ch.bfh.bti7081.s2013.pink.model.Patient;

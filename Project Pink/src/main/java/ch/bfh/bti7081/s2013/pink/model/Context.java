@@ -47,6 +47,6 @@ public class Context
      */
     public Doctor getDoctor()
     {
-        return new Doctor("Hansi", "Hinterseher");
+		return new Doctor("Hansi", "Hinterseher", null);
     }
 }

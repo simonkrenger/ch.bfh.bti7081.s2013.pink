@@ -62,16 +62,19 @@ public class TestDataSource {
 		// Create Doctors
 		List<Doctor> doctors = new LinkedList<Doctor>();
 		doctors.add((Doctor) session.merge(createDoctor("Marco", "Berger",
-				"Kognitive Psychologie", "Pädagogische Psychologie")));
+				"images/berger.jpeg", "Kognitive Psychologie",
+				"Pädagogische Psychologie")));
 		doctors.add((Doctor) session.merge(createDoctor("Franziska", "Corradi",
-				"Neuropsychologie", "Mathematische Psychologie")));
+				"images/corradi.jpeg", "Neuropsychologie",
+				"Mathematische Psychologie")));
 		doctors.add((Doctor) session.merge(createDoctor("Simon", "Krenger",
-				"Diagnostik", "Evaluation")));
+				"images/krenger.jpeg", "Diagnostik", "Evaluation")));
 		doctors.add((Doctor) session.merge(createDoctor("Christian", "Meyer",
-				"Entwicklungspsychologie", "Klinische Psychologie",
-				"Diagnostik")));
+				"images/meyer.jpeg", "Entwicklungspsychologie",
+				"Klinische Psychologie", "Diagnostik")));
 		doctors.add((Doctor) session.merge(createDoctor("Christoph", "Seiler",
-				"Klinische Psychologie", "Kommunikationspsychologie")));
+				"images/seiler.jpeg", "Klinische Psychologie",
+				"Kommunikationspsychologie")));
 
 		// Create Patients
 		String[] names = new String[] { "Haas", "Adler", "Walter", "Koch",
@@ -99,7 +102,8 @@ public class TestDataSource {
 				"Findet Dilbert lustig.", "Mag Visual Basic." };
 		List<Patient> patients = new LinkedList<Patient>();
 		for (int i = 0; i < names.length; i++) {
-			Patient p = new Patient(firstNames[i], names[i], "img/mascot.png");
+			Patient p = new Patient(firstNames[i], names[i],
+					"images/mascot.png");
 			// Several allergies are possible, so there are two chances
 			for (int j = 0; j < 2; j++) {
 				if (random.nextBoolean() && random.nextBoolean()) {
@@ -159,9 +163,9 @@ public class TestDataSource {
 		return list.get(random.nextInt(list.size()));
 	}
 
-	private Doctor createDoctor(String firstName, String name,
+	private Doctor createDoctor(String firstName, String name, String imgUrl,
 			String... specializations) {
-		Doctor result = new Doctor(firstName, name, "img/house.png");
+		Doctor result = new Doctor(firstName, name, imgUrl);
 		for (String specialization : specializations)
 			result.addSpecialization(specialization);
 		return result;

@@ -3,7 +3,6 @@ package ch.bfh.bti7081.s2013.pink.view;
 import java.text.SimpleDateFormat;
 
 import ch.bfh.bti7081.s2013.pink.MyVaadinUI;
-import ch.bfh.bti7081.s2013.pink.PatientDetailView;
 import ch.bfh.bti7081.s2013.pink.model.Patient;
 import ch.bfh.bti7081.s2013.pink.model.Session;
 
@@ -104,8 +103,8 @@ public class PatientOverview extends CustomComponent {
 		startSession.setWidth("100%");
 		buttons.addComponent(startSession);
 
-		mainLayout.addComponent(new Image(null, new ClassResource(
-				"/images/mascot.png")));
+		mainLayout.addComponent(new Image(null, new ClassResource(patient
+				.getImageUrl())));
 		text.setExpandRatio(name, 1.0f);
 		text.setExpandRatio(sessionBegin, 1.0f);
 		mainLayout.addComponent(text);
