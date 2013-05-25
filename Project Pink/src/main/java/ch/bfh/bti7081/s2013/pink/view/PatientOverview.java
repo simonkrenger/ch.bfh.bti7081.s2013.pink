@@ -3,6 +3,7 @@ package ch.bfh.bti7081.s2013.pink.view;
 import java.text.SimpleDateFormat;
 
 import ch.bfh.bti7081.s2013.pink.MyVaadinUI;
+import ch.bfh.bti7081.s2013.pink.SessionView;
 import ch.bfh.bti7081.s2013.pink.model.Patient;
 import ch.bfh.bti7081.s2013.pink.model.Session;
 
@@ -68,14 +69,10 @@ public class PatientOverview extends CustomComponent {
 		Button showDetails = new Button("Patient", new Button.ClickListener() {
 			@Override
 			public void buttonClick(ClickEvent event) {
-				// Open Search
 				PatientDetailView detailedPatientView = new PatientDetailView(
 						patient);
 				MyVaadinUI.getNavigationManager().navigateTo(
 						detailedPatientView);
-				// getUI().getNavigator().addView("patientDetail",
-				// detailedPatientView);
-				// getUI().getNavigator().navigateTo("patientDetail");
 			}
 		});
 		showDetails.setWidth("100%");
@@ -93,18 +90,16 @@ public class PatientOverview extends CustomComponent {
 		Button startSession = new Button("Begin", new Button.ClickListener() {
 			@Override
 			public void buttonClick(ClickEvent event) {
-				// Open Search
-				// PatientDetailView detailedPatientView = new
-				// PatientDetailView(patient);
-				// getUI().getNavigator().addView("sessionDetail", de)
-				// mainLayout.addComponent(detailledPatientView);
+				SessionView sessionView = new SessionView(session, patient);
+				MyVaadinUI.getNavigationManager().navigateTo(sessionView);
 			}
 		});
 		startSession.setWidth("100%");
 		buttons.addComponent(startSession);
 
-		mainLayout.addComponent(new Image(null, new ClassResource(patient
-				.getImageUrl())));
+		if (patient.getImageUrl() != null)
+			mainLayout.addComponent(new Image(null, new ClassResource(patient
+					.getImageUrl())));
 		text.setExpandRatio(name, 1.0f);
 		text.setExpandRatio(sessionBegin, 1.0f);
 		mainLayout.addComponent(text);

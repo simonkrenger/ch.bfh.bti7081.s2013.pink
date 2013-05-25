@@ -62,18 +62,18 @@ public class TestDataSource {
 		// Create Doctors
 		List<Doctor> doctors = new LinkedList<Doctor>();
 		doctors.add((Doctor) session.merge(createDoctor("Marco", "Berger",
-				"images/berger.jpeg", "Kognitive Psychologie",
+				"/images/berger.jpeg", "Kognitive Psychologie",
 				"Pädagogische Psychologie")));
 		doctors.add((Doctor) session.merge(createDoctor("Franziska", "Corradi",
-				"images/corradi.jpeg", "Neuropsychologie",
+				"/images/corradi.jpeg", "Neuropsychologie",
 				"Mathematische Psychologie")));
 		doctors.add((Doctor) session.merge(createDoctor("Simon", "Krenger",
-				"images/krenger.jpeg", "Diagnostik", "Evaluation")));
+				"/images/krenger.jpeg", "Diagnostik", "Evaluation")));
 		doctors.add((Doctor) session.merge(createDoctor("Christian", "Meyer",
-				"images/meyer.jpeg", "Entwicklungspsychologie",
+				"/images/meyer.jpeg", "Entwicklungspsychologie",
 				"Klinische Psychologie", "Diagnostik")));
 		doctors.add((Doctor) session.merge(createDoctor("Christoph", "Seiler",
-				"images/seiler.jpeg", "Klinische Psychologie",
+				"/images/seiler.jpeg", "Klinische Psychologie",
 				"Kommunikationspsychologie")));
 
 		// Create Patients
@@ -103,7 +103,7 @@ public class TestDataSource {
 		List<Patient> patients = new LinkedList<Patient>();
 		for (int i = 0; i < names.length; i++) {
 			Patient p = new Patient(firstNames[i], names[i],
-					"images/mascot.png");
+					"/images/mascot.png");
 			// Several allergies are possible, so there are two chances
 			for (int j = 0; j < 2; j++) {
 				if (random.nextBoolean() && random.nextBoolean()) {
