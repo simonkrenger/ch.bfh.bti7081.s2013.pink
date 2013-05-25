@@ -19,7 +19,7 @@ import javax.persistence.ManyToMany;
  * 
  */
 @Entity
-public class Medicine implements Serializable {
+public class Medication implements Serializable {
 	private static final long serialVersionUID = 8422980973382356404L;
 
 	@Id
@@ -43,12 +43,12 @@ public class Medicine implements Serializable {
 	@Column(name = "sideeffect")
 	private List<String> sideeffects = new LinkedList<String>();
 
-	public Medicine(String name) {
+	public Medication(String name) {
 		this.name = name;
 	}
 
 	@SuppressWarnings("unused")
-	private Medicine() {
+	private Medication() {
 		// needed for Hibernate
 	}
 

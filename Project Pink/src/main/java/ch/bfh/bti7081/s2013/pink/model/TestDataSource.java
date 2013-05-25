@@ -44,7 +44,7 @@ public class TestDataSource {
 			session.delete(o);
 		for (Object o : session.createCriteria(Doctor.class).list())
 			session.delete(o);
-		for (Object o : session.createCriteria(Medicine.class).list())
+		for (Object o : session.createCriteria(Medication.class).list())
 			session.delete(o);
 		for (Object o : session.createCriteria(Ingredient.class).list())
 			session.delete(o);
@@ -119,7 +119,7 @@ public class TestDataSource {
 		String[] mediNames = new String[] { "Jenataria", "Qlatol", "Eatcin",
 				"Winzym", "Oliphrom", "Cephrol", "Valium" };
 		for (String name : mediNames) {
-			Medicine m = new Medicine(name);
+			Medication m = new Medication(name);
 			m.addIngredient(getRandom(ingredients));
 			if (random.nextBoolean() && random.nextBoolean())
 				m.addIngredient(getRandom(ingredients));
@@ -186,10 +186,10 @@ public class TestDataSource {
 		return new Allergy(getIngredient(), Severity.SEVERE);
 	}
 
-	public static Medicine getMedicine() {
+	public static Medication getMedicine() {
 		Ingredient i = new Ingredient("Placebium");
 
-		Medicine m = new Medicine("Placebo");
+		Medication m = new Medication("Placebo");
 		m.addIngredient(i);
 		m.addEffect("effect");
 		m.addEffect("another effect");

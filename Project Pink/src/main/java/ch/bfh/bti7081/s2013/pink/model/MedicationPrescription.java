@@ -33,7 +33,7 @@ public class MedicationPrescription implements Serializable {
 	 */
 	private String reason;
 	@ManyToOne(cascade = { CascadeType.PERSIST })
-	private Medicine medicine;
+	private Medication medicine;
 
 	@OneToOne(cascade = { CascadeType.PERSIST })
 	private Dose dose;
@@ -54,7 +54,7 @@ public class MedicationPrescription implements Serializable {
 	 * @param prescriber
 	 *            <code>Doctor</code> that makes the prescription
 	 */
-	public MedicationPrescription(String reason, Medicine medicine, Dose dose,
+	public MedicationPrescription(String reason, Medication medicine, Dose dose,
 			Doctor prescriber) {
 		this.reason = reason;
 		this.medicine = medicine;
@@ -71,7 +71,7 @@ public class MedicationPrescription implements Serializable {
 		return reason;
 	}
 
-	public Medicine getMedicine() {
+	public Medication getMedicine() {
 		return medicine;
 	}
 

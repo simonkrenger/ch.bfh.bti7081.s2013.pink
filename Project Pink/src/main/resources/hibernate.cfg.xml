@@ -31,7 +31,7 @@
 		<mapping class="ch.bfh.bti7081.s2013.pink.model.Dose" />
 		<mapping class="ch.bfh.bti7081.s2013.pink.model.Ingredient" />
 		<mapping class="ch.bfh.bti7081.s2013.pink.model.MedicationPrescription" />
-		<mapping class="ch.bfh.bti7081.s2013.pink.model.Medicine" />
+		<mapping class="ch.bfh.bti7081.s2013.pink.model.Medication" />
 		<mapping class="ch.bfh.bti7081.s2013.pink.model.Note" />
 		<mapping class="ch.bfh.bti7081.s2013.pink.model.Patient" />
 		<mapping class="ch.bfh.bti7081.s2013.pink.model.Session" />
