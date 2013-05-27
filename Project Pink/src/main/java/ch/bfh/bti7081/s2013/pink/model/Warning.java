@@ -10,6 +10,13 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
+/**
+ * A warning that can be added to a <code>Patient</code>, for example if a
+ * patient tends to have a violent behaviour.
+ * 
+ * @author chris
+ * 
+ */
 @Entity
 public class Warning implements Serializable {
 	private static final long serialVersionUID = 58666746010984225L;

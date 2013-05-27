@@ -9,6 +9,12 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
+/**
+ * Class to represent a medication dose.
+ * 
+ * @author chris
+ * 
+ */
 @Entity
 public class Dose implements Serializable {
 	private static final long serialVersionUID = 9091291159459047509L;
@@ -17,14 +23,36 @@ public class Dose implements Serializable {
 	@GeneratedValue
 	private Long id;
 
+	/**
+	 * Dosage amount
+	 */
 	private int amount;
+
+	/**
+	 * Definition of "How many times per period"
+	 */
 	private int multiplier;
+
+	/**
+	 * Period, to be used in combination with multiplier
+	 */
 	private Period period;
 	@OneToMany
 	private List<Note> notes = new LinkedList<Note>();
 
-	public Dose(int amout, int multiplier, Period period) {
-		this.amount = amout;
+	/**
+	 * Constructor for the class.
+	 * 
+	 * @param amount
+	 *            Dosage (amount of pills)
+	 * @param multiplier
+	 *            Multiplier to define how many times per period a medication
+	 *            has to be taken
+	 * @param period
+	 *            Period for the dosage, see enumeration Period in this class
+	 */
+	public Dose(int amount, int multiplier, Period period) {
+		this.amount = amount;
 		this.multiplier = multiplier;
 		this.period = period;
 	}
@@ -54,6 +82,12 @@ public class Dose implements Serializable {
 		return notes;
 	}
 
+	/**
+	 * Period enumeration, allowed periods for a medication.
+	 * 
+	 * @author chris
+	 * 
+	 */
 	public static enum Period {
 		HOUR, DAY, WEEK, MONTH, YEAR;
 	}

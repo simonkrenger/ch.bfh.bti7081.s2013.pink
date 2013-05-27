@@ -43,7 +43,7 @@ public class LocalMedicalService implements IMedicalService
      * @param text in the medicament name.
      * @return List of medicines
      */
-    public List<Medicine> searchForMedicaments(String text)
+    public List<Medication> searchForMedicaments(String text)
     {
         if (text == null)
         {
@@ -63,7 +63,7 @@ public class LocalMedicalService implements IMedicalService
      * @param allergy allergy to be tested.
      * @return flag if it conflicted.
      */
-    private boolean doesMedicamentConflictWithAllergy(Medicine medicine, Allergy allergy)
+    private boolean doesMedicamentConflictWithAllergy(Medication medicine, Allergy allergy)
     {
         return medicine.getIngredients().contains(allergy.getTrigger());
     }
@@ -78,7 +78,7 @@ public class LocalMedicalService implements IMedicalService
      * @param reason for the prescription, if given and or necessary.
      * @return flag if saving was successful.
      */
-    private boolean savePrescription(Patient patient, Medicine medicine, Dose dose, String reason)
+    private boolean savePrescription(Patient patient, Medication medicine, Dose dose, String reason)
     {
         patient.addPrescription(
                     new MedicationPrescription(
@@ -97,7 +97,7 @@ public class LocalMedicalService implements IMedicalService
      * @param medicament to be prescribed.
      * @return flag if prescription has been made.
      */
-    public boolean prescribeMedicament(Patient patient, Medicine medicament, Dose dose)
+    public boolean prescribeMedicament(Patient patient, Medication medicament, Dose dose)
     {
         for (Allergy allergy : patient.getAllergies())
         {
@@ -119,7 +119,7 @@ public class LocalMedicalService implements IMedicalService
      * @param reason     justification of the prescription.
      * @return flag if prescription has been made.
      */
-    public boolean prescribeUnsafeMedicament(Patient patient, Medicine medicament, Dose dose, String reason) {
+    public boolean prescribeUnsafeMedicament(Patient patient, Medication medicament, Dose dose, String reason) {
         if (reason == null || reason.isEmpty())
         {
             throw new IllegalArgumentException("reason");
