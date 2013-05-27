@@ -1,6 +1,6 @@
 package ch.bfh.bti7081.s2013.pink.medication;
 
-import ch.bfh.bti7081.s2013.pink.model.Medicine;
+import ch.bfh.bti7081.s2013.pink.model.Medication;
 
 import java.util.List;
 
@@ -18,7 +18,7 @@ public interface IMedicineDataSource {
      *
      * @return complete list of all medicine.
      */
-    List<Medicine> GetAllMedicine();
+    List<Medication> GetAllMedicine();
 
     /**
      * Gets all medicine with a specific text in the name.
@@ -26,5 +26,5 @@ public interface IMedicineDataSource {
      * @param text which has to be present in the name.
      * @return List of medicine matching the text.
      */
-    List<Medicine> GetMedicineContainingText(String text);
+    List<Medication> GetMedicineContainingText(String text);
 }

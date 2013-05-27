@@ -12,7 +12,7 @@ import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.VerticalLayout;
 
 /**
- * Class that shows the upcoming sessions with the patients
+ * View class that shows the upcoming sessions with the patients
  * 
  * @author Marco Berger <lostchall@gmail.com>
  */

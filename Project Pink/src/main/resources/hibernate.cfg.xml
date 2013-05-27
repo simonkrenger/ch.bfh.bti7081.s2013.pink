@@ -11,8 +11,10 @@
 		<!-- JDBC connection pool (use the built-in) -->
 		<property name="connection.pool_size">1</property>
 
-		<!-- SQL dialect -->
+		<!-- SQL dialect
+		This shouldn't be necessary, and will not work with other databases, such as MySQL
 		<property name="dialect">org.hibernate.dialect.H2Dialect</property>
+		-->
 
 		<!-- Disable the second-level cache -->
 		<property name="cache.provider_class">org.hibernate.cache.internal.NoCacheProvider
@@ -31,7 +33,7 @@
 		<mapping class="ch.bfh.bti7081.s2013.pink.model.Dose" />
 		<mapping class="ch.bfh.bti7081.s2013.pink.model.Ingredient" />
 		<mapping class="ch.bfh.bti7081.s2013.pink.model.MedicationPrescription" />
-		<mapping class="ch.bfh.bti7081.s2013.pink.model.Medicine" />
+		<mapping class="ch.bfh.bti7081.s2013.pink.model.Medication" />
 		<mapping class="ch.bfh.bti7081.s2013.pink.model.Note" />
 		<mapping class="ch.bfh.bti7081.s2013.pink.model.Patient" />
 		<mapping class="ch.bfh.bti7081.s2013.pink.model.Session" />

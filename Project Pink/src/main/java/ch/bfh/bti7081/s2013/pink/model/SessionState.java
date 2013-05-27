@@ -4,6 +4,8 @@ import java.util.Arrays;
 import java.util.Collection;
 
 /**
+ * Class to represent the state of the session.
+ * 
  * @author sc0238
  * @since 2013-05-09 10:49
  */

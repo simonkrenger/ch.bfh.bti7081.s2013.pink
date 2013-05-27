@@ -1,9 +1,3 @@
-/**
- * Class that shows the upcomming sessions with the patients
- *
- * @author	Marco Berger	<lostchall@gmail.com>
- */
-
 package ch.bfh.bti7081.s2013.pink;
 
 import ch.bfh.bti7081.s2013.pink.model.Patient;
@@ -16,7 +10,10 @@ import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.ui.Label;
 
 /**
- * The Application's "main" class
+ * View class for Sessions
+ * 
+ * @author Marco Berger
+ * 
  */
 @SuppressWarnings("serial")
 public class SessionView extends NavigationView implements View {
@@ -35,6 +32,18 @@ public class SessionView extends NavigationView implements View {
 		this.patient = session.getPatient();
 
 		buildSessionWindow();
+		showPatients();
+	}
+
+	public void showPatients() {
+		// TODO: Show patients
+		// loop trough the next 3 patients
+		for (int i = 0; i < 3; i++) {
+			// PatientOverview patientOverview = new PatientOverview(session);
+			// addComponent(patientOverview);
+			// SessionView test = new SessionView(session, patient);
+			// addComponent(test);
+		}
 	}
 
 	public void buildSessionWindow() {

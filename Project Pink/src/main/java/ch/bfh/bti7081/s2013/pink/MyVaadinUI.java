@@ -8,7 +8,8 @@ import com.vaadin.server.VaadinRequest;
 import com.vaadin.ui.UI;
 
 /**
- * The Application's "main" class
+ * This is the applications 'main' class. Serves as the index page of the Vaadin
+ * site.
  * 
  * @author Christian Meyer
  */

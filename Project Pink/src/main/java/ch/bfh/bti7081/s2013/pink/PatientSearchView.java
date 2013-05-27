@@ -11,9 +11,10 @@ import com.vaadin.ui.Label;
 import com.vaadin.ui.TextField;
 
 /**
- * Class that shows the upcomming sessions with the patients
+ * View class that allows to search for a patient.
  * 
  * @author Marco Berger <lostchall@gmail.com>
+ * 
  */
 @SuppressWarnings("serial")
 public class PatientSearchView extends CustomComponent {
@@ -87,6 +88,7 @@ public class PatientSearchView extends CustomComponent {
 
 		/** Handle search events for the button. */
 		public void buttonClick(Button.ClickEvent event) {
+			// TODO
 			// Open Search
 			// PatientDetailView detailledPatientView = new PatientDetailView(
 			// patient);
