@@ -14,7 +14,6 @@ import org.hibernate.service.ServiceRegistryBuilder;
 
 import ch.bfh.bti7081.s2013.pink.model.Allergy.Severity;
 import ch.bfh.bti7081.s2013.pink.model.Dose.Period;
-import ch.bfh.bti7081.s2013.pink.model.PatientSession.Session;
 
 /**
  * Helper class to create some test entities or fill the database with some test
