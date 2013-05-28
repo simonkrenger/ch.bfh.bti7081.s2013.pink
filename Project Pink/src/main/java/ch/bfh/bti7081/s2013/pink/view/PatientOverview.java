@@ -23,8 +23,9 @@ import com.vaadin.ui.VerticalLayout;
  * 
  * @author Marco Berger <lostchall@gmail.com>
  */
-@SuppressWarnings("serial")
 public class PatientOverview extends CustomComponent {
+	private static final long serialVersionUID = -6396971132171425883L;
+
 	private SimpleDateFormat dateFormat = new SimpleDateFormat();
 	private HorizontalLayout mainLayout;
 
