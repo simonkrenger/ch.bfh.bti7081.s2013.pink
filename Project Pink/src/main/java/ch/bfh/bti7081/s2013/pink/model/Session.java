@@ -16,8 +16,7 @@ import javax.persistence.OneToMany;
  * Class to represent a session with a <code>Doctor</code> and a
  * <code>Patient</code>
  * 
- * @author chris
- * 
+ * @author Christian Meyer <chrigu.meyer@gmail.com>
  */
 @Entity
 public class Session implements Serializable {
@@ -109,10 +108,10 @@ public class Session implements Serializable {
 	}
 
 	public void addNote(Note note) {
-		if(this.isEditable()) {
-		notes.add(note);
+		if (isEditable()) {
+			notes.add(note);
 		} else {
-			throw new RuntimeException(
+			throw new IllegalStateException(
 					"Failed to add note, current state is not editable.");
 		}
 	}
