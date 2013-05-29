@@ -33,7 +33,7 @@ public class HibernateDataSource {
 		sessionFactory = configuration.buildSessionFactory(serviceRegistry);
 	}
 
-	private Configuration getConfiguration() {
+	Configuration getConfiguration() {
 		Configuration conf = new Configuration();
 		conf.configure();
 
@@ -41,7 +41,7 @@ public class HibernateDataSource {
 		try {
 			prop.load(new FileReader("~/pink.properties"));
 		} catch (IOException e) {
-			e.printStackTrace();
+			System.out.println(e.getLocalizedMessage());
 		}
 
 		String driverClass = prop.getProperty("db.driver");
@@ -60,7 +60,7 @@ public class HibernateDataSource {
 		try {
 			prop.store(new FileWriter("~/pink.properties"), null);
 		} catch (IOException e) {
-			e.printStackTrace();
+			System.out.println(e.getLocalizedMessage());
 		}
 		return conf;
 	}

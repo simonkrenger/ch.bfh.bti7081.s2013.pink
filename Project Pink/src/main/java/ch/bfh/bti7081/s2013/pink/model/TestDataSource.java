@@ -28,8 +28,8 @@ public class TestDataSource {
 	private final SessionFactory sessionFactory;
 
 	public TestDataSource() {
-		Configuration configuration = new Configuration();
-		configuration.configure();
+		Configuration configuration = HibernateDataSource.getInstance()
+				.getConfiguration();
 		ServiceRegistry serviceRegistry = new ServiceRegistryBuilder()
 				.applySettings(configuration.getProperties())
 				.buildServiceRegistry();
