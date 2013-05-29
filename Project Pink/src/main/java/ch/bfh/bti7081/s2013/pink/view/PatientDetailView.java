@@ -16,11 +16,16 @@ import com.vaadin.ui.VerticalLayout;
 /**
  * View class to show detailed information about a patient.
  * 
- * @author Marco Berger <lostchall@gmail.com>
+ * @author Christian Meyer
+ * @author Simon Krenger
  */
 @SuppressWarnings("serial")
 public class PatientDetailView extends NavigationView {
-	private Patient patient;
+
+	/**
+	 * Patient whose details are displayed
+	 */
+	private Patient patient = null;
 
 	/**
 	 * Constructor for the view class. Takes the patient to be displayed as an
