@@ -26,7 +26,7 @@ public class HibernateDataSource {
 
 	protected final SessionFactory sessionFactory;
 
-	private static File propFile = new File(System.getProperty("user.home")
+	private File propFile = new File(System.getProperty("user.home")
 			+ File.pathSeparator + "pink.properties");
 
 	protected HibernateDataSource() {
