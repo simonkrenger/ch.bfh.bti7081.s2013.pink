@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Properties;
 
+import org.apache.log4j.Logger;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -23,6 +24,7 @@ import org.hibernate.service.ServiceRegistryBuilder;
  */
 public class HibernateDataSource {
 	private static final HibernateDataSource INSTANCE = new HibernateDataSource();
+	private final Logger LOG = Logger.getLogger(HibernateDataSource.class);
 
 	protected final SessionFactory sessionFactory;
 
@@ -45,8 +47,7 @@ public class HibernateDataSource {
 		try {
 			prop.load(new FileReader(propFile));
 		} catch (IOException e) {
-			System.out.println("Error loading properties: "
-					+ e.getLocalizedMessage());
+			LOG.warn("Error loading properties: " + e.getLocalizedMessage());
 		}
 
 		String driverClass = prop.getProperty("db.driver");
@@ -64,10 +65,10 @@ public class HibernateDataSource {
 
 		try {
 			prop.store(new FileWriter(propFile), null);
-			System.out.println("Saved properties to " + propFile.getPath());
+
+			LOG.info("Saved properties to " + propFile.getPath());
 		} catch (IOException e) {
-			System.out.println("Error saving properties: "
-					+ e.getLocalizedMessage());
+			LOG.error("Error saving properties: " + e.getLocalizedMessage());
 		}
 		return conf;
 	}
