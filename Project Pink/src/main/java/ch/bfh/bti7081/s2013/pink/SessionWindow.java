@@ -134,10 +134,10 @@ public class SessionWindow extends CustomComponent {
 					@Override
 					public void buttonClick(ClickEvent event) {
 						// Open Search
-						PatientDetailView detailedPatientView = new PatientDetailView(
-								patient);
+						MedicalPrescriptionView medicalPrescriptionView = new MedicalPrescriptionView(
+								session);
 						MyVaadinUI.getNavigationManager().navigateTo(
-								detailedPatientView);
+								medicalPrescriptionView);
 					}
 				});
 		mainLayout.addComponent(addMedicationButton, "top:100px;left:450px");
