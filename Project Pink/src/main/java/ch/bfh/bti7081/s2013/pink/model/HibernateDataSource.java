@@ -1,6 +1,10 @@
 package ch.bfh.bti7081.s2013.pink.model;
 
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.List;
+import java.util.Properties;
 
 import org.hibernate.Criteria;
 import org.hibernate.Session;
@@ -22,12 +26,56 @@ public class HibernateDataSource {
 	protected final SessionFactory sessionFactory;
 
 	protected HibernateDataSource() {
-		Configuration configuration = new Configuration();
-		configuration.configure();
+		Configuration configuration = getConfiguration();
 		ServiceRegistry serviceRegistry = new ServiceRegistryBuilder()
 				.applySettings(configuration.getProperties())
 				.buildServiceRegistry();
 		sessionFactory = configuration.buildSessionFactory(serviceRegistry);
+	}
+
+	private Configuration getConfiguration() {
+		Configuration conf = new Configuration();
+		conf.configure();
+
+		Properties prop = getProperties();
+		try {
+			prop.load(new FileReader("~/pink.properties"));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		String driverClass = prop.getProperty("db.driver");
+		String url = prop.getProperty("db.url");
+		String user = prop.getProperty("db.username");
+		String pass = prop.getProperty("db.password");
+		String dialect = prop.getProperty("hibernate.dialect");
+
+		conf.setProperty("hibernate.connection.driver_class", driverClass);
+		conf.setProperty("hibernate.connection.url", url);
+		conf.setProperty("hibernate.connection.username", user);
+		conf.setProperty("hibernate.connection.password", pass);
+		if (dialect != null)
+			conf.setProperty("hibernate.dialect", dialect);
+
+		try {
+			prop.store(new FileWriter("~/pink.properties"), null);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return conf;
+	}
+
+	private Properties getProperties() {
+		Properties prop = new Properties();
+
+		prop.setProperty("db.driver", "org.h2.Driver");
+		prop.setProperty("db.url", "jdbc:h2:~/pinkDB");
+		prop.setProperty("db.username", "user");
+		prop.setProperty("db.password", "password");
+		// prop.setProperty("hibernate.dialect",
+		// "org.hibernate.dialect.H2Dialect");
+
+		return prop;
 	}
 
 	/**

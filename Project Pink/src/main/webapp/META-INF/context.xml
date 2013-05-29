@@ -1,6 +1,2 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Context antiJARLocking="true" path="/pink">
-	<Resource name="jdbc/database" auth="Container" type="javax.sql.DataSource"
-		username="user" password="password" driverClassName="org.h2.Driver"
-		url="jdbc:h2:~/pinkDB" />
-</Context>
+<Context antiJARLocking="true" path="/pink" />

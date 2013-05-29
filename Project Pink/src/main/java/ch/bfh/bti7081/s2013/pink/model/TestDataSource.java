@@ -134,6 +134,12 @@ public class TestDataSource {
 			if (random.nextBoolean() && random.nextBoolean())
 				p.addWarning((Warning) session.merge(new Warning(
 						getRandom(warnings))));
+			if (random.nextBoolean() && random.nextBoolean()) {
+				p.addNote((Note) session
+						.merge(new Note(
+								"Fascinating case! Bones, you should take a look at this!")));
+				System.out.println("Added note to " + p);
+			}
 			patients.add((Patient) session.merge(p));
 		}
 
@@ -162,10 +168,9 @@ public class TestDataSource {
 			s.setTimeStart(cal.getTime());
 			cal.add(Calendar.HOUR, 1);
 			s.setTimeEnd(cal.getTime());
-			if (random.nextBoolean() && random.nextBoolean()
-					&& random.nextBoolean())
-				s.addNote(new Note("Your lucky number is "
-						+ random.nextInt(100)));
+			if (random.nextBoolean() && random.nextBoolean())
+				s.addNote((Note) session.merge(new Note("Your lucky number is "
+						+ random.nextInt(100))));
 			session.persist(s);
 		}
 

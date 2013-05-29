@@ -51,6 +51,7 @@ public class PatientOverview extends CustomComponent {
 		setCompositionRoot(box);
 	}
 
+	@SuppressWarnings("serial")
 	private Layout buildMainLayout() {
 		// common part: create layout
 		mainLayout = new HorizontalLayout();

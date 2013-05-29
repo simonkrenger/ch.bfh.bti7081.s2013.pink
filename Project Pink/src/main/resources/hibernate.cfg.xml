@@ -5,16 +5,11 @@
 <hibernate-configuration>
 	<session-factory>
 
-		<!-- Database connection settings -->
-		<property name="hibernate.connection.datasource">java:comp/env/jdbc/database</property>
-
 		<!-- JDBC connection pool (use the built-in) -->
 		<property name="connection.pool_size">1</property>
 
-		<!-- SQL dialect
-		This shouldn't be necessary, and will not work with other databases, such as MySQL
-		<property name="dialect">org.hibernate.dialect.H2Dialect</property>
-		-->
+		<!-- SQL dialect This shouldn't be necessary, and will not work with other 
+			databases, such as MySQL <property name="dialect">org.hibernate.dialect.H2Dialect</property> -->
 
 		<!-- Disable the second-level cache -->
 		<property name="cache.provider_class">org.hibernate.cache.internal.NoCacheProvider
