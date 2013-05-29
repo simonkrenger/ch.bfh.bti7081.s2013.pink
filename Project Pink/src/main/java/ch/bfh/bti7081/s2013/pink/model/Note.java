@@ -9,7 +9,7 @@ import javax.persistence.Id;
 
 /**
  * Class to represent a note that can be added to another entity (for example to
- * a <code>Patient</code> or <code>Session</code>.
+ * a {@link Patient} or {@link Patient}).
  * 
  * @author chris
  * 
@@ -39,10 +39,20 @@ public class Note implements Serializable {
 		// Default constructor, needed for Hibernate
 	}
 
+	/**
+	 * Get timestamp of the note
+	 * 
+	 * @return Timestamp of the note
+	 */
 	public Date getTimestamp() {
 		return timestamp;
 	}
 
+	/**
+	 * Get the text of the note
+	 * 
+	 * @return The text of the note as a String
+	 */
 	public String getText() {
 		return text;
 	}

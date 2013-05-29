@@ -1,6 +1,7 @@
 package ch.bfh.bti7081.s2013.pink;
 
 import ch.bfh.bti7081.s2013.pink.model.Session;
+
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.ui.Button;
@@ -8,19 +9,33 @@ import com.vaadin.ui.Label;
 import com.vaadin.ui.VerticalLayout;
 
 /**
- * Created with IntelliJ IDEA.
- * User: sc0238
- * Date: 24.05.13
- * Time: 17:06
- * To change this template use File | Settings | File Templates.
+ * View to prescribe medication to a patient.
+ * 
+ * @author Christoph Seiler
+ * @author Franziska Corradi
+ * 
  */
 public class MedicalPrescriptionView extends VerticalLayout implements View
 {
-    private Session privateSession;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 797608741077712153L;
+
+	/**
+	 * Session in which the prescription takes place
+	 */
+	private Session privateSession;
 
     Button btnPrescribe;
     Button btnUnsafePrescribe;
 
+	/**
+	 * Constructor for the view class.
+	 * 
+	 * @param patientSession
+	 *            Session in which the prescripion takes place
+	 */
     public MedicalPrescriptionView(Session patientSession)
     {
         this.privateSession = patientSession;

@@ -31,6 +31,16 @@ public class Doctor extends Person {
 	 */
 	private String title = "Dr. med.";
 
+	/**
+	 * Constructor for the class
+	 * 
+	 * @param firstName
+	 *            First name of the doctor
+	 * @param name
+	 *            Last name of the doctor
+	 * @param imageUrl
+	 *            URL to an image of the doctor
+	 */
 	public Doctor(String firstName, String name, String imageUrl) {
 		super(firstName, name, imageUrl);
 	}
@@ -39,10 +49,21 @@ public class Doctor extends Person {
 		// needed for Hibernate
 	}
 
+	/**
+	 * Adds a specialization to the doctor
+	 * 
+	 * @param specialization
+	 *            The specialization the be added
+	 */
 	public void addSpecialization(String specialization) {
 		specializations.add(specialization);
 	}
 
+	/**
+	 * Gets a list of specializations of this doctor
+	 * 
+	 * @return A list of specializations as Strings
+	 */
 	public List<String> getSpecializations() {
 		return specializations;
 	}
