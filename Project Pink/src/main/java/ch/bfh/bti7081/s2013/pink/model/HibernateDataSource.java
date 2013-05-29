@@ -64,6 +64,7 @@ public class HibernateDataSource {
 
 		try {
 			prop.store(new FileWriter(propFile), null);
+			System.out.println("Saved properties to " + propFile.getPath());
 		} catch (IOException e) {
 			System.out.println("Error saving properties: "
 					+ e.getLocalizedMessage());
