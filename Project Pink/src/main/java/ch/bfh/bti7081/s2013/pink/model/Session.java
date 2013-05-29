@@ -13,8 +13,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 /**
- * Class to represent a session with a <code>Doctor</code> and a
- * <code>Patient</code>
+ * Class to represent a session with a {@link Doctor} and a {@link Patient}
  * 
  * @author Christian Meyer <chrigu.meyer@gmail.com>
  */

@@ -11,8 +11,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 /**
- * Model for an allergy. An allergy is triggered by an <code>Ingredient</code>
- * and has a certain <code>Severity</code>. Notes can be added to an allergy.
+ * Model for an allergy. An allergy is triggered by an {@link Ingredient} and
+ * has a certain {@link Severity}. Notes can be added to an allergy.
  * 
  * @author chris
  * 
