@@ -8,6 +8,7 @@ Installation
 1. Check out the project from github
 2. Using Maven, run the following command:
     `mvn clean install tomcat:run`
+3. Visit http://localhost:8080/pink in Safari or Chrome and enjoy!
 
 If you want to run the project on a server other than Tomcat, modify the above command to fit your environment.
 

@@ -11,8 +11,16 @@ import javax.persistence.OneToMany;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
+/**
+ * Class that represents a patient.
+ * 
+ * @author chris
+ * 
+ */
 @Entity
 public class Patient extends Person {
+	private static final long serialVersionUID = 6206530937924052846L;
+
 	@Fetch(FetchMode.SUBSELECT)
 	@OneToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
 	private List<Allergy> allergies = new LinkedList<Allergy>();
@@ -29,8 +37,8 @@ public class Patient extends Person {
 	@OneToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
 	private List<Note> notes = new LinkedList<Note>();
 
-	public Patient(String firstName, String name) {
-		super(firstName, name);
+	public Patient(String firstName, String name, String imageUrl) {
+		super(firstName, name, imageUrl);
 	}
 
 	@SuppressWarnings("unused")
@@ -69,4 +77,12 @@ public class Patient extends Person {
 	public List<Note> getNotes() {
 		return notes;
 	}
+
+	@Override
+	public String toString() {
+		return "Patient [name=" + getFirstName() + " " + getName()
+				+ ", allergies=" + allergies + ", warnings=" + warnings
+				+ ", prescriptions=" + prescriptions + ", notes=" + notes + "]";
+	}
+
 }

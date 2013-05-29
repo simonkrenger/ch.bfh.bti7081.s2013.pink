@@ -11,15 +11,24 @@
 	</context-param>
 	<servlet>
 		<servlet-name>Vaadin Application Servlet</servlet-name>
-		<servlet-class>com.vaadin.server.VaadinServlet</servlet-class>
+		<servlet-class>com.vaadin.addon.touchkit.server.TouchKitServlet</servlet-class>
 		<init-param>
 			<description>Vaadin UI to display</description>
 			<param-name>UI</param-name>
 			<param-value>ch.bfh.bti7081.s2013.pink.MyVaadinUI</param-value>
+		</init-param>
+		<init-param>
+			<description>Widget Set to Use</description>
+			<param-name>widgetset</param-name>
+			<param-value>ch.bfh.bti7081.s2013.pink.AppWidgetSet</param-value>
 		</init-param>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>Vaadin Application Servlet</servlet-name>
 		<url-pattern>/*</url-pattern>
 	</servlet-mapping>
+	<resource-env-ref>
+		<resource-env-ref-name>jdbc/database</resource-env-ref-name>
+		<resource-env-ref-type>javax.sql.DataSource</resource-env-ref-type>
+	</resource-env-ref>
 </web-app>

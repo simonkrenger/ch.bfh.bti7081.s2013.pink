@@ -1,5 +1,6 @@
 package ch.bfh.bti7081.s2013.pink.model;
 
+import java.io.Serializable;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -11,15 +12,28 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
+/**
+ * Class to represent a medication prescription. The prescription is basically
+ * the combination of a dose and a medication. In addition, the prescription
+ * holds the doctor responsible for prescribing the medication.
+ * 
+ * @author chris
+ * 
+ */
 @Entity
-public class MedicationPrescription {
+public class MedicationPrescription implements Serializable {
+	private static final long serialVersionUID = -5008856064969172587L;
+
 	@Id
 	@GeneratedValue
 	private Long id;
 
+	/**
+	 * Reason for the prescription
+	 */
 	private String reason;
 	@ManyToOne(cascade = { CascadeType.PERSIST })
-	private Medicine medicine;
+	private Medication medicine;
 
 	@OneToOne(cascade = { CascadeType.PERSIST })
 	private Dose dose;
@@ -28,7 +42,19 @@ public class MedicationPrescription {
 	@OneToMany(cascade = { CascadeType.PERSIST })
 	private List<Note> notes = new LinkedList<Note>();
 
-	public MedicationPrescription(String reason, Medicine medicine, Dose dose,
+	/**
+	 * Constructor for the class
+	 * 
+	 * @param reason
+	 *            Reason for this prescription.
+	 * @param medicine
+	 *            Medication that is prescribed
+	 * @param dose
+	 *            Dosage of the medication
+	 * @param prescriber
+	 *            <code>Doctor</code> that makes the prescription
+	 */
+	public MedicationPrescription(String reason, Medication medicine, Dose dose,
 			Doctor prescriber) {
 		this.reason = reason;
 		this.medicine = medicine;
@@ -45,7 +71,7 @@ public class MedicationPrescription {
 		return reason;
 	}
 
-	public Medicine getMedicine() {
+	public Medication getMedicine() {
 		return medicine;
 	}
 

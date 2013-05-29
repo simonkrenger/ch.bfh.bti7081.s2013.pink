@@ -5,20 +5,11 @@
 <hibernate-configuration>
 	<session-factory>
 
-		<!-- Database connection settings -->
-		<property name="connection.driver_class">org.h2.Driver</property>
-		<!-- Warning, creates a database and lock file in the home directory called "pinkDB*" -->
-		<!-- Not quite sure if this will work with windows... -->
-		<property name="connection.url">jdbc:h2:~/pinkDB</property>
-		<!-- <property name="connection.url">jdbc:h2:mem:db1;DB_CLOSE_DELAY=-1;MVCC=TRUE</property> -->
-		<property name="connection.username">user</property>
-		<property name="connection.password">password</property>
-
 		<!-- JDBC connection pool (use the built-in) -->
 		<property name="connection.pool_size">1</property>
 
-		<!-- SQL dialect -->
-		<property name="dialect">org.hibernate.dialect.H2Dialect</property>
+		<!-- SQL dialect This shouldn't be necessary, and will not work with other 
+			databases, such as MySQL <property name="dialect">org.hibernate.dialect.H2Dialect</property> -->
 
 		<!-- Disable the second-level cache -->
 		<property name="cache.provider_class">org.hibernate.cache.internal.NoCacheProvider
@@ -37,7 +28,7 @@
 		<mapping class="ch.bfh.bti7081.s2013.pink.model.Dose" />
 		<mapping class="ch.bfh.bti7081.s2013.pink.model.Ingredient" />
 		<mapping class="ch.bfh.bti7081.s2013.pink.model.MedicationPrescription" />
-		<mapping class="ch.bfh.bti7081.s2013.pink.model.Medicine" />
+		<mapping class="ch.bfh.bti7081.s2013.pink.model.Medication" />
 		<mapping class="ch.bfh.bti7081.s2013.pink.model.Note" />
 		<mapping class="ch.bfh.bti7081.s2013.pink.model.Patient" />
 		<mapping class="ch.bfh.bti7081.s2013.pink.model.Session" />

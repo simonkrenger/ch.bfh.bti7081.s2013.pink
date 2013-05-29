@@ -2,7 +2,7 @@ package ch.bfh.bti7081.s2013.pink.medication;
 
 import ch.bfh.bti7081.s2013.pink.model.Allergy;
 import ch.bfh.bti7081.s2013.pink.model.Dose;
-import ch.bfh.bti7081.s2013.pink.model.Medicine;
+import ch.bfh.bti7081.s2013.pink.model.Medication;
 import ch.bfh.bti7081.s2013.pink.model.Patient;
 
 import java.util.ArrayList;
@@ -22,7 +22,7 @@ public interface IMedicalService
      * @param text in the medicament name.
      * @return List of medicines
      */
-    List<Medicine> searchForMedicaments(String text);
+    List<Medication> searchForMedicaments(String text);
 
     /**
      * Prescribes a medicament to a patient
@@ -32,7 +32,7 @@ public interface IMedicalService
      * @param medicament to be prescribed.
      * @return flag if prescription has been made.
      */
-    public boolean prescribeMedicament(Patient patient, Medicine medicament, Dose dose);
+    public boolean prescribeMedicament(Patient patient, Medication medicament, Dose dose);
 
     /**
      * Prescribe a unsafe medicament with a reason why it has prescribed anyway.
@@ -43,5 +43,5 @@ public interface IMedicalService
      * @param reason     justification of the prescription.
      * @return flag if prescription has been made.
      */
-    public boolean prescribeUnsafeMedicament(Patient patient, Medicine medicament, Dose dose, String reason);
+    public boolean prescribeUnsafeMedicament(Patient patient, Medication medicament, Dose dose, String reason);
 }

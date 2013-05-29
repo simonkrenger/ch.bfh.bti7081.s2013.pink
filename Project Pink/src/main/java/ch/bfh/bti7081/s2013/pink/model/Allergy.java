@@ -1,5 +1,6 @@
 package ch.bfh.bti7081.s2013.pink.model;
 
+import java.io.Serializable;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -9,19 +10,47 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
+/**
+ * Model for an allergy. An allergy is triggered by an <code>Ingredient</code>
+ * and has a certain <code>Severity</code>. Notes can be added to an allergy.
+ * 
+ * @author chris
+ * 
+ */
 @Entity
-public class Allergy {
+public class Allergy implements Serializable {
+	private static final long serialVersionUID = -7947437825782406243L;
+
 	@Id
 	@GeneratedValue
 	private Long id;
 
+	/**
+	 * The ingredient that triggers the allergy
+	 */
 	@ManyToOne
 	private Ingredient trigger;
+
+	/**
+	 * Serverity of the allergy, see the Severity enumeration in this class.
+	 */
 	private Severity severity;
 
+	/**
+	 * Notes for a certain allergy
+	 */
 	@OneToMany
 	private List<Note> notes = new LinkedList<Note>();
 
+	/**
+	 * Constructor for the class, takes the ingredient which triggers the
+	 * allergy and the severity as an argument.
+	 * 
+	 * @param trigger
+	 *            Ingredient that triggers the allergy
+	 * @param severity
+	 *            Severity of the allergy in combination with this ingredient.
+	 */
 	public Allergy(Ingredient trigger, Severity severity) {
 		this.trigger = trigger;
 		this.severity = severity;
@@ -52,6 +81,12 @@ public class Allergy {
 		return notes;
 	}
 
+	/**
+	 * Allergy severity, ranging from benign to lethal.
+	 * 
+	 * @author chris
+	 * 
+	 */
 	public static enum Severity {
 		BENIGN, SEVERE, LETHAL;
 	}

@@ -1,5 +1,6 @@
 package ch.bfh.bti7081.s2013.pink.model;
 
+import java.io.Serializable;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -9,8 +10,17 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
+/**
+ * A warning that can be added to a <code>Patient</code>, for example if a
+ * patient tends to have a violent behaviour.
+ * 
+ * @author chris
+ * 
+ */
 @Entity
-public class Warning {
+public class Warning implements Serializable {
+	private static final long serialVersionUID = 58666746010984225L;
+
 	@Id
 	@GeneratedValue
 	private Long id;

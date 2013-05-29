@@ -14,9 +14,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Class that shows the upcomming sessions with the patients
+ * View class that allows to search for a patient.
  * 
  * @author Marco Berger <lostchall@gmail.com>
+ * 
  */
 @SuppressWarnings("serial")
 public class PatientSearchView extends CustomComponent {
@@ -117,6 +118,7 @@ public class PatientSearchView extends CustomComponent {
 
                 searchValue = lastInput;
             }
+			// TODO
         }
 	}
 

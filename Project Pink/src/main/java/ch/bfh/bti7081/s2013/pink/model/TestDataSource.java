@@ -15,6 +15,12 @@ import org.hibernate.service.ServiceRegistryBuilder;
 import ch.bfh.bti7081.s2013.pink.model.Allergy.Severity;
 import ch.bfh.bti7081.s2013.pink.model.Dose.Period;
 
+/**
+ * Helper class to create some test entities or fill the database with some test
+ * data.
+ * 
+ * @author Christian Meyer <chrigu.meyer@gmail.com>
+ */
 public class TestDataSource {
 	private static int noteNumber;
 
@@ -22,19 +28,31 @@ public class TestDataSource {
 	private final SessionFactory sessionFactory;
 
 	public TestDataSource() {
-		Configuration configuration = new Configuration();
-		configuration.configure();
+		Configuration configuration = HibernateDataSource.getInstance()
+				.getConfiguration();
 		ServiceRegistry serviceRegistry = new ServiceRegistryBuilder()
 				.applySettings(configuration.getProperties())
 				.buildServiceRegistry();
 		sessionFactory = configuration.buildSessionFactory(serviceRegistry);
 	}
 
+	/**
+	 * Deletes existing data and creates new entries for
+	 * <ul>
+	 * <li>Doctor
+	 * <li>Patient
+	 * <li>Allergy
+	 * <li>Medicine
+	 * <li>Ingredient
+	 * <li>Session
+	 * </ul>
+	 * Most data is randomized to some degree.
+	 */
 	public void clearTableAndCreateTestData() {
 		org.hibernate.Session session = sessionFactory.openSession();
 		session.beginTransaction();
 
-		// FIXME: Delete existing data
+		// Delete existing data
 		for (Object o : session.createCriteria(MedicationPrescription.class)
 				.list())
 			session.delete(o);
@@ -44,7 +62,7 @@ public class TestDataSource {
 			session.delete(o);
 		for (Object o : session.createCriteria(Doctor.class).list())
 			session.delete(o);
-		for (Object o : session.createCriteria(Medicine.class).list())
+		for (Object o : session.createCriteria(Medication.class).list())
 			session.delete(o);
 		for (Object o : session.createCriteria(Ingredient.class).list())
 			session.delete(o);
@@ -62,16 +80,19 @@ public class TestDataSource {
 		// Create Doctors
 		List<Doctor> doctors = new LinkedList<Doctor>();
 		doctors.add((Doctor) session.merge(createDoctor("Marco", "Berger",
-				"Kognitive Psychologie", "Pädagogische Psychologie")));
+				"/images/berger.jpeg", "Kognitive Psychologie",
+				"Pädagogische Psychologie")));
 		doctors.add((Doctor) session.merge(createDoctor("Franziska", "Corradi",
-				"Neuropsychologie", "Mathematische Psychologie")));
+				"/images/corradi.jpeg", "Neuropsychologie",
+				"Mathematische Psychologie")));
 		doctors.add((Doctor) session.merge(createDoctor("Simon", "Krenger",
-				"Diagnostik", "Evaluation")));
+				"/images/krenger.jpeg", "Diagnostik", "Evaluation")));
 		doctors.add((Doctor) session.merge(createDoctor("Christian", "Meyer",
-				"Entwicklungspsychologie", "Klinische Psychologie",
-				"Diagnostik")));
+				"/images/meyer.jpeg", "Entwicklungspsychologie",
+				"Klinische Psychologie", "Diagnostik")));
 		doctors.add((Doctor) session.merge(createDoctor("Christoph", "Seiler",
-				"Klinische Psychologie", "Kommunikationspsychologie")));
+				"/images/seiler.jpeg", "Klinische Psychologie",
+				"Kommunikationspsychologie")));
 
 		// Create Patients
 		String[] names = new String[] { "Haas", "Adler", "Walter", "Koch",
@@ -99,9 +120,10 @@ public class TestDataSource {
 				"Findet Dilbert lustig.", "Mag Visual Basic." };
 		List<Patient> patients = new LinkedList<Patient>();
 		for (int i = 0; i < names.length; i++) {
-			Patient p = new Patient(firstNames[i], names[i]);
-			// Several allergies are possible, so there are two chances
-			for (int j = 0; j < 2; j++) {
+			Patient p = new Patient(firstNames[i], names[i],
+					"/images/mascot.png");
+			// Several allergies are possible, so there are three chances
+			for (int j = 0; j < 3; j++) {
 				if (random.nextBoolean() && random.nextBoolean()) {
 					Allergy a = new Allergy(getRandom(ingredients),
 							getRandom(Severity.values()));
@@ -112,6 +134,12 @@ public class TestDataSource {
 			if (random.nextBoolean() && random.nextBoolean())
 				p.addWarning((Warning) session.merge(new Warning(
 						getRandom(warnings))));
+			if (random.nextBoolean() && random.nextBoolean()) {
+				p.addNote((Note) session
+						.merge(new Note(
+								"Fascinating case! Bones, you should take a look at this!")));
+				System.out.println("Added note to " + p);
+			}
 			patients.add((Patient) session.merge(p));
 		}
 
@@ -119,7 +147,7 @@ public class TestDataSource {
 		String[] mediNames = new String[] { "Jenataria", "Qlatol", "Eatcin",
 				"Winzym", "Oliphrom", "Cephrol", "Valium" };
 		for (String name : mediNames) {
-			Medicine m = new Medicine(name);
+			Medication m = new Medication(name);
 			m.addIngredient(getRandom(ingredients));
 			if (random.nextBoolean() && random.nextBoolean())
 				m.addIngredient(getRandom(ingredients));
@@ -140,10 +168,9 @@ public class TestDataSource {
 			s.setTimeStart(cal.getTime());
 			cal.add(Calendar.HOUR, 1);
 			s.setTimeEnd(cal.getTime());
-			if (random.nextBoolean() && random.nextBoolean()
-					&& random.nextBoolean())
-				s.addNote(new Note("Your lucky number is "
-						+ random.nextInt(100)));
+			if (random.nextBoolean() && random.nextBoolean())
+				s.addNote((Note) session.merge(new Note("Your lucky number is "
+						+ random.nextInt(100))));
 			session.persist(s);
 		}
 
@@ -151,17 +178,25 @@ public class TestDataSource {
 		session.close();
 	}
 
+	/**
+	 * @param list
+	 * @return one random element out of the given array
+	 */
 	private <T> T getRandom(T[] list) {
 		return list[random.nextInt(list.length)];
 	}
 
+	/**
+	 * @param list
+	 * @return one random element out of the given list
+	 */
 	private <T> T getRandom(List<T> list) {
 		return list.get(random.nextInt(list.size()));
 	}
 
-	private Doctor createDoctor(String firstName, String name,
+	private Doctor createDoctor(String firstName, String name, String imgUrl,
 			String... specializations) {
-		Doctor result = new Doctor(firstName, name);
+		Doctor result = new Doctor(firstName, name, imgUrl);
 		for (String specialization : specializations)
 			result.addSpecialization(specialization);
 		return result;
@@ -172,7 +207,7 @@ public class TestDataSource {
 	}
 
 	public static Doctor getDoctor() {
-		Doctor dr = new Doctor("Gregory", "House");
+		Doctor dr = new Doctor("Gregory", "House", "house.png");
 		dr.addSpecialization("diagnostics");
 		dr.addSpecialization("sociopath");
 		return dr;
@@ -186,10 +221,10 @@ public class TestDataSource {
 		return new Allergy(getIngredient(), Severity.SEVERE);
 	}
 
-	public static Medicine getMedicine() {
+	public static Medication getMedicine() {
 		Ingredient i = new Ingredient("Placebium");
 
-		Medicine m = new Medicine("Placebo");
+		Medication m = new Medication("Placebo");
 		m.addIngredient(i);
 		m.addEffect("effect");
 		m.addEffect("another effect");
@@ -207,7 +242,7 @@ public class TestDataSource {
 	}
 
 	public static Patient getPatient() {
-		Patient p = new Patient("Pink", "Panter");
+		Patient p = new Patient("Pink", "Panter", "mascot.png");
 		p.addAllergy(new Allergy(new Ingredient("Bullshit"),
 				Allergy.Severity.BENIGN));
 		p.addAllergy(getAllergy());
