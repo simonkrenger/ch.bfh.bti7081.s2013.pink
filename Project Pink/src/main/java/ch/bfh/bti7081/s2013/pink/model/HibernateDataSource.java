@@ -1,5 +1,6 @@
 package ch.bfh.bti7081.s2013.pink.model;
 
+import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -25,6 +26,9 @@ public class HibernateDataSource {
 
 	protected final SessionFactory sessionFactory;
 
+	private static File propFile = new File(System.getProperty("user.home")
+			+ File.pathSeparator + "pink.properties");
+
 	protected HibernateDataSource() {
 		Configuration configuration = getConfiguration();
 		ServiceRegistry serviceRegistry = new ServiceRegistryBuilder()
@@ -39,9 +43,10 @@ public class HibernateDataSource {
 
 		Properties prop = getProperties();
 		try {
-			prop.load(new FileReader("~/pink.properties"));
+			prop.load(new FileReader(propFile));
 		} catch (IOException e) {
-			System.out.println(e.getLocalizedMessage());
+			System.out.println("Error loading properties: "
+					+ e.getLocalizedMessage());
 		}
 
 		String driverClass = prop.getProperty("db.driver");
@@ -58,9 +63,10 @@ public class HibernateDataSource {
 			conf.setProperty("hibernate.dialect", dialect);
 
 		try {
-			prop.store(new FileWriter("~/pink.properties"), null);
+			prop.store(new FileWriter(propFile), null);
 		} catch (IOException e) {
-			System.out.println(e.getLocalizedMessage());
+			System.out.println("Error saving properties: "
+					+ e.getLocalizedMessage());
 		}
 		return conf;
 	}
@@ -72,8 +78,6 @@ public class HibernateDataSource {
 		prop.setProperty("db.url", "jdbc:h2:~/pinkDB");
 		prop.setProperty("db.username", "user");
 		prop.setProperty("db.password", "password");
-		// prop.setProperty("hibernate.dialect",
-		// "org.hibernate.dialect.H2Dialect");
 
 		return prop;
 	}
