@@ -1,9 +1,15 @@
 package ch.bfh.bti7081.s2013.pink.medication;
 
-import ch.bfh.bti7081.s2013.pink.model.*;
-
-import java.util.ArrayList;
 import java.util.List;
+
+import ch.bfh.bti7081.s2013.pink.model.Allergy;
+import ch.bfh.bti7081.s2013.pink.model.Context;
+import ch.bfh.bti7081.s2013.pink.model.DataBasePatientDataSource;
+import ch.bfh.bti7081.s2013.pink.model.Dose;
+import ch.bfh.bti7081.s2013.pink.model.IPatientDataSource;
+import ch.bfh.bti7081.s2013.pink.model.Medication;
+import ch.bfh.bti7081.s2013.pink.model.MedicationPrescription;
+import ch.bfh.bti7081.s2013.pink.model.Patient;
 
 /**
  * Local implementation of the medical service, accessing local databases as dataSources.
@@ -69,15 +75,19 @@ public class LocalMedicalService implements IMedicalService
     }
 
     /**
-     * Adds a new prescription to an Patient.
-     *
-     * @author Christoph Seiler (christoph.seiler@gmail.com)
-     * @param patient for whom the prescription is.
-     * @param medicine to be prescribed.
-     * @param dose of the medicine.
-     * @param reason for the prescription, if given and or necessary.
-     * @return flag if saving was successful.
-     */
+	 * Adds a new prescription to a Patient.
+	 * 
+	 * @author Christoph Seiler (christoph.seiler@gmail.com)
+	 * @param patient
+	 *            for whom the prescription is.
+	 * @param medicine
+	 *            to be prescribed.
+	 * @param dose
+	 *            of the medicine.
+	 * @param reason
+	 *            for the prescription, if given and or necessary.
+	 * @return flag if saving was successful.
+	 */
     private boolean savePrescription(Patient patient, Medication medicine, Dose dose, String reason)
     {
         patient.addPrescription(
@@ -111,14 +121,17 @@ public class LocalMedicalService implements IMedicalService
     }
 
     /**
-     * Prescribe a unsafe medicament with a reason why it has prescribed anyway.
-     *
-     * @author Christoph Seiler (christoph.seiler@gmail.com)
-     * @param patient    patient who gets the medicament.
-     * @param medicament medicament to be prescribed.
-     * @param reason     justification of the prescription.
-     * @return flag if prescription has been made.
-     */
+	 * Prescribe a unsafe medicament with a reason why it is prescribed anyway.
+	 * 
+	 * @author Christoph Seiler (christoph.seiler@gmail.com)
+	 * @param patient
+	 *            patient who gets the medicament.
+	 * @param medicament
+	 *            medicament to be prescribed.
+	 * @param reason
+	 *            justification of the prescription.
+	 * @return flag if prescription has been made.
+	 */
     public boolean prescribeUnsafeMedicament(Patient patient, Medication medicament, Dose dose, String reason) {
         if (reason == null || reason.isEmpty())
         {
