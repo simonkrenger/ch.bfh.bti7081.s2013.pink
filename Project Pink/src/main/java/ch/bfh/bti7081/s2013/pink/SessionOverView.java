@@ -6,9 +6,13 @@ import ch.bfh.bti7081.s2013.pink.model.TestDataSource;
 
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
-import com.vaadin.ui.Button;
+import com.vaadin.ui.*;
 import com.vaadin.ui.Button.ClickEvent;
-import com.vaadin.ui.VerticalLayout;
+
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Class that shows the upcoming sessions with the patients
@@ -18,14 +22,33 @@ import com.vaadin.ui.VerticalLayout;
 @SuppressWarnings("serial")
 public class SessionOverView extends VerticalLayout implements View {
 	private int posX;
+    SessionList sessionList;
 
 	public SessionOverView() {
 		posX = 0;
 
 		setSizeFull();
-		buildPatientSearch();
-		showPatients();
 
+        final PatientSearchView searchView = new PatientSearchView();
+        searchView.AddSearchListener(new ChangeListener() {
+            @Override
+            public void stateChanged(ChangeEvent e) {
+                removeComponent(sessionList);
+               sessionList = new SessionList(HibernateDataSource
+                       .getInstance()
+                       .getSessionsByName(searchView.getSearchValue()));
+
+                addComponent(sessionList);
+            }
+        });
+
+        addComponent(searchView);
+
+        sessionList = new SessionList(getNextSessions());
+        addComponent(sessionList);
+
+
+        // Testing Area
 		Button test = new Button("Clear DB and create test data",
 				new Button.ClickListener() {
 					@Override
@@ -33,7 +56,6 @@ public class SessionOverView extends VerticalLayout implements View {
 						new TestDataSource().clearTableAndCreateTestData();
 					}
 				});
-
 		addComponent(test);
 
         final Session dummySession = HibernateDataSource.getInstance().findAll(Session.class).get(0);
@@ -48,22 +70,19 @@ public class SessionOverView extends VerticalLayout implements View {
         }));
 	}
 
-	public void showPatients() {
-		// loop trough the next 3 patients
-		int i = 0;
-		for (Session session : HibernateDataSource.getInstance().findAll(
-				Session.class)) {
-			if (i++ > 3)
-				break;
-			PatientOverview patientOverview = new PatientOverview(posX, 200,
-					session.getPatient(), session);
-			addComponent(patientOverview);
-		}
-	}
+    private List<Session> getNextSessions()
+    {
+        List<Session> results = new ArrayList<Session>();
+        int i = 0;
+        for (Session session : HibernateDataSource.getInstance().findAll(Session.class)) {
+            if (i++ > 3)
+                break;
 
-	public void buildPatientSearch() {
-		addComponent(new PatientSearchView());
-	}
+            results.add(session);
+        }
+
+        return results;
+    }
 
 	@Override
 	public void enter(ViewChangeEvent event) {
