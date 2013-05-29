@@ -30,7 +30,7 @@ public class HibernateDataSource {
 	protected final SessionFactory sessionFactory;
 
 	private File propFile = new File(System.getProperty("user.home")
-			+ File.pathSeparator + "pink.properties");
+			+ File.separator + "pink.properties");
 
 	protected HibernateDataSource() {
 		Configuration configuration = getConfiguration();
