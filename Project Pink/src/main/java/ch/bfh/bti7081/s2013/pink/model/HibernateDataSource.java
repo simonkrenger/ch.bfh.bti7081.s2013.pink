@@ -7,7 +7,6 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Properties;
 
-import org.apache.log4j.Logger;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -16,6 +15,8 @@ import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Restrictions;
 import org.hibernate.service.ServiceRegistry;
 import org.hibernate.service.ServiceRegistryBuilder;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * This is where all the persistence magic happens. It should provide a clean
@@ -25,12 +26,12 @@ import org.hibernate.service.ServiceRegistryBuilder;
  */
 public class HibernateDataSource {
 	private static final HibernateDataSource INSTANCE = new HibernateDataSource();
-	private final Logger LOG = Logger.getLogger(HibernateDataSource.class);
+	private final Logger LOG = LoggerFactory.getLogger(getClass());
 
 	protected final SessionFactory sessionFactory;
 
 	private File propFile = new File(System.getProperty("user.home")
-			+ File.pathSeparator + "pink.properties");
+			+ File.separator + "pink.properties");
 
 	protected HibernateDataSource() {
 		Configuration configuration = getConfiguration();
@@ -48,7 +49,7 @@ public class HibernateDataSource {
 		try {
 			prop.load(new FileReader(propFile));
 		} catch (IOException e) {
-			LOG.warn("Error loading properties: " + e.getLocalizedMessage());
+			LOG.warn("Error loading properties: " + e.getLocalizedMessage(), e);
 		}
 
 		String driverClass = prop.getProperty("db.driver");
@@ -69,7 +70,8 @@ public class HibernateDataSource {
 
 			LOG.info("Saved properties to " + propFile.getPath());
 		} catch (IOException e) {
-			LOG.error("Error saving properties: " + e.getLocalizedMessage());
+			throw new RuntimeException("Error saving properties: "
+					+ e.getLocalizedMessage(), e);
 		}
 		return conf;
 	}

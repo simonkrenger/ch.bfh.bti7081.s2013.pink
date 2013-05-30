@@ -56,11 +56,15 @@ public enum SessionState {
 	private boolean editable;
 
 	/**
+	 * Constructor for SessionState
+	 * 
 	 * @param name
+	 *            Name of the state
 	 * @param description
+	 *            Description of the state
 	 * @param editable
-	 * @param nextStates
-	 *            the first one is the default next state
+	 *            Definition if the state is editable, basically if one is
+	 *            allowed to add a note to the session
 	 */
 	private SessionState(String name, String description, boolean editable) {
 		this.name = name;
