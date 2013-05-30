@@ -4,8 +4,10 @@ import java.text.SimpleDateFormat;
 
 import ch.bfh.bti7081.s2013.pink.MyVaadinUI;
 import ch.bfh.bti7081.s2013.pink.SessionView;
+import ch.bfh.bti7081.s2013.pink.model.HibernateDataSource;
 import ch.bfh.bti7081.s2013.pink.model.Patient;
 import ch.bfh.bti7081.s2013.pink.model.Session;
+import ch.bfh.bti7081.s2013.pink.model.SessionState;
 
 import com.vaadin.addon.touchkit.ui.VerticalComponentGroup;
 import com.vaadin.server.ClassResource;
@@ -92,6 +94,8 @@ public class PatientOverview extends CustomComponent {
 		Button startSession = new Button("Begin", new Button.ClickListener() {
 			@Override
 			public void buttonClick(ClickEvent event) {
+				session.changeState(SessionState.STARTED);
+				HibernateDataSource.getInstance().saveOrUpdate(session);
 				SessionView sessionView = new SessionView(session, patient);
 				MyVaadinUI.getNavigationManager().navigateTo(sessionView);
 			}
