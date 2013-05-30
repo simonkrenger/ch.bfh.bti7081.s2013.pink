@@ -73,19 +73,6 @@ public class PatientSearchView extends CustomComponent {
 
 		// Put some initial content in it
 		mainLayout.addComponent(searchBox);
-
-		// Next Sessions
-		// title = new Label();
-		// title.setValue("Next sessions");
-		// mainLayout.addComponent(title);
-		// Button searchButton = new Button("Search", new Button.ClickListener()
-		// {
-		// @Override
-		// public void buttonClick(Button.ClickEvent event) {
-		// patientSearch();
-		// }
-		// });
-		// mainLayout.addComponent(searchButton);
 	}
 
 	private void patientSearch() {
