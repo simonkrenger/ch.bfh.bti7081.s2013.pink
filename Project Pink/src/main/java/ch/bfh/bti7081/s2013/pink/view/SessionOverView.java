@@ -1,5 +1,8 @@
 package ch.bfh.bti7081.s2013.pink.view;
 
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+
 import ch.bfh.bti7081.s2013.pink.model.HibernateDataSource;
 import ch.bfh.bti7081.s2013.pink.model.Session;
 import ch.bfh.bti7081.s2013.pink.model.TestDataSource;
@@ -22,16 +25,32 @@ public class SessionOverView extends NavigationView {
 		setCaption("Upcoming");
 
 		// TODO: buildPatientSearch();
-		VerticalLayout layout = new VerticalLayout();
+		final VerticalLayout layout = new VerticalLayout();
+		SessionList sessionList = new SessionList(HibernateDataSource
+				.getInstance().findAll(Session.class));
+
+		final PatientSearchView searchView = new PatientSearchView();
+		searchView.addSearchListener(new ChangeListener() {
+			@Override
+			public void stateChanged(ChangeEvent e) {
+				layout.removeComponent(layout.getComponent(1));
+				layout.addComponent(new SessionList(HibernateDataSource
+						.getInstance().getSessionsByName(
+								searchView.getSearchValue())));
+			}
+		});
+
 		// loop trough the next 3 patients
-		int i = 0;
-		for (Session session : HibernateDataSource.getInstance().findAll(
-				Session.class)) {
-			// if (i++ > 3)
-			// break;
-			PatientOverview patientOverview = new PatientOverview(session);
-			layout.addComponent(patientOverview);
-		}
+		// int i = 0;
+		// for (Session session : HibernateDataSource.getInstance().findAll(
+		// Session.class)) {
+		// // if (i++ > 3)
+		// // break;
+		// PatientOverview patientOverview = new PatientOverview(session);
+		// sessionList.addComponent(patientOverview);
+		// }
+		layout.addComponent(searchView);
+		layout.addComponent(sessionList);
 		setContent(layout);
 
 		// Toolbar
