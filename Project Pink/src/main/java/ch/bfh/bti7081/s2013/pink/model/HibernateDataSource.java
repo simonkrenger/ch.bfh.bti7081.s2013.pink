@@ -11,6 +11,7 @@ import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
+import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Restrictions;
 import org.hibernate.service.ServiceRegistry;
 import org.hibernate.service.ServiceRegistryBuilder;
@@ -105,6 +106,31 @@ public class HibernateDataSource {
 		session.close();
 		return result;
 	}
+
+    public List<ch.bfh.bti7081.s2013.pink.model.Session> getSessionsByName(String name)
+    {
+        Session session = sessionFactory.openSession();
+        session.beginTransaction();
+
+        Criteria crit = session.createCriteria(ch.bfh.bti7081.s2013.pink.model.Session.class);
+        if (name != null)
+        {
+            crit = crit
+                    .createCriteria("patient")
+                    .add(
+                        Restrictions.or(
+                            Restrictions.ilike("name", name, MatchMode.ANYWHERE),
+                            Restrictions.ilike("firstName", name, MatchMode.ANYWHERE)));
+
+        }
+        @SuppressWarnings("unchecked")
+        List<ch.bfh.bti7081.s2013.pink.model.Session> result = crit.list();
+
+        session.getTransaction().commit();
+        session.close();
+
+        return result;
+    }
 
 	/**
 	 * @param name

@@ -13,7 +13,6 @@ public class DataBasePatientDataSource extends HibernateDataSource implements IP
     /**
      * Saves a patient to the database.
      *
-     * @author Christoph Seiler (christoph.seiler@gmail.com)
      * @param patient to be saved.
      * @return flag if saving was successful.
      */
