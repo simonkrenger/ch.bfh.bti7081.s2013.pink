@@ -1,6 +1,7 @@
 package ch.bfh.bti7081.s2013.pink;
 
 import ch.bfh.bti7081.s2013.pink.model.Session;
+import ch.bfh.bti7081.s2013.pink.view.PatientOverview;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.ui.VerticalLayout;
@@ -22,7 +23,7 @@ public class SessionList extends VerticalLayout implements View
 
         for (Session session : sessions)
         {
-            addComponent(new PatientOverview(0, 200, session.getPatient(), session));
+            addComponent(new PatientOverview(session));
         }
     }
 
