@@ -1,7 +1,7 @@
 package ch.bfh.bti7081.s2013.pink.model;
 
 /**
- * Application Context.
+ * Application Context. The context is implemented as a Singleton (pattern).
  * 
  * @author Christoph Seiler (christoph.seiler@gmail.com)
  * 
@@ -21,9 +21,8 @@ public class Context {
 	}
 
 	/**
-	 * Gets the current Context for this Application.
+	 * Gets the current Context for this application.
 	 * 
-	 * @author Christoph Seiler (christoph.seiler@gmail.com)
 	 * @return current Application Context.
 	 */
 	public static Context getCurrent() {
@@ -35,9 +34,8 @@ public class Context {
 	}
 
 	/**
-	 * Gets the current loggedIn Doctor.
+	 * Gets the current {@link Doctor} logged in.
 	 * 
-	 * @author Christoph Seiler (christoph.seiler@gmail.com)
 	 * @return current Doctor.
 	 */
 	public Doctor getDoctor() {
