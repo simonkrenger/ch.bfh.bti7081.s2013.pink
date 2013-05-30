@@ -50,6 +50,15 @@ public class Patient extends Person {
 		return allergies;
 	}
 
+	/**
+	 * Returns TRUE if a patient has associated {@link Warning}s.
+	 * 
+	 * @return TRUE if the patient has warnings
+	 */
+	public boolean hasWarnings() {
+		return this.warnings.size() > 0;
+	}
+
 	public void addAllergy(Allergy allergy) {
 		allergies.add(allergy);
 	}
