@@ -13,6 +13,9 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
 /**
  * Class to represent a session with a {@link Doctor} and a {@link Patient}
  * 
@@ -37,6 +40,7 @@ public class Session implements Serializable, NoteHolder {
 
 	private SessionState sessionState = SessionState.INVALID;
 
+	@Fetch(FetchMode.SUBSELECT)
 	@OneToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
 	private List<Note> notes = new LinkedList<Note>();
 

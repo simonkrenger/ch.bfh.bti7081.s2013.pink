@@ -11,6 +11,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
 /**
  * Class to represent a medication dose. The medication does consists of an
  * amount, a multiplier and a period.
@@ -44,6 +47,7 @@ public class Dose implements Serializable, NoteHolder {
 	/**
 	 * Notes for this dose
 	 */
+	@Fetch(FetchMode.SUBSELECT)
 	@OneToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
 	private List<Note> notes = new LinkedList<Note>();
 

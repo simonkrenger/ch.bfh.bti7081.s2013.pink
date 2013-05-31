@@ -12,6 +12,9 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
 /**
  * Model for an allergy. An allergy is triggered by an {@link Ingredient} and
  * has a certain {@link Severity}. Notes can be added to an allergy.
@@ -41,6 +44,7 @@ public class Allergy implements Serializable, NoteHolder {
 	/**
 	 * Notes for a certain allergy
 	 */
+	@Fetch(FetchMode.SUBSELECT)
 	@OneToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
 	private List<Note> notes = new LinkedList<Note>();
 

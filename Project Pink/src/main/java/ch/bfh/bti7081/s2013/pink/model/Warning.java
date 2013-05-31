@@ -11,6 +11,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
 /**
  * A warning that can be added to a {@link Patient}, for example if a patient
  * tends to have a violent behaviour.
@@ -28,6 +31,7 @@ public class Warning implements Serializable {
 
 	private String text;
 
+	@Fetch(FetchMode.SUBSELECT)
 	@OneToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
 	private List<Note> updates = new LinkedList<Note>();
 

@@ -13,6 +13,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
 /**
  * Class to represent a medication prescription. The prescription is basically
  * the combination of a dose and a medication. In addition, the prescription
@@ -38,8 +41,11 @@ public class MedicationPrescription implements Serializable, NoteHolder {
 
 	@OneToOne(cascade = { CascadeType.PERSIST })
 	private Dose dose;
+
 	@ManyToOne(cascade = { CascadeType.PERSIST })
 	private Doctor prescriber;
+
+	@Fetch(FetchMode.SUBSELECT)
 	@OneToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
 	private List<Note> notes = new LinkedList<Note>();
 

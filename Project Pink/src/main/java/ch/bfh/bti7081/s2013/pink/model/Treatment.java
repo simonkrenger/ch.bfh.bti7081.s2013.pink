@@ -13,6 +13,9 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
 /**
  * Class to represent a treatment. A treatment consists of a name, both a
  * {@link Patient} and a responsible {@link Doctor} as well as other doctors. A
@@ -61,6 +64,7 @@ public class Treatment implements Serializable, NoteHolder {
 	/**
 	 * Notes for this treatment
 	 */
+	@Fetch(FetchMode.SUBSELECT)
 	@OneToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
 	private List<Note> notes = new LinkedList<Note>();
 

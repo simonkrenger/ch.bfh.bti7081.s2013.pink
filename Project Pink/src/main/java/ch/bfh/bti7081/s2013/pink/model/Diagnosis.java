@@ -17,6 +17,9 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
 /**
  * Represents a diagnosis. A diagnosis has a name, a description, one or more
  * symptoms, responsible doctors and the affected patient. In addition,
@@ -63,6 +66,7 @@ public class Diagnosis implements Serializable, NoteHolder {
 	@ManyToMany(cascade = CascadeType.PERSIST)
 	private List<Treatment> treatments = new LinkedList<Treatment>();
 
+	@Fetch(FetchMode.SUBSELECT)
 	@OneToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
 	private List<Note> notes = new LinkedList<Note>();
 
