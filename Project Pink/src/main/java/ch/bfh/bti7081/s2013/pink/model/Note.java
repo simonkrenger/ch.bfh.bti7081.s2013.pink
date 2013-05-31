@@ -7,6 +7,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
+import org.hibernate.annotations.Type;
+
 /**
  * Class to represent a note that can be added to another entity (for example to
  * a {@link Patient} or {@link Patient}).
@@ -27,6 +29,7 @@ public class Note implements Serializable {
 	/**
 	 * Text in the note
 	 */
+	@Type(type = "text")
 	private String text;
 
 	public Note(String text) {
