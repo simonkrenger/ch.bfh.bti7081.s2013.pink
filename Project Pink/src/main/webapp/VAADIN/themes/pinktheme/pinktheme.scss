@@ -5,9 +5,20 @@
 
 	/* An actual theme rule */
 	.v-slot-p-note {
-		background: url(img/sticky-note.svg) no-repeat;
-		padding: 0.6em;
+		background: url(img/sticky-note.png) no-repeat;
+		padding-top: 0.5em;
+		padding-bottom: 0.6em;
+		padding-left: 5%;
+		padding-right: 5%;
 		margin: 0.8em;
 		background-size: 100% 100%;
+		min-height: 5em;
+	}
+	
+	.v-slot-p-note .v-caption {
+		text-align: right;
+		width: 100%;
+		font-style: italic;
+		padding-bottom: 0.6em;
 	}
 }
