@@ -4,11 +4,16 @@ import java.io.Serializable;
 import java.util.LinkedList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 /**
  * Model for an allergy. An allergy is triggered by an {@link Ingredient} and
@@ -39,7 +44,8 @@ public class Allergy implements Serializable, NoteHolder {
 	/**
 	 * Notes for a certain allergy
 	 */
-	@OneToMany
+	@Fetch(FetchMode.SUBSELECT)
+	@OneToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
 	private List<Note> notes = new LinkedList<Note>();
 
 	/**

@@ -9,12 +9,16 @@ import javax.persistence.CollectionTable;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 /**
  * Represents a diagnosis. A diagnosis has a name, a description, one or more
@@ -62,7 +66,8 @@ public class Diagnosis implements Serializable, NoteHolder {
 	@ManyToMany(cascade = CascadeType.PERSIST)
 	private List<Treatment> treatments = new LinkedList<Treatment>();
 
-	@OneToMany(cascade = CascadeType.PERSIST)
+	@Fetch(FetchMode.SUBSELECT)
+	@OneToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
 	private List<Note> notes = new LinkedList<Note>();
 
 	/**

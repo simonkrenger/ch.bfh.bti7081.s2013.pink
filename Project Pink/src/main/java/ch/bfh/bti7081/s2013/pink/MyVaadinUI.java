@@ -13,7 +13,7 @@ import com.vaadin.ui.UI;
  * 
  * @author Christian Meyer
  */
-@Theme("mobiletheme")
+@Theme("pinktheme")
 @SuppressWarnings("serial")
 public class MyVaadinUI extends UI {
 	private NavigationManager navigationManager;

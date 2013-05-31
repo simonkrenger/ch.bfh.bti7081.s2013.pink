@@ -23,8 +23,8 @@ import com.vaadin.ui.VerticalLayout;
  * 
  * @author Marco Berger <lostchall@gmail.com>
  */
-@SuppressWarnings("serial")
 public class SessionOverView extends NavigationView {
+	private static final long serialVersionUID = 371245835932429111L;
 
 	SessionList sessionList;
 
@@ -54,6 +54,8 @@ public class SessionOverView extends NavigationView {
 
 		// Toolbar
 		Button test = new Button(null, new Button.ClickListener() {
+			private static final long serialVersionUID = -261072762324902276L;
+
 			@Override
 			public void buttonClick(ClickEvent event) {
 				new TestDataSource().clearTableAndCreateTestData();
@@ -68,6 +70,8 @@ public class SessionOverView extends NavigationView {
 			final Session dummySession = sessions.get(0);
 			toolbar.addComponent(new Button("Medical Prescription Dummy",
 					new Button.ClickListener() {
+						private static final long serialVersionUID = 5381750326390188015L;
+
 						@Override
 						public void buttonClick(ClickEvent event) {
 							// Open Search

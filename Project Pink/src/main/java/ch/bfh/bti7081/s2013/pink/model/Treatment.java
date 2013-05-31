@@ -6,11 +6,15 @@ import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 /**
  * Class to represent a treatment. A treatment consists of a name, both a
@@ -60,7 +64,8 @@ public class Treatment implements Serializable, NoteHolder {
 	/**
 	 * Notes for this treatment
 	 */
-	@OneToMany(cascade = CascadeType.PERSIST)
+	@Fetch(FetchMode.SUBSELECT)
+	@OneToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
 	private List<Note> notes = new LinkedList<Note>();
 
 	/**

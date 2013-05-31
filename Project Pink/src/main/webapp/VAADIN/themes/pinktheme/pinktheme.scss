@@ -1,0 +1,13 @@
+@import "../mobiletheme/mobiletheme.scss";
+
+@mixin pinktheme {
+	@include reindeer;
+
+	/* An actual theme rule */
+	.v-slot-p-note {
+		background: url(img/sticky-note.svg) no-repeat;
+		padding: 0.6em;
+		margin: 0.8em;
+		background-size: 100% 100%;
+	}
+}
