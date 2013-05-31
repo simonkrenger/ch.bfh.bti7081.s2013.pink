@@ -1,5 +1,6 @@
 package ch.bfh.bti7081.s2013.pink.view;
 
+import ch.bfh.bti7081.s2013.pink.MyVaadinUI;
 import ch.bfh.bti7081.s2013.pink.model.Allergy;
 import ch.bfh.bti7081.s2013.pink.model.MedicationPrescription;
 import ch.bfh.bti7081.s2013.pink.model.Note;
@@ -7,9 +8,12 @@ import ch.bfh.bti7081.s2013.pink.model.Patient;
 import ch.bfh.bti7081.s2013.pink.model.Warning;
 
 import com.vaadin.addon.touchkit.ui.NavigationView;
+import com.vaadin.addon.touchkit.ui.Toolbar;
 import com.vaadin.addon.touchkit.ui.VerticalComponentGroup;
 import com.vaadin.server.ClassResource;
 import com.vaadin.shared.ui.label.ContentMode;
+import com.vaadin.ui.Button;
+import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Image;
 import com.vaadin.ui.Label;
@@ -39,7 +43,7 @@ public class PatientDetailView extends NavigationView {
 	 * @param patient
 	 *            The patient whose information is displayed in the detail view.
 	 */
-	public PatientDetailView(Patient patient) {
+	public PatientDetailView(final Patient patient) {
 		setSizeFull();
 		this.patient = patient;
 
@@ -57,7 +61,6 @@ public class PatientDetailView extends NavigationView {
 		VerticalComponentGroup basicInfo = new VerticalComponentGroup(
 				"Basic information");
 
-
 		Label firstName = new Label("<b>First name:</b> "
 				+ patient.getFirstName(), ContentMode.HTML);
 		basicInfo.addComponent(firstName);
@@ -66,7 +69,6 @@ public class PatientDetailView extends NavigationView {
 				ContentMode.HTML);
 
 		basicInfo.addComponent(lastName);
-
 
 		horizontalLayout.addComponent(basicInfo);
 		layout.addComponent(horizontalLayout);
@@ -100,13 +102,31 @@ public class PatientDetailView extends NavigationView {
 		layout.addComponent(prescriptions);
 
 		setContent(layout);
+
+		// Create Toolbar
+		Toolbar toolbar = new Toolbar();
+
+		Button notesButton = new Button(null, new Button.ClickListener() {
+			@Override
+			public void buttonClick(ClickEvent event) {
+				NotesView notesView = new NotesView(patient);
+				MyVaadinUI.getNavigationManager().navigateTo(notesView);
+			}
+		});
+		int size = patient.getNotes().size();
+		IndicatorImageSource image = new IndicatorImageSource(
+				"/images/note.png", size);
+		notesButton.setIcon(image.getResource());
+
+		toolbar.addComponent(notesButton);
+		setToolbar(toolbar);
 	}
 
 	@Override
 	protected void onBecomingVisible() {
 		super.onBecomingVisible();
 		for (Warning warning : patient.getWarnings()) {
-			Notification.show(warning.getText(), Type.ERROR_MESSAGE);
+			Notification.show(warning.getText(), Type.WARNING_MESSAGE);
 		}
 	}
 }
