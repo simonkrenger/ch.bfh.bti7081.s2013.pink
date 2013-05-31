@@ -18,7 +18,7 @@ import javax.persistence.OneToMany;
  * 
  */
 @Entity
-public class Allergy implements Serializable {
+public class Allergy implements Serializable, NoteHolder {
 	private static final long serialVersionUID = -7947437825782406243L;
 
 	@Id

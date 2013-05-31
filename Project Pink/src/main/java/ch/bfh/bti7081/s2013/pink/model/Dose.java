@@ -17,7 +17,7 @@ import javax.persistence.OneToMany;
  * 
  */
 @Entity
-public class Dose implements Serializable {
+public class Dose implements Serializable, NoteHolder {
 	private static final long serialVersionUID = 9091291159459047509L;
 
 	@Id

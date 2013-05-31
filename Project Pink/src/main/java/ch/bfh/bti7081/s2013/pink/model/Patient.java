@@ -18,7 +18,7 @@ import org.hibernate.annotations.FetchMode;
  * 
  */
 @Entity
-public class Patient extends Person {
+public class Patient extends Person implements NoteHolder {
 	private static final long serialVersionUID = 6206530937924052846L;
 
 	@Fetch(FetchMode.SUBSELECT)

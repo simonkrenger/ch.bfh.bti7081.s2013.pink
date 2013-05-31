@@ -18,7 +18,7 @@ import javax.persistence.OneToMany;
  * @author Christian Meyer <chrigu.meyer@gmail.com>
  */
 @Entity
-public class Session implements Serializable {
+public class Session implements Serializable, NoteHolder {
 	private static final long serialVersionUID = 4037114189034652676L;
 
 	@Id

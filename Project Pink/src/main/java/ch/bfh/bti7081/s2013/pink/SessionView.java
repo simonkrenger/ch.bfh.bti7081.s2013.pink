@@ -30,7 +30,7 @@ public class SessionView extends NavigationView implements View {
 	public SessionView(Session session, Patient patient) {
 		this.session = session;
 		this.patient = session.getPatient();
-
+		setCaption(patient.getFirstName() + "'s Session");
 		buildSessionWindow();
 		showPatients();
 	}

@@ -25,7 +25,7 @@ import javax.persistence.OneToMany;
  * 
  */
 @Entity
-public class Diagnosis implements Serializable {
+public class Diagnosis implements Serializable, NoteHolder {
 	private static final long serialVersionUID = 7849922413540771230L;
 
 	@Id

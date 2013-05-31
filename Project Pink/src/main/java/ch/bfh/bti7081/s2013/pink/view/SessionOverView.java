@@ -1,6 +1,5 @@
 package ch.bfh.bti7081.s2013.pink.view;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.event.ChangeEvent;
@@ -27,7 +26,8 @@ import com.vaadin.ui.VerticalLayout;
 @SuppressWarnings("serial")
 public class SessionOverView extends NavigationView {
 
-    SessionList sessionList;
+	SessionList sessionList;
+
 	public SessionOverView() {
 		setCaption("Upcoming");
 
@@ -62,27 +62,22 @@ public class SessionOverView extends NavigationView {
 		test.setIcon(new ClassResource("/images/mascot.png"));
 		Toolbar toolbar = new Toolbar();
 
-        final Session dummySession = HibernateDataSource.getInstance().findAll(Session.class).get(0);
-        toolbar.addComponent(new Button("Medical Prescription Dummy", new Button.ClickListener() {
-            @Override
-            public void buttonClick(ClickEvent event) {
-                // Open Search
-                MedicalPrescriptionView mpv = new MedicalPrescriptionView(dummySession);
-                MyVaadinUI.getNavigationManager().navigateTo(mpv);
-            }
-        }));
-
+		List<Session> sessions = HibernateDataSource.getInstance().findAll(
+				Session.class);
+		if (sessions.size() > 0) {
+			final Session dummySession = sessions.get(0);
+			toolbar.addComponent(new Button("Medical Prescription Dummy",
+					new Button.ClickListener() {
+						@Override
+						public void buttonClick(ClickEvent event) {
+							// Open Search
+							MedicalPrescriptionView mpv = new MedicalPrescriptionView(
+									dummySession);
+							MyVaadinUI.getNavigationManager().navigateTo(mpv);
+						}
+					}));
+		}
 		toolbar.addComponent(test);
 		setToolbar(toolbar);
 	}
-
-    private List<Session> getNextSessions()
-    {
-        List<Session> results = new ArrayList<Session>();
-        for (Session session : HibernateDataSource.getInstance().findAll(Session.class)) {
-            results.add(session);
-        }
-
-        return results;
-    }
 }
