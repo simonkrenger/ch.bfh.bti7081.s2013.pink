@@ -19,9 +19,7 @@ public class SessionList extends VerticalLayout implements View {
 		setSizeFull();
 
 		for (Session session : sessions) {
-			// FIXME: Remove this condition!
-			if (session.getPatient().getNotes().size() > 0)
-				addComponent(new PatientOverview(session));
+			addComponent(new PatientOverview(session));
 		}
 	}
 
