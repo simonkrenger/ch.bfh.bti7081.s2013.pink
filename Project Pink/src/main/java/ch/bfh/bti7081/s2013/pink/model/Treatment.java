@@ -14,37 +14,66 @@ import javax.persistence.OneToMany;
 
 /**
  * Class to represent a treatment. A treatment consists of a name, both a
- * <code>Patient</code> and a responsible <code>Doctor</code> as well as other
- * doctors. A treatment is often the result of a <code>Diagnosis</code>.
+ * {@link Patient} and a responsible {@link Doctor} as well as other doctors. A
+ * treatment is often the result of a {@link Diagnosis}.
  * 
  * @author chris
  * 
  */
 @Entity
-public class Treatment implements Serializable {
+public class Treatment implements Serializable, NoteHolder {
 	private static final long serialVersionUID = -1047887571011750666L;
 
 	@Id
 	@GeneratedValue
 	private Long id;
 
+	/**
+	 * Name of the treatment
+	 */
 	private String name;
 
+	/**
+	 * Patient affected by the treatment
+	 */
 	@ManyToOne(cascade = CascadeType.PERSIST)
 	private Patient patient;
 
+	/**
+	 * Doctor that is responsible for this treatment
+	 */
 	@ManyToOne(cascade = CascadeType.PERSIST)
 	private Doctor responsibleMD;
 
+	/**
+	 * Doctors involved in this treatment
+	 */
 	@ManyToMany(cascade = CascadeType.PERSIST)
 	private List<Doctor> attendingMDs = new LinkedList<Doctor>();
 
+	/**
+	 * Diagnosis on which this treatment is based
+	 */
 	@ManyToMany(cascade = CascadeType.PERSIST)
 	private List<Diagnosis> basedOnDiagnosis = new LinkedList<Diagnosis>();
 
+	/**
+	 * Notes for this treatment
+	 */
 	@OneToMany(cascade = CascadeType.PERSIST)
 	private List<Note> notes = new LinkedList<Note>();
 
+	/**
+	 * Constructor for the class, requires a name for a treatment, a
+	 * {@link Patient} and a responsible {@link Doctor}
+	 * 
+	 * @param name
+	 *            Name of the treatment
+	 * @param patient
+	 *            Patient affected by this treatment
+	 * @param responsibleMD
+	 *            Doctor that is responsible for this treatment
+	 */
 	public Treatment(String name, Patient patient, Doctor responsibleMD) {
 		this.name = name;
 		this.patient = patient;

@@ -21,7 +21,7 @@ import javax.persistence.OneToOne;
  * 
  */
 @Entity
-public class MedicationPrescription implements Serializable {
+public class MedicationPrescription implements Serializable, NoteHolder {
 	private static final long serialVersionUID = -5008856064969172587L;
 
 	@Id
@@ -52,7 +52,7 @@ public class MedicationPrescription implements Serializable {
 	 * @param dose
 	 *            Dosage of the medication
 	 * @param prescriber
-	 *            <code>Doctor</code> that makes the prescription
+	 *            {@link Doctor} that makes the prescription
 	 */
 	public MedicationPrescription(String reason, Medication medicine, Dose dose,
 			Doctor prescriber) {

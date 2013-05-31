@@ -25,7 +25,7 @@ import javax.persistence.OneToMany;
  * 
  */
 @Entity
-public class Diagnosis implements Serializable {
+public class Diagnosis implements Serializable, NoteHolder {
 	private static final long serialVersionUID = 7849922413540771230L;
 
 	@Id
@@ -65,6 +65,19 @@ public class Diagnosis implements Serializable {
 	@OneToMany(cascade = CascadeType.PERSIST)
 	private List<Note> notes = new LinkedList<Note>();
 
+	/**
+	 * A Diagnosis consists of a name, a short description, a {@link Patient}
+	 * and a responsible {@link Doctor}.
+	 * 
+	 * @param name
+	 *            Name of the diagnosis
+	 * @param description
+	 *            Description of the diagnosis
+	 * @param patient
+	 *            The patient who this diagnosis belongs to
+	 * @param doctor
+	 *            The doctor responsible for this diagnosis
+	 */
 	public Diagnosis(String name, String description, Patient patient,
 			Doctor doctor) {
 		this.name = name;
