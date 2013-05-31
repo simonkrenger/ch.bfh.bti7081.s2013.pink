@@ -66,9 +66,12 @@ public class SessionOverView extends NavigationView {
 
 		List<Session> sessions = HibernateDataSource.getInstance().findAll(
 				Session.class);
-		if (sessions.size() > 0) {
+		if (sessions.size() == 0) {
+			// allow creating test data
+			toolbar.addComponent(test);
+		} else {
 			final Session dummySession = sessions.get(0);
-			toolbar.addComponent(new Button("Medical Prescription Dummy",
+			Button prescriptionDummy = new Button("Medical Prescription Dummy",
 					new Button.ClickListener() {
 						private static final long serialVersionUID = 5381750326390188015L;
 
@@ -79,9 +82,10 @@ public class SessionOverView extends NavigationView {
 									dummySession);
 							MyVaadinUI.getNavigationManager().navigateTo(mpv);
 						}
-					}));
+					});
+			prescriptionDummy.setIcon(new ClassResource("/images/mascot.png"));
+			toolbar.addComponent(prescriptionDummy);
 		}
-		toolbar.addComponent(test);
 		setToolbar(toolbar);
 	}
 }
