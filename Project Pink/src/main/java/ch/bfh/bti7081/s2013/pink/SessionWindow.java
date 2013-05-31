@@ -5,6 +5,7 @@
  */
 package ch.bfh.bti7081.s2013.pink;
 
+import ch.bfh.bti7081.s2013.pink.model.Note;
 import ch.bfh.bti7081.s2013.pink.model.Patient;
 import ch.bfh.bti7081.s2013.pink.model.Session;
 import ch.bfh.bti7081.s2013.pink.model.SessionState;
@@ -253,8 +254,8 @@ public class SessionWindow extends CustomComponent {
 			@Override
 			public void buttonClick(ClickEvent event) {
 				// Open Search
-				// Note note = new Note(tf.getValue());
-				// session.addNote(note);
+				Note note = new Note(tf.getValue());
+				session.addNote(note);
 				PatientDetailView detailedPatientView = new PatientDetailView(
 						patient);
 				MyVaadinUI.getNavigationManager().navigateTo(
