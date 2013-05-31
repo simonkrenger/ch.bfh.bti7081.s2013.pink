@@ -4,7 +4,9 @@ import java.io.Serializable;
 import java.util.LinkedList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
@@ -42,7 +44,7 @@ public class Dose implements Serializable, NoteHolder {
 	/**
 	 * Notes for this dose
 	 */
-	@OneToMany
+	@OneToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
 	private List<Note> notes = new LinkedList<Note>();
 
 	/**

@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
@@ -27,7 +28,7 @@ public class Warning implements Serializable {
 
 	private String text;
 
-	@OneToMany(cascade = CascadeType.PERSIST)
+	@OneToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
 	private List<Note> updates = new LinkedList<Note>();
 
 	public Warning(String text) {

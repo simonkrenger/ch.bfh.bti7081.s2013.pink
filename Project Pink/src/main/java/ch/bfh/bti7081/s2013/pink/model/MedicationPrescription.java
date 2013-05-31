@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
@@ -39,7 +40,7 @@ public class MedicationPrescription implements Serializable, NoteHolder {
 	private Dose dose;
 	@ManyToOne(cascade = { CascadeType.PERSIST })
 	private Doctor prescriber;
-	@OneToMany(cascade = { CascadeType.PERSIST })
+	@OneToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
 	private List<Note> notes = new LinkedList<Note>();
 
 	/**
@@ -54,8 +55,8 @@ public class MedicationPrescription implements Serializable, NoteHolder {
 	 * @param prescriber
 	 *            {@link Doctor} that makes the prescription
 	 */
-	public MedicationPrescription(String reason, Medication medicine, Dose dose,
-			Doctor prescriber) {
+	public MedicationPrescription(String reason, Medication medicine,
+			Dose dose, Doctor prescriber) {
 		this.reason = reason;
 		this.medicine = medicine;
 		this.dose = dose;

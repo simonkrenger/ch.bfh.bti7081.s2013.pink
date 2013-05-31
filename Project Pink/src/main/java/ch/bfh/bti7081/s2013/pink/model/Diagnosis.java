@@ -9,6 +9,7 @@ import javax.persistence.CollectionTable;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -62,7 +63,7 @@ public class Diagnosis implements Serializable, NoteHolder {
 	@ManyToMany(cascade = CascadeType.PERSIST)
 	private List<Treatment> treatments = new LinkedList<Treatment>();
 
-	@OneToMany(cascade = CascadeType.PERSIST)
+	@OneToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
 	private List<Note> notes = new LinkedList<Note>();
 
 	/**

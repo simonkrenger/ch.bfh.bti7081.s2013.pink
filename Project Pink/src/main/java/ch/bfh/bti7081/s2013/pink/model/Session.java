@@ -7,6 +7,7 @@ import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
@@ -36,7 +37,7 @@ public class Session implements Serializable, NoteHolder {
 
 	private SessionState sessionState = SessionState.INVALID;
 
-	@OneToMany(cascade = CascadeType.PERSIST)
+	@OneToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
 	private List<Note> notes = new LinkedList<Note>();
 
 	public Session(Patient patient, Doctor doctor) {
