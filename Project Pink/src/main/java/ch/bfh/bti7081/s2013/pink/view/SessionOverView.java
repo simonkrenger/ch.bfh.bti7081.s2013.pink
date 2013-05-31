@@ -31,7 +31,6 @@ public class SessionOverView extends NavigationView {
 	public SessionOverView() {
 		setCaption("Upcoming");
 
-		// TODO: buildPatientSearch();
 		final VerticalLayout layout = new VerticalLayout();
 
 		SessionList sessionList = new SessionList(HibernateDataSource

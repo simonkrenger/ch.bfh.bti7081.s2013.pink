@@ -76,16 +76,12 @@ public class PatientSearchView extends CustomComponent {
 	}
 
 	private void patientSearch() {
-		if (this.searchListener != null && !this.searchListener.isEmpty()) {
-			if (!lastInput.equalsIgnoreCase(searchValue)) {
-				ChangeEvent event = new ChangeEvent(lastInput);
-				for (ChangeListener eventListener : searchListener) {
-					eventListener.stateChanged(event);
-				}
-
-				searchValue = lastInput;
+		if (!lastInput.equalsIgnoreCase(searchValue)) {
+			ChangeEvent event = new ChangeEvent(lastInput);
+			for (ChangeListener eventListener : searchListener) {
+				eventListener.stateChanged(event);
 			}
-			// TODO
+			searchValue = lastInput;
 		}
 	}
 
