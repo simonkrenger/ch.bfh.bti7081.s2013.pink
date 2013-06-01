@@ -23,7 +23,6 @@ public class LocalMedicalService implements IMedicalService
     /**
      * Gets the medicine data source.
      *
-     * @author Christoph Seiler (christoph.seiler@gmail.com)
      * @return medicine data source.
      */
     private IMedicineDataSource getMedicineDataSource()
@@ -34,7 +33,6 @@ public class LocalMedicalService implements IMedicalService
     /**
      * Gets the dataSource for patients.
      *
-     * @author Christoph Seiler (christoph.seiler@gmail.com)
      * @return patient data source.
      */
     private IPatientDataSource getPatientDataSource()
@@ -45,7 +43,6 @@ public class LocalMedicalService implements IMedicalService
     /**
      * Searches for medicines by a given text part.
      *
-     * @author Christoph Seiler (christoph.seiler@gmail.com)
      * @param text in the medicament name.
      * @return List of medicines
      */
@@ -64,7 +61,6 @@ public class LocalMedicalService implements IMedicalService
     /**
      * Checks if a medicament conflicts with an allergy.
      *
-     * @author Christoph Seiler (christoph.seiler@gmail.com)
      * @param medicine medicine to be tested.
      * @param allergy allergy to be tested.
      * @return flag if it conflicted.
@@ -75,19 +71,14 @@ public class LocalMedicalService implements IMedicalService
     }
 
     /**
-	 * Adds a new prescription to a Patient.
-	 * 
-	 * @author Christoph Seiler (christoph.seiler@gmail.com)
-	 * @param patient
-	 *            for whom the prescription is.
-	 * @param medicine
-	 *            to be prescribed.
-	 * @param dose
-	 *            of the medicine.
-	 * @param reason
-	 *            for the prescription, if given and or necessary.
-	 * @return flag if saving was successful.
-	 */
+     * Adds a new prescription to an Patient.
+     *
+     * @param patient for whom the prescription is.
+     * @param medicine to be prescribed.
+     * @param dose of the medicine.
+     * @param reason for the prescription, if given and or necessary.
+     * @return flag if saving was successful.
+     */
     private boolean savePrescription(Patient patient, Medication medicine, Dose dose, String reason)
     {
         patient.addPrescription(
@@ -102,7 +93,6 @@ public class LocalMedicalService implements IMedicalService
     /**
      * Prescribes a medicament to a patient
      *
-     * @author Christoph Seiler (christoph.seiler@gmail.com)
      * @param patient    who will get the medicament.
      * @param medicament to be prescribed.
      * @return flag if prescription has been made.
@@ -121,17 +111,13 @@ public class LocalMedicalService implements IMedicalService
     }
 
     /**
-	 * Prescribe a unsafe medicament with a reason why it is prescribed anyway.
-	 * 
-	 * @author Christoph Seiler (christoph.seiler@gmail.com)
-	 * @param patient
-	 *            patient who gets the medicament.
-	 * @param medicament
-	 *            medicament to be prescribed.
-	 * @param reason
-	 *            justification of the prescription.
-	 * @return flag if prescription has been made.
-	 */
+     * Prescribe a unsafe medicament with a reason why it has prescribed anyway.
+     *
+     * @param patient    patient who gets the medicament.
+     * @param medicament medicament to be prescribed.
+     * @param reason     justification of the prescription.
+     * @return flag if prescription has been made.
+     */
     public boolean prescribeUnsafeMedicament(Patient patient, Medication medicament, Dose dose, String reason) {
         if (reason == null || reason.isEmpty())
         {
