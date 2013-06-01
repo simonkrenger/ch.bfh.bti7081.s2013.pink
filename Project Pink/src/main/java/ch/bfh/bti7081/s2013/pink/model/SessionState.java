@@ -95,7 +95,7 @@ public enum SessionState {
 			return Arrays.asList(FINISHED, ABORTED);
 
 		case ABORTED:
-			return Arrays.asList(PLANNED, FINISHED, STARTED);
+			return Arrays.asList(PLANNED, ARCHIVED, STARTED);
 
 		case FINISHED:
 			return Arrays.asList(ARCHIVED, STARTED);
