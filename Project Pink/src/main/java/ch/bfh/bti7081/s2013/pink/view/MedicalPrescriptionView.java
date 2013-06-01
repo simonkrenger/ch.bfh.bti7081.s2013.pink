@@ -4,12 +4,11 @@ import ch.bfh.bti7081.s2013.pink.medication.LocalMedicalService;
 import ch.bfh.bti7081.s2013.pink.model.Dose.Period;
 import ch.bfh.bti7081.s2013.pink.model.Session;
 
+import com.vaadin.addon.touchkit.ui.NavigationView;
 import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;
 import com.vaadin.event.FieldEvents.TextChangeEvent;
 import com.vaadin.event.FieldEvents.TextChangeListener;
-import com.vaadin.navigator.View;
-import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.Label;
@@ -21,11 +20,13 @@ import com.vaadin.ui.VerticalLayout;
  * Created with IntelliJ IDEA. User: sc0238 Date: 24.05.13 Time: 17:06 To change
  * this template use File | Settings | File Templates.
  */
-public class MedicalPrescriptionView extends VerticalLayout implements View {
+public class MedicalPrescriptionView extends NavigationView {
 	private Session privateSession;
 
 	Button btnPrescribe;
 	Button btnUnsafePrescribe;
+
+	private VerticalLayout layout = new VerticalLayout();
 
 	private int valueDoseAmount;
 	private int valueDoseMultiplier;
@@ -33,18 +34,22 @@ public class MedicalPrescriptionView extends VerticalLayout implements View {
 
 	public MedicalPrescriptionView(Session patientSession) {
 		this.privateSession = patientSession;
+		setCaption("Prescription");
 		setSizeFull();
 
 		LocalMedicalService localMedicalService = new LocalMedicalService();
 
-		addComponent(new Label(privateSession.getTimeEnd().toString()));
+		layout.addComponent(new Label(privateSession.getTimeEnd().toString()));
 
 		// Select medicine ComboBox
 		ComboBox medicineSel = new ComboBox("Medicine");
-		medicineSel.setWidth(100, Unit.PIXELS);
-		medicineSel.setValue(localMedicalService
-				.searchForMedicaments("Enter medicine name"));
-		addComponent(medicineSel);
+		medicineSel.setValue("initial Value");
+		// for (Medication medicine :
+		// localMedicalService.searchForMedicaments("")) {
+		// medicineSel.addItem(medicine);
+		// }
+
+		layout.addComponent(medicineSel);
 
 		// Look into Dose and MedicalPrescirption Classes for the Options
 
@@ -52,6 +57,7 @@ public class MedicalPrescriptionView extends VerticalLayout implements View {
 		TextField doseAmount = new TextField("doseAmount");
 
 		// Handle changes in the value
+		doseAmount.setValue("initial value");
 		doseAmount.addTextChangeListener(new TextChangeListener() {
 
 			@Override
@@ -61,7 +67,7 @@ public class MedicalPrescriptionView extends VerticalLayout implements View {
 
 		});
 
-		addComponent(doseAmount);
+		layout.addComponent(doseAmount);
 
 		// Create a text fields for Dose
 		TextField doseMultiplier = new TextField("doseMultiplier");
@@ -76,10 +82,13 @@ public class MedicalPrescriptionView extends VerticalLayout implements View {
 
 		});
 
-		addComponent(doseMultiplier);
+		layout.addComponent(doseMultiplier);
 
 		// Create a text fields for Dose NativeSelect dosePeriod = new
 		NativeSelect dosePeriod = new NativeSelect("DosePeriod");
+		for (Period periods : Period.values()) {
+			dosePeriod.addItem(periods.name());
+		}
 		dosePeriod.addValueChangeListener(new ValueChangeListener() {
 			@Override
 			public void valueChange(ValueChangeEvent event) {
@@ -88,7 +97,8 @@ public class MedicalPrescriptionView extends VerticalLayout implements View {
 			}
 		});
 
-		// addComponent(dosePeriod);
+
+		layout.addComponent(dosePeriod);
 
 		// Dose consisting of amount, multiplier, period(Date From To)
 		// Amount(2 Pillen) int multi(3mal) int period(Täglich) enum
@@ -119,13 +129,9 @@ public class MedicalPrescriptionView extends VerticalLayout implements View {
 				});
 		btnUnsafePrescribe.setEnabled(false);
 
-		addComponent(btnPrescribe);
-		addComponent(btnUnsafePrescribe);
-	}
+		layout.addComponent(btnPrescribe);
+		layout.addComponent(btnUnsafePrescribe);
 
-	@Override
-	public void enter(ViewChangeListener.ViewChangeEvent viewChangeEvent) {
-		// To change body of implemented methods use File | Settings | File
-		// Templates.
+		setContent(layout);
 	}
 }
