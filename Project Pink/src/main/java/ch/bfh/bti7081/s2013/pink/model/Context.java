@@ -1,10 +1,9 @@
 package ch.bfh.bti7081.s2013.pink.model;
 
 /**
- * Application Context.
+ * Application Context. The context is implemented as a Singleton (pattern).
  * 
  * @author Christoph Seiler (christoph.seiler@gmail.com)
- * 
  */
 public class Context {
 	private static Context context;
@@ -17,13 +16,13 @@ public class Context {
 	 * @author Christoph Seiler (christoph.seiler@gmail.com)
 	 */
 	private Context() {
-
+		// TODO: Login - static context won't work then, must be thread local
+		doctor = HibernateDataSource.getInstance().findAll(Doctor.class).get(0);
 	}
 
 	/**
-	 * Gets the current Context for this Application.
+	 * Gets the current Context for this application.
 	 * 
-	 * @author Christoph Seiler (christoph.seiler@gmail.com)
 	 * @return current Application Context.
 	 */
 	public static Context getCurrent() {
@@ -35,13 +34,9 @@ public class Context {
 	}
 
 	/**
-	 * Gets the current loggedIn Doctor.
-	 * 
-	 * @author Christoph Seiler (christoph.seiler@gmail.com)
-	 * @return current Doctor.
+	 * @return the currently logged in {@link Doctor}
 	 */
 	public Doctor getDoctor() {
-		// TODO: Return this.doctor
-		return new Doctor("Hansi", "Hinterseher", null);
+		return doctor;
 	}
 }

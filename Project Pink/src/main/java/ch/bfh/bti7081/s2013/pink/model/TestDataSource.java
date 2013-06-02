@@ -164,7 +164,6 @@ public class TestDataSource {
 				continue;
 			Patient p = (Patient) o;
 			Session s = new Session(p, getRandom(doctors));
-			// TODO: better dates
 			s.setTimeStart(cal.getTime());
 			cal.add(Calendar.HOUR, 1);
 			s.setTimeEnd(cal.getTime());

@@ -14,7 +14,6 @@ public interface IPatientDataSource{
     /**
      * Gets a patient by lastName and firstName.
      *
-     * @author Christoph Seiler (christoph.seiler@gmail.com)
      * @param name of the patient.
      * @param firstName of the patient.
      * @return List of patients.
@@ -24,7 +23,6 @@ public interface IPatientDataSource{
     /**
      * Saves a patient.
      *
-     * @author Christoph Seiler (christoph.seiler@gmail.com)
      * @param patient to be saved.
      * @return flag if save was successful.
      */
