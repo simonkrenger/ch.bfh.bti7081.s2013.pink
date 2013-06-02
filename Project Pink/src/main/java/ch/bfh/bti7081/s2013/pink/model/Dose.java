@@ -70,6 +70,18 @@ public class Dose implements Serializable {
 		return multiplier;
 	}
 
+	public void setPeriod(Period p) {
+		this.period = p;
+	}
+
+	public void setAmount(int a) {
+		this.amount = a;
+	}
+
+	public void setMultiplier(int m) {
+		this.multiplier = m;
+	}
+
 	public Period getPeriod() {
 		return period;
 	}
