@@ -1,5 +1,6 @@
 package ch.bfh.bti7081.s2013.pink.medication;
 
+import java.util.Date;
 import java.util.List;
 
 import ch.bfh.bti7081.s2013.pink.model.Allergy;
@@ -62,6 +63,22 @@ public class LocalMedicalService implements IMedicalService
     }
 
     /**
+     * Prescribes a medicament to a patient
+     *
+     * @param patient    who will get the medicament.
+     * @param medicament to be prescribed.
+     * @param dose       Dose of the medication.
+     * @param startDate  Start date of the prescription.
+     * @param endDate    End date of the prescription.
+     * @return flag if prescription has been made.
+     * @author Christoph Seiler (christoph.seiler@gmail.com)
+     */
+    @Override
+    public boolean prescribeMedicament(Patient patient, Medication medicament, Dose dose, Date startDate, Date endDate) {
+        return prescribeMedicament(patient, medicament, dose, "", startDate, endDate);
+    }
+
+    /**
      * Checks if a medicament conflicts with an allergy.
      *
      * @author Christoph Seiler (christoph.seiler@gmail.com)
@@ -86,16 +103,28 @@ public class LocalMedicalService implements IMedicalService
 	 *            of the medicine.
 	 * @param reason
 	 *            for the prescription, if given and or necessary.
+     * @param startDate
+     *            Start date of the prescription.
+     * @param endDate
+     *            End date of the prescription.
 	 * @return flag if saving was successful.
 	 */
-    private boolean savePrescription(Patient patient, Medication medicine, Dose dose, String reason)
+    private boolean savePrescription(
+            Patient patient,
+            Medication medicine,
+            Dose dose,
+            String reason,
+            Date startDate,
+            Date endDate)
     {
         patient.addPrescription(
                     new MedicationPrescription(
                             reason,
                             medicine,
                             dose,
-                            Context.getCurrent().getDoctor()));
+                            Context.getCurrent().getDoctor(),
+                            startDate,
+                            endDate));
         return getPatientDataSource().savePatient(patient);
     }
 
@@ -105,9 +134,23 @@ public class LocalMedicalService implements IMedicalService
      * @author Christoph Seiler (christoph.seiler@gmail.com)
      * @param patient    who will get the medicament.
      * @param medicament to be prescribed.
+     * @param dose
+     *            Dose of the medication.
+     * @param reason
+     *            justification of the prescription.
+     * @param startDate
+     *            Start date of the prescription.
+     * @param endDate
+     *            End date of the prescription.
      * @return flag if prescription has been made.
      */
-    public boolean prescribeMedicament(Patient patient, Medication medicament, Dose dose)
+    public boolean prescribeMedicament(
+            Patient patient,
+            Medication medicament,
+            Dose dose,
+            String reason,
+            Date startDate,
+            Date endDate)
     {
         for (Allergy allergy : patient.getAllergies())
         {
@@ -117,7 +160,7 @@ public class LocalMedicalService implements IMedicalService
              }
         }
 
-        return savePrescription(patient, medicament, dose, "");
+        return savePrescription(patient, medicament, dose, reason, startDate, endDate);
     }
 
     /**
@@ -128,16 +171,28 @@ public class LocalMedicalService implements IMedicalService
 	 *            patient who gets the medicament.
 	 * @param medicament
 	 *            medicament to be prescribed.
+     * @param dose
+     *            Dose of the medication.
 	 * @param reason
 	 *            justification of the prescription.
+     * @param startDate
+     *            Start date of the prescription.
+     * @param endDate
+     *            End date of the prescription.
 	 * @return flag if prescription has been made.
 	 */
-    public boolean prescribeUnsafeMedicament(Patient patient, Medication medicament, Dose dose, String reason) {
+    public boolean prescribeUnsafeMedicament(
+            Patient patient,
+            Medication medicament,
+            Dose dose,
+            String reason,
+            Date startDate,
+            Date endDate) {
         if (reason == null || reason.isEmpty())
         {
             throw new IllegalArgumentException("reason");
         }
 
-        return savePrescription(patient, medicament, dose, reason);
+        return savePrescription(patient, medicament, dose, reason, startDate, endDate);
     }
 }

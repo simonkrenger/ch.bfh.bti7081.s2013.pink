@@ -1,6 +1,7 @@
 package ch.bfh.bti7081.s2013.pink.model;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -35,6 +36,10 @@ public class MedicationPrescription implements Serializable {
 	@ManyToOne(cascade = { CascadeType.PERSIST })
 	private Medication medicine;
 
+    private Date startDate;
+
+    private Date endDate;
+
 	@OneToOne(cascade = { CascadeType.PERSIST })
 	private Dose dose;
 	@ManyToOne(cascade = { CascadeType.PERSIST })
@@ -53,19 +58,45 @@ public class MedicationPrescription implements Serializable {
 	 *            Dosage of the medication
 	 * @param prescriber
 	 *            <code>Doctor</code> that makes the prescription
+     * @param startDate
+     *            Start date of the prescription.
+     * @param endDate
+     *            End date of the prescription.
 	 */
 	public MedicationPrescription(String reason, Medication medicine, Dose dose,
-			Doctor prescriber) {
+			Doctor prescriber, Date startDate, Date endDate) {
 		this.reason = reason;
 		this.medicine = medicine;
 		this.dose = dose;
 		this.prescriber = prescriber;
+        this.startDate = startDate;
+        this.endDate = endDate;
 	}
 
 	@SuppressWarnings("unused")
 	private MedicationPrescription() {
 		// needed for Hibernate
 	}
+
+    public Date getStartDate()
+    {
+        return startDate;
+    }
+
+    public void setStartDate(Date date)
+    {
+        this.startDate = date;
+    }
+
+    public Date getEndDate()
+    {
+        return endDate;
+    }
+
+    public void setEndDate(Date date)
+    {
+        this.endDate = date;
+    }
 
 	public String getReason() {
 		return reason;
