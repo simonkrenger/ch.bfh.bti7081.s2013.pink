@@ -7,19 +7,22 @@ import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
 /**
- * Class to represent a session with a <code>Doctor</code> and a
- * <code>Patient</code>
+ * Class to represent a session with a {@link Doctor} and a {@link Patient}
  * 
  * @author Christian Meyer <chrigu.meyer@gmail.com>
  */
 @Entity
-public class Session implements Serializable {
+public class Session implements Serializable, NoteHolder {
 	private static final long serialVersionUID = 4037114189034652676L;
 
 	@Id
@@ -37,7 +40,8 @@ public class Session implements Serializable {
 
 	private SessionState sessionState = SessionState.INVALID;
 
-	@OneToMany(cascade = CascadeType.PERSIST)
+	@Fetch(FetchMode.SUBSELECT)
+	@OneToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
 	private List<Note> notes = new LinkedList<Note>();
 
 	public Session(Patient patient, Doctor doctor) {

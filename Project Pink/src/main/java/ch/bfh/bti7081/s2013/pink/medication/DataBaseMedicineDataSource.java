@@ -1,14 +1,14 @@
 package ch.bfh.bti7081.s2013.pink.medication;
 
-import ch.bfh.bti7081.s2013.pink.model.HibernateDataSource;
-import ch.bfh.bti7081.s2013.pink.model.Medication;
-import ch.bfh.bti7081.s2013.pink.model.Patient;
+import java.util.List;
+
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Restrictions;
 
-import java.util.List;
+import ch.bfh.bti7081.s2013.pink.model.HibernateDataSource;
+import ch.bfh.bti7081.s2013.pink.model.Medication;
 
 /**
  * Database based dataSource for medicine.
@@ -20,7 +20,6 @@ public class DataBaseMedicineDataSource extends HibernateDataSource implements I
     /**
      * Get all medicine in database.
      *
-     * @author Christoph Seiler (christoph.seiler@gmail.com)
      * @return complete list of all medicine.
      */
     public List<Medication> GetAllMedicine()
@@ -40,7 +39,6 @@ public class DataBaseMedicineDataSource extends HibernateDataSource implements I
     /**
      * Gets all medicine with a specific text in the name.
      *
-     * @author Christoph Seiler (christoph.seiler@gmail.com)
      * @param text which has to be present in the name.
      * @return List of medicine matching the text.
      */

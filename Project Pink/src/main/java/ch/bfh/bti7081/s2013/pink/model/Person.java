@@ -33,6 +33,10 @@ public abstract class Person implements Serializable {
 	 * First name of the person
 	 */
 	private String firstName;
+
+	/**
+	 * URL to a portrait of a patient
+	 */
 	private String imageUrl;
 
 	/**
@@ -72,6 +76,11 @@ public abstract class Person implements Serializable {
 		return firstName;
 	}
 
+	/**
+	 * Returns the absolute image URL for the person.
+	 * 
+	 * @return URL to the portrait of the person
+	 */
 	public String getImageUrl() {
 		return imageUrl;
 	}
