@@ -161,7 +161,7 @@ public class MedicalPrescriptionView extends NavigationView {
 
 		// Show the doctor from the current seisson
 		Label doctor = new Label("the doctor");
-		doctor.setValue(privateSession.getDoctor().toString());
+		doctor.setValue(privateSession.getDoctor().getName());
 
 		layout.addComponent(doctor);
 
