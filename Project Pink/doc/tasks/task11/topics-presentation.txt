@@ -1,5 +1,6 @@
 - Introduction
 - Scrum
+-- Working with GitHub (network graph!)
 - Continuous Integration
 - Problems encountered
 - Results

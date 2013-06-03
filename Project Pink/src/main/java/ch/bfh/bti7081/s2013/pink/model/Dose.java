@@ -92,12 +92,18 @@ public class Dose implements Serializable, NoteHolder {
 		return multiplier;
 	}
 
-	/**
-	 * Returns the period in which a certain <code>amount</code> of a drug has
-	 * to be taken "<code>multiplier</code>" times
-	 * 
-	 * @return Period in which the drug needs to be taken n times.
-	 */
+	public void setPeriod(Period p) {
+		this.period = p;
+	}
+
+	public void setAmount(int a) {
+		this.amount = a;
+	}
+
+	public void setMultiplier(int m) {
+		this.multiplier = m;
+	}
+
 	public Period getPeriod() {
 		return period;
 	}

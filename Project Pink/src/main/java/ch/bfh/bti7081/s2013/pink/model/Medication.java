@@ -52,6 +52,10 @@ public class Medication implements Serializable {
 		// needed for Hibernate
 	}
 
+	public String getName() {
+		return name;
+	}
+
 	public List<Ingredient> getIngredients() {
 		return ingredients;
 	}
@@ -83,6 +87,7 @@ public class Medication implements Serializable {
 	public void addSideeffect(String sideeffect) {
 		sideeffects.add(sideeffect);
 	}
+
 
 	@Override
 	public String toString() {
