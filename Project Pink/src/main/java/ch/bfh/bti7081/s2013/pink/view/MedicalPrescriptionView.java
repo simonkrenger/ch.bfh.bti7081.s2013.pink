@@ -173,7 +173,8 @@ public class MedicalPrescriptionView extends NavigationView {
 				valueDose.setMultiplier(valueDoseMultiplier);
 				valueDose.setPeriod(valueDosePeriod);
 				localMedicalService.prescribeMedicament(
-						privateSession.getPatient(), valueMedication, valueDose);
+						privateSession.getPatient(), valueMedication, valueDose,
+                        valueDateFrom, valueDateTo);
 			}
 		});
 
