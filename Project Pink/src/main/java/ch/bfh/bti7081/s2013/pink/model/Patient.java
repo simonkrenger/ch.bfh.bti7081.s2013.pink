@@ -18,7 +18,7 @@ import org.hibernate.annotations.FetchMode;
  * 
  */
 @Entity
-public class Patient extends Person {
+public class Patient extends Person implements NoteHolder {
 	private static final long serialVersionUID = 6206530937924052846L;
 
 	@Fetch(FetchMode.SUBSELECT)
@@ -48,6 +48,15 @@ public class Patient extends Person {
 
 	public List<Allergy> getAllergies() {
 		return allergies;
+	}
+
+	/**
+	 * Returns TRUE if a patient has associated {@link Warning}s.
+	 * 
+	 * @return TRUE if the patient has warnings
+	 */
+	public boolean hasWarnings() {
+		return this.warnings.size() > 0;
 	}
 
 	public void addAllergy(Allergy allergy) {

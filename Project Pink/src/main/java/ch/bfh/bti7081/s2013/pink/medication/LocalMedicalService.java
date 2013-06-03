@@ -23,7 +23,6 @@ public class LocalMedicalService implements IMedicalService
     /**
      * Gets the medicine data source.
      *
-     * @author Christoph Seiler (christoph.seiler@gmail.com)
      * @return medicine data source.
      */
     private IMedicineDataSource getMedicineDataSource()
@@ -34,7 +33,6 @@ public class LocalMedicalService implements IMedicalService
     /**
      * Gets the dataSource for patients.
      *
-     * @author Christoph Seiler (christoph.seiler@gmail.com)
      * @return patient data source.
      */
     private IPatientDataSource getPatientDataSource()
@@ -45,7 +43,6 @@ public class LocalMedicalService implements IMedicalService
     /**
      * Searches for medicines by a given text part.
      *
-     * @author Christoph Seiler (christoph.seiler@gmail.com)
      * @param text in the medicament name.
      * @return List of medicines
      */
@@ -64,7 +61,6 @@ public class LocalMedicalService implements IMedicalService
     /**
      * Checks if a medicament conflicts with an allergy.
      *
-     * @author Christoph Seiler (christoph.seiler@gmail.com)
      * @param medicine medicine to be tested.
      * @param allergy allergy to be tested.
      * @return flag if it conflicted.
@@ -102,7 +98,6 @@ public class LocalMedicalService implements IMedicalService
     /**
      * Prescribes a medicament to a patient
      *
-     * @author Christoph Seiler (christoph.seiler@gmail.com)
      * @param patient    who will get the medicament.
      * @param medicament to be prescribed.
      * @return flag if prescription has been made.

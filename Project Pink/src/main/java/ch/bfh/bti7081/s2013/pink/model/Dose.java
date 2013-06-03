@@ -4,19 +4,25 @@ import java.io.Serializable;
 import java.util.LinkedList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
 /**
- * Class to represent a medication dose.
+ * Class to represent a medication dose. The medication does consists of an
+ * amount, a multiplier and a period.
  * 
  * @author chris
  * 
  */
 @Entity
-public class Dose implements Serializable {
+public class Dose implements Serializable, NoteHolder {
 	private static final long serialVersionUID = 9091291159459047509L;
 
 	@Id
@@ -37,7 +43,12 @@ public class Dose implements Serializable {
 	 * Period, to be used in combination with multiplier
 	 */
 	private Period period;
-	@OneToMany
+
+	/**
+	 * Notes for this dose
+	 */
+	@Fetch(FetchMode.SUBSELECT)
+	@OneToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
 	private List<Note> notes = new LinkedList<Note>();
 
 	/**
@@ -62,10 +73,21 @@ public class Dose implements Serializable {
 		// needed for Hibernate
 	}
 
+	/**
+	 * Returns the dosage amount (e.g. "# of pills")
+	 * 
+	 * @return The dosage amount
+	 */
 	public int getAmount() {
 		return amount;
 	}
 
+	/**
+	 * Returns the dosage multiplier. The multiplier defines
+	 * "how many times per period" the <code>amount</code> has to be taken.
+	 * 
+	 * @return How many times per period does a drug have to be taken
+	 */
 	public int getMultiplier() {
 		return multiplier;
 	}
