@@ -70,7 +70,7 @@ public class MedicationPrescription implements Serializable, NoteHolder {
      * @param endDate
      *            End date of the prescription.
 	 */
-	public MedicationPrescription(String reason, Medication medicine,
+	public MedicationPrescription(String reason, Medication medicine, Dose dose,
 			Doctor prescriber, Date startDate, Date endDate) {
 		this.reason = reason;
 		this.medicine = medicine;

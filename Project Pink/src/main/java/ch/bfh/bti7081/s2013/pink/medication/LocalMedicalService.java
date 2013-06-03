@@ -21,6 +21,8 @@ import ch.bfh.bti7081.s2013.pink.model.Patient;
  */
 public class LocalMedicalService implements IMedicalService
 {
+    private IPatientDataSource patientDataSource;
+
     /**
      * Gets the medicine data source.
      *
@@ -38,7 +40,25 @@ public class LocalMedicalService implements IMedicalService
      */
     private IPatientDataSource getPatientDataSource()
     {
-        return new DataBasePatientDataSource();
+        return patientDataSource;
+    }
+
+    /**
+     * Creates a new instance of LocalMedicalService.
+     */
+    public LocalMedicalService()
+    {
+        patientDataSource = new DataBasePatientDataSource();
+    }
+
+    /**
+     * Creates a new instance of LocalMedicalService.
+     *
+     * @param patientDataSource to be used.
+     */
+    public LocalMedicalService(IPatientDataSource patientDataSource)
+    {
+        this.patientDataSource = patientDataSource;
     }
 
     /**
@@ -185,7 +205,7 @@ public class LocalMedicalService implements IMedicalService
             Date endDate) {
         if (reason == null || reason.isEmpty())
         {
-            throw new IllegalArgumentException("reason");
+            return false;
         }
 
         return savePrescription(patient, medicament, dose, reason, startDate, endDate);

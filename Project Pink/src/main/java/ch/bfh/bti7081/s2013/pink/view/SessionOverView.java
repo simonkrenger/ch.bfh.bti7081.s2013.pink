@@ -5,7 +5,7 @@ import java.util.List;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
-import ch.bfh.bti7081.s2013.pink.MedicalPrescriptionView;
+import ch.bfh.bti7081.s2013.pink.view.MedicalPrescriptionView;
 import ch.bfh.bti7081.s2013.pink.MyVaadinUI;
 import ch.bfh.bti7081.s2013.pink.model.HibernateDataSource;
 import ch.bfh.bti7081.s2013.pink.model.Session;
