@@ -1,6 +1,7 @@
 package ch.bfh.bti7081.s2013.pink.view;
 
 import java.util.Date;
+import java.util.List;
 
 import ch.bfh.bti7081.s2013.pink.medication.LocalMedicalService;
 import ch.bfh.bti7081.s2013.pink.model.Dose;
@@ -22,11 +23,14 @@ import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 
 /**
- * Created with IntelliJ IDEA. User: sc0238 Date: 24.05.13 Time: 17:06 To change
- * this template use File | Settings | File Templates.
+ * View Class to show a window to prescribe a medicament
+ * 
+ * @author Christoph Seiler (Christoph Seiler) Date: 22.05.13 Time: 18:40
  */
 public class MedicalPrescriptionView extends NavigationView {
+
 	private Session privateSession;
+
 
 	Button btnPrescribe;
 	Button btnUnsafePrescribe;
@@ -34,36 +38,54 @@ public class MedicalPrescriptionView extends NavigationView {
 	private VerticalLayout layout = new VerticalLayout();
 
 	private Medication valueMedication;
-	private int valueDoseAmount;
-	private int valueDoseMultiplier;
-	private Period valueDosePeriod;
 	private Date valueDateFrom, valueDateTo;
 	private String valueReason;
 	private Dose valueDose;
 
+	/**
+	 * not used anymore Delete before Finisehing // private int valueDoseAmount;
+	 * // private int valueDoseMultiplier; // private Period valueDosePeriod;
+	 **/
+
 	LocalMedicalService localMedicalService = new LocalMedicalService();
 
+	/**
+	 * Creates the View.
+	 * 
+	 * 
+	 * @return a View
+	 */
+
 	public MedicalPrescriptionView(Session patientSession) {
+
+		/**
+		 * get the active Session and set the Windows initials
+		 */
+
 		this.privateSession = patientSession;
 		setCaption("Prescription");
 		setSizeFull();
 
-
 		layout.addComponent(new Label(privateSession.getTimeEnd().toString()));
 
-		// Select medicine ComboBox
+		/**
+		 * Add a ComboBox to select a medicament from the medicament database
+		 * Set valueMedication to the chosen value
+		 */
 		ComboBox medicineSel = new ComboBox("Medicine");
-		
-		medicineSel.setValue("initial Value");
-		
+
 		for (Medication medicine : localMedicalService.searchForMedicaments("")) {
 			medicineSel.addItem(medicine.getName());
 		}
+		medicineSel.setValue("enter medicine name");
 		medicineSel.addValueChangeListener(new ValueChangeListener() {
 
 			@Override
 			public void valueChange(ValueChangeEvent event) {
-				valueMedication = (Medication) event.getProperty().getValue();
+				String value = event.getProperty().getValue().toString();
+				List<Medication> values = localMedicalService
+						.searchForMedicaments("value");
+				valueMedication = values.get(0);
 
 			}
 		});
@@ -71,39 +93,56 @@ public class MedicalPrescriptionView extends NavigationView {
 		layout.addComponent(medicineSel);
 
 
-		// Create a text fields for Dose
+		/**
+		 * Add a TextField to enter the doseAmount Set the dose Amount to the
+		 * inserted Value
+		 * 
+		 * @default = 0
+		 */
 		TextField doseAmount = new TextField("doseAmount");
 
 		// Handle changes in the value
-		doseAmount.setValue("initial value");
+		doseAmount.setValue("0");
+		doseAmount.setWidth(30, Unit.PIXELS);
 		doseAmount.addTextChangeListener(new TextChangeListener() {
 
 
 			@Override
 			public void textChange(TextChangeEvent event) {
-				valueDoseAmount = Integer.parseInt(event.getText());
+				valueDose.setAmount(Integer.parseInt(event.getText()));
 			}
 
 		});
 
 		layout.addComponent(doseAmount);
 
-		// Create a text fields for Dose
+		/**
+		 * Add a TextField to enter the dose Multiplier Set the dose Multiplier
+		 * to the inserted Value
+		 * 
+		 * @default = 0
+		 */
 		TextField doseMultiplier = new TextField("doseMultiplier");
-
+		doseMultiplier.setValue("0");
+		doseMultiplier.setWidth(30, Unit.PIXELS);
 		// Handle changes in the value
 		doseMultiplier.addTextChangeListener(new TextChangeListener() {
 
 			@Override
 			public void textChange(TextChangeEvent event) {
-				valueDoseMultiplier = Integer.parseInt(event.getText());
+				valueDose.setMultiplier(Integer.parseInt(event.getText()));
 			}
 
 		});
 
 		layout.addComponent(doseMultiplier);
 
-		// Create a text fields for Dose NativeSelect dosePeriod = new
+		/**
+		 * Add a Native Select to enter choose a Period Set the dose Period to
+		 * the chosen value
+		 * 
+		 * @default = 0
+		 */
 		NativeSelect dosePeriod = new NativeSelect("DosePeriod");
 		for (Period periods : Period.values()) {
 			dosePeriod.addItem(periods.name());
@@ -111,15 +150,20 @@ public class MedicalPrescriptionView extends NavigationView {
 		dosePeriod.addValueChangeListener(new ValueChangeListener() {
 			@Override
 			public void valueChange(ValueChangeEvent event) {
-				valueDosePeriod = (Period) event.getProperty().getValue();
-
+				valueDose.setPeriod((Period) event.getProperty().getValue());
 			}
 		});
 
 
 		layout.addComponent(dosePeriod);
 
-		// From and to Period // Create a DateField with the default style
+
+		/**
+		 * Add a Date Field to enter the beginning of the prescription Set the
+		 * dateFrom
+		 * 
+		 * @default = Actual Date
+		 */
 		DateField dateFrom = new DateField();
 		dateFrom.setValue(new Date());
 		dateFrom.addValueChangeListener(new ValueChangeListener() {
@@ -131,6 +175,12 @@ public class MedicalPrescriptionView extends NavigationView {
 			}
 		});
 		layout.addComponent(dateFrom);
+
+		/**
+		 * Add a Date Field to enter the end of the prescription Set the dateTo
+		 * 
+		 * @default = Actual Date
+		 */
 
 		DateField dateTo = new DateField();
 		dateTo.setValue(new Date());
@@ -144,10 +194,15 @@ public class MedicalPrescriptionView extends NavigationView {
 		});
 		layout.addComponent(dateTo);
 
-		// Create a text fields reason
+		/**
+		 * Add a Text Field to enter a reason for the prescription Set the
+		 * reason
+		 * 
+		 * @default = ""
+		 */
 		TextField reason = new TextField("reason");
+		reason.setValue("");
 
-		// Handle changes in the value
 		reason.addTextChangeListener(new TextChangeListener() {
 			@Override
 			public void textChange(TextChangeEvent event) {
@@ -157,21 +212,30 @@ public class MedicalPrescriptionView extends NavigationView {
 		});
 		layout.addComponent(reason);
 
-		// Notes Note to be added
+		/**
+		 * TO DO It should be possoble to add notes here
+		 * 
+		 */
 
-		// Show the doctor from the current seisson
+		/**
+		 * Add a Label to show the doctor from the Session
+		 */
 		Label doctor = new Label("the doctor");
 		doctor.setValue(privateSession.getDoctor().getName());
 
 		layout.addComponent(doctor);
 
-		// Prescribe medication
+		/**
+		 * Add a Button to Prescribe a medication
+		 * 
+		 * @Param patient = patient from the session
+		 * @Param medication = selected medication
+		 * @Param dose = selected dose by amount, multiplier and period
+		 * @Param doctor = doctor from the session
+		 */
 		btnPrescribe = new Button("Prescribe", new Button.ClickListener() {
 			@Override
 			public void buttonClick(Button.ClickEvent clickEvent) {
-				valueDose.setAmount(valueDoseAmount);
-				valueDose.setMultiplier(valueDoseMultiplier);
-				valueDose.setPeriod(valueDosePeriod);
 				localMedicalService.prescribeMedicament(
 						privateSession.getPatient(), valueMedication, valueDose);
 			}
