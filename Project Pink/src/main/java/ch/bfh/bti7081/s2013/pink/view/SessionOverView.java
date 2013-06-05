@@ -1,22 +1,12 @@
 package ch.bfh.bti7081.s2013.pink.view;
 
-import java.util.List;
-
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
-import ch.bfh.bti7081.s2013.pink.view.MedicalPrescriptionView;
-import ch.bfh.bti7081.s2013.pink.model.Doctor;
-import ch.bfh.bti7081.s2013.pink.MyVaadinUI;
 import ch.bfh.bti7081.s2013.pink.model.HibernateDataSource;
 import ch.bfh.bti7081.s2013.pink.model.Session;
-import ch.bfh.bti7081.s2013.pink.model.TestDataSource;
 
 import com.vaadin.addon.touchkit.ui.NavigationView;
-import com.vaadin.addon.touchkit.ui.Toolbar;
-import com.vaadin.server.ClassResource;
-import com.vaadin.ui.Button;
-import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.VerticalLayout;
 
 /**
@@ -51,25 +41,5 @@ public class SessionOverView extends NavigationView {
 		layout.addComponent(searchView);
 		layout.addComponent(sessionList);
 		setContent(layout);
-
-		// Toolbar
-		List<Doctor> doctors = HibernateDataSource.getInstance().findAll(
-				Doctor.class);
-		if (doctors.size() == 0) {
-			// allow creating test data
-			Button test = new Button(null, new Button.ClickListener() {
-				private static final long serialVersionUID = -261072762324902276L;
-
-				@Override
-				public void buttonClick(ClickEvent event) {
-					new TestDataSource().clearTableAndCreateTestData();
-				}
-			});
-			test.setIcon(new ClassResource("/images/mascot.png"));
-			Toolbar toolbar = new Toolbar();
-
-			toolbar.addComponent(test);
-			setToolbar(toolbar);
-		}
 	}
 }

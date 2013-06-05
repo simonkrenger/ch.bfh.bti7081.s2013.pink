@@ -1,6 +1,6 @@
 package ch.bfh.bti7081.s2013.pink;
 
-import ch.bfh.bti7081.s2013.pink.view.SessionOverView;
+import ch.bfh.bti7081.s2013.pink.view.LoginView;
 
 import com.vaadin.addon.touchkit.ui.NavigationManager;
 import com.vaadin.annotations.Theme;
@@ -23,8 +23,7 @@ public class MyVaadinUI extends UI {
 	protected void init(VaadinRequest request) {
 		getPage().setTitle("The Cool Project Pink");
 
-		SessionOverView view = new SessionOverView();
-		navigationManager = new NavigationManager(view);
+		navigationManager = new NavigationManager(new LoginView());
 		setContent(navigationManager);
 	}
 
