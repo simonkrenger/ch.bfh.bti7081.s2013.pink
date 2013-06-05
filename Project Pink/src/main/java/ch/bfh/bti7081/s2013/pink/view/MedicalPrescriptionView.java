@@ -84,13 +84,14 @@ public class MedicalPrescriptionView extends NavigationView {
 			medicineSel.addItem(medicine.getName());
 		}
 		medicineSel.setValue("enter medicine name");
+
 		medicineSel.addValueChangeListener(new ValueChangeListener() {
 
 			@Override
 			public void valueChange(ValueChangeEvent event) {
 				String value = event.getProperty().getValue().toString();
 				List<Medication> values = localMedicalService
-						.searchForMedicaments("value");
+						.searchForMedicaments(value);
 				valueMedication = values.get(0);
 
 			}

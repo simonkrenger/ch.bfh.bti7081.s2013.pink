@@ -149,6 +149,7 @@ public class SessionWindow extends CustomComponent {
 						session.changeState(SessionState.REOPENED);
 						SessionView view = new SessionView(session, patient);
 						MyVaadinUI.getNavigationManager().navigateTo(view);
+
 					}
 				});
 		if (session.getSessionState() == SessionState.ARCHIVED) {
