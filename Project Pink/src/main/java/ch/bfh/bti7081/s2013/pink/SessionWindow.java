@@ -222,7 +222,8 @@ public class SessionWindow extends CustomComponent {
 				});
 		// set edit notes button to disabled if there are no notes
 		if (session.getNotes().isEmpty()) {
-			addMedicationButton.setEnabled(false);
+			// FIXME: Not sure this is needed, but this is the wrong button!
+			// addMedicationButton.setEnabled(false);
 		}
 		buttons2.addComponent(editNotesButton);
 
