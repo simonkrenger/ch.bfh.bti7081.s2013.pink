@@ -207,10 +207,7 @@ public class SessionWindow extends CustomComponent {
 						MyVaadinUI.getNavigationManager().navigateTo(view);
 					}
 				});
-		if (((session.getSessionState() == SessionState.STARTED) || (session
-				.getSessionState() == SessionState.REOPENED))) {
-			addMedicationButton.setEnabled(false);
-		}
+		addMedicationButton.setEnabled(session.getSessionState().isEditable());
 		buttons2.addComponent(addMedicationButton);
 
 		// add edit notes button
@@ -220,8 +217,7 @@ public class SessionWindow extends CustomComponent {
 					public void buttonClick(ClickEvent event) {
 						// Open Search
 						SessionNotesView view = new SessionNotesView(session);
-						MyVaadinUI.getNavigationManager().navigateTo(
-view);
+						MyVaadinUI.getNavigationManager().navigateTo(view);
 					}
 				});
 		// set edit notes button to disabled if there are no notes

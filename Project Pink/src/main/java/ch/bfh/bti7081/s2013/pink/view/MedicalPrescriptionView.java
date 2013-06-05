@@ -10,6 +10,8 @@ import ch.bfh.bti7081.s2013.pink.model.Medication;
 import ch.bfh.bti7081.s2013.pink.model.Session;
 
 import com.vaadin.addon.touchkit.ui.NavigationView;
+import com.vaadin.addon.touchkit.ui.NumberField;
+import com.vaadin.addon.touchkit.ui.VerticalComponentGroup;
 import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;
 import com.vaadin.event.FieldEvents.TextChangeEvent;
@@ -31,7 +33,6 @@ public class MedicalPrescriptionView extends NavigationView {
 
 	private Session privateSession;
 
-
 	Button btnPrescribe;
 	Button btnUnsafePrescribe;
 
@@ -40,7 +41,10 @@ public class MedicalPrescriptionView extends NavigationView {
 	private Medication valueMedication;
 	private Date valueDateFrom, valueDateTo;
 	private String valueReason;
-	private Dose valueDose;
+	// private Dose valueDose = new Dose(amount, multiplier, period);
+	private int amout;
+	private int multiplier;
+	private Period period;
 
 	/**
 	 * not used anymore Delete before Finisehing // private int valueDoseAmount;
@@ -61,12 +65,14 @@ public class MedicalPrescriptionView extends NavigationView {
 		/**
 		 * get the active Session and set the Windows initials
 		 */
-
 		this.privateSession = patientSession;
 		setCaption("Prescription");
 		setSizeFull();
 
 		layout.addComponent(new Label(privateSession.getTimeEnd().toString()));
+
+		VerticalComponentGroup group = new VerticalComponentGroup();
+		layout.addComponent(group);
 
 		/**
 		 * Add a ComboBox to select a medicament from the medicament database
@@ -89,9 +95,9 @@ public class MedicalPrescriptionView extends NavigationView {
 
 			}
 		});
+		medicineSel.setWidth("100%");
 
-		layout.addComponent(medicineSel);
-
+		group.addComponent(medicineSel);
 
 		/**
 		 * Add a TextField to enter the doseAmount Set the dose Amount to the
@@ -99,22 +105,22 @@ public class MedicalPrescriptionView extends NavigationView {
 		 * 
 		 * @default = 0
 		 */
-		TextField doseAmount = new TextField("doseAmount");
+		NumberField doseAmount = new NumberField("Amount");
 
 		// Handle changes in the value
 		doseAmount.setValue("0");
 		doseAmount.setWidth(30, Unit.PIXELS);
 		doseAmount.addTextChangeListener(new TextChangeListener() {
 
-
 			@Override
 			public void textChange(TextChangeEvent event) {
-				valueDose.setAmount(Integer.parseInt(event.getText()));
+				amout = Integer.parseInt(event.getText());
 			}
 
 		});
+		doseAmount.setWidth("100%");
 
-		layout.addComponent(doseAmount);
+		group.addComponent(doseAmount);
 
 		/**
 		 * Add a TextField to enter the dose Multiplier Set the dose Multiplier
@@ -122,7 +128,7 @@ public class MedicalPrescriptionView extends NavigationView {
 		 * 
 		 * @default = 0
 		 */
-		TextField doseMultiplier = new TextField("doseMultiplier");
+		NumberField doseMultiplier = new NumberField("Multiplier");
 		doseMultiplier.setValue("0");
 		doseMultiplier.setWidth(30, Unit.PIXELS);
 		// Handle changes in the value
@@ -130,12 +136,13 @@ public class MedicalPrescriptionView extends NavigationView {
 
 			@Override
 			public void textChange(TextChangeEvent event) {
-				valueDose.setMultiplier(Integer.parseInt(event.getText()));
+				multiplier = Integer.parseInt(event.getText());
 			}
 
 		});
+		doseMultiplier.setWidth("100%");
 
-		layout.addComponent(doseMultiplier);
+		group.addComponent(doseMultiplier);
 
 		/**
 		 * Add a Native Select to enter choose a Period Set the dose Period to
@@ -143,20 +150,20 @@ public class MedicalPrescriptionView extends NavigationView {
 		 * 
 		 * @default = 0
 		 */
-		NativeSelect dosePeriod = new NativeSelect("DosePeriod");
+		NativeSelect dosePeriod = new NativeSelect("Period");
 		for (Period periods : Period.values()) {
 			dosePeriod.addItem(periods.name());
 		}
 		dosePeriod.addValueChangeListener(new ValueChangeListener() {
 			@Override
 			public void valueChange(ValueChangeEvent event) {
-				valueDose.setPeriod((Period) event.getProperty().getValue());
+				period = Period
+						.valueOf((String) event.getProperty().getValue());
 			}
 		});
+		dosePeriod.setWidth("100%");
 
-
-		layout.addComponent(dosePeriod);
-
+		group.addComponent(dosePeriod);
 
 		/**
 		 * Add a Date Field to enter the beginning of the prescription Set the
@@ -164,7 +171,7 @@ public class MedicalPrescriptionView extends NavigationView {
 		 * 
 		 * @default = Actual Date
 		 */
-		DateField dateFrom = new DateField();
+		DateField dateFrom = new DateField("From");
 		dateFrom.setValue(new Date());
 		dateFrom.addValueChangeListener(new ValueChangeListener() {
 
@@ -174,7 +181,8 @@ public class MedicalPrescriptionView extends NavigationView {
 
 			}
 		});
-		layout.addComponent(dateFrom);
+		dateFrom.setWidth("100%");
+		group.addComponent(dateFrom);
 
 		/**
 		 * Add a Date Field to enter the end of the prescription Set the dateTo
@@ -182,7 +190,7 @@ public class MedicalPrescriptionView extends NavigationView {
 		 * @default = Actual Date
 		 */
 
-		DateField dateTo = new DateField();
+		DateField dateTo = new DateField("To");
 		dateTo.setValue(new Date());
 		dateTo.addValueChangeListener(new ValueChangeListener() {
 
@@ -192,7 +200,8 @@ public class MedicalPrescriptionView extends NavigationView {
 
 			}
 		});
-		layout.addComponent(dateTo);
+		dateTo.setWidth("100%");
+		group.addComponent(dateTo);
 
 		/**
 		 * Add a Text Field to enter a reason for the prescription Set the
@@ -200,7 +209,7 @@ public class MedicalPrescriptionView extends NavigationView {
 		 * 
 		 * @default = ""
 		 */
-		TextField reason = new TextField("reason");
+		TextField reason = new TextField("Reason");
 		reason.setValue("");
 
 		reason.addTextChangeListener(new TextChangeListener() {
@@ -210,7 +219,8 @@ public class MedicalPrescriptionView extends NavigationView {
 			}
 
 		});
-		layout.addComponent(reason);
+		reason.setWidth("100%");
+		group.addComponent(reason);
 
 		/**
 		 * TO DO It should be possoble to add notes here
@@ -222,8 +232,9 @@ public class MedicalPrescriptionView extends NavigationView {
 		 */
 		Label doctor = new Label("the doctor");
 		doctor.setValue(privateSession.getDoctor().getName());
+		doctor.setWidth("100%");
 
-		layout.addComponent(doctor);
+		group.addComponent(doctor);
 
 		/**
 		 * Add a Button to Prescribe a medication
@@ -236,13 +247,12 @@ public class MedicalPrescriptionView extends NavigationView {
 		btnPrescribe = new Button("Prescribe", new Button.ClickListener() {
 			@Override
 			public void buttonClick(Button.ClickEvent clickEvent) {
-				localMedicalService.prescribeMedicament(
-						privateSession.getPatient(), valueMedication, valueDose,
-                        valueDateFrom, valueDateTo);
+				localMedicalService.prescribeMedicament(privateSession
+						.getPatient(), valueMedication, new Dose(amout,
+						multiplier, period), valueDateFrom, valueDateTo);
 			}
 		});
 
-	
 		layout.addComponent(btnPrescribe);
 
 		/**
@@ -260,6 +270,6 @@ public class MedicalPrescriptionView extends NavigationView {
 		 * 
 		 */
 
-            setContent(layout); }
+		setContent(layout);
+	}
 }
-
