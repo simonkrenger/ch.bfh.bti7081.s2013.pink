@@ -233,7 +233,7 @@ public class TestDataSource {
 
 	public static MedicationPrescription getPrescription() {
 		return new MedicationPrescription("Just for fun", getMedicine(),
-				getDose(), getDoctor());
+				getDose(), getDoctor(), new Date(), new Date());
 	}
 
 	public static Dose getDose() {

@@ -7,6 +7,7 @@ package ch.bfh.bti7081.s2013.pink;
 
 import ch.bfh.bti7081.s2013.pink.model.Patient;
 import ch.bfh.bti7081.s2013.pink.model.Session;
+import ch.bfh.bti7081.s2013.pink.view.MedicalPrescriptionView;
 import ch.bfh.bti7081.s2013.pink.model.SessionState;
 import ch.bfh.bti7081.s2013.pink.view.PatientDetailView;
 import ch.bfh.bti7081.s2013.pink.view.SessionOverView;
@@ -196,10 +197,10 @@ public class SessionWindow extends CustomComponent {
 					@Override
 					public void buttonClick(ClickEvent event) {
 						// Open Search
-						PatientDetailView detailedPatientView = new PatientDetailView(
-								patient);
+						MedicalPrescriptionView medicalPrescriptionView = new MedicalPrescriptionView(
+								session);
 						MyVaadinUI.getNavigationManager().navigateTo(
-								detailedPatientView);
+								medicalPrescriptionView);
 					}
 				});
 		if (!((session.getSessionState() == SessionState.STARTED) || (session
