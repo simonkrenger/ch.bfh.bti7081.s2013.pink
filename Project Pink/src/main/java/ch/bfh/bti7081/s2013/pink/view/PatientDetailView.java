@@ -2,8 +2,8 @@ package ch.bfh.bti7081.s2013.pink.view;
 
 import ch.bfh.bti7081.s2013.pink.MyVaadinUI;
 import ch.bfh.bti7081.s2013.pink.model.Allergy;
+import ch.bfh.bti7081.s2013.pink.model.HibernateDataSource;
 import ch.bfh.bti7081.s2013.pink.model.MedicationPrescription;
-import ch.bfh.bti7081.s2013.pink.model.Note;
 import ch.bfh.bti7081.s2013.pink.model.Patient;
 import ch.bfh.bti7081.s2013.pink.model.Warning;
 
@@ -30,6 +30,7 @@ import com.vaadin.ui.VerticalLayout;
  */
 @SuppressWarnings("serial")
 public class PatientDetailView extends NavigationView {
+	private Button notesButton;
 
 	/**
 	 * Patient whose details are displayed
@@ -84,14 +85,6 @@ public class PatientDetailView extends NavigationView {
 			layout.addComponent(allergies);
 		}
 
-		VerticalComponentGroup notes = new VerticalComponentGroup("Notes");
-		for (Note n : patient.getNotes()) {
-			Label note = new Label(n.getText());
-			note.setCaption("Date: " + n.getTimestamp());
-			notes.addComponent(note);
-		}
-		layout.addComponent(notes);
-
 		VerticalComponentGroup prescriptions = new VerticalComponentGroup(
 				"Prescriptions");
 		for (MedicationPrescription p : patient.getPrescriptions()) {
@@ -106,7 +99,7 @@ public class PatientDetailView extends NavigationView {
 		// Create Toolbar
 		Toolbar toolbar = new Toolbar();
 
-		Button notesButton = new Button(null, new Button.ClickListener() {
+		notesButton = new Button(null, new Button.ClickListener() {
 			@Override
 			public void buttonClick(ClickEvent event) {
 				NotesView notesView = new NotesView(patient);
@@ -125,8 +118,14 @@ public class PatientDetailView extends NavigationView {
 	@Override
 	protected void onBecomingVisible() {
 		super.onBecomingVisible();
+		patient = HibernateDataSource.getInstance().reload(patient);
 		for (Warning warning : patient.getWarnings()) {
 			Notification.show(warning.getText(), Type.WARNING_MESSAGE);
 		}
+
+		int size = patient.getNotes().size();
+		IndicatorImageSource image = new IndicatorImageSource(
+				"/images/note.png", size);
+		notesButton.setIcon(image.getResource());
 	}
 }

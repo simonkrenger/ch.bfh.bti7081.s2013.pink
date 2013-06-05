@@ -7,8 +7,8 @@ package ch.bfh.bti7081.s2013.pink;
 
 import ch.bfh.bti7081.s2013.pink.model.Patient;
 import ch.bfh.bti7081.s2013.pink.model.Session;
-import ch.bfh.bti7081.s2013.pink.view.MedicalPrescriptionView;
 import ch.bfh.bti7081.s2013.pink.model.SessionState;
+import ch.bfh.bti7081.s2013.pink.view.MedicalPrescriptionView;
 import ch.bfh.bti7081.s2013.pink.view.PatientDetailView;
 import ch.bfh.bti7081.s2013.pink.view.SessionOverView;
 

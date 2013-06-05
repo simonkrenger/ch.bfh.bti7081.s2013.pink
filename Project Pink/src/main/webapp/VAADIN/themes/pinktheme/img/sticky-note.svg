@@ -36,11 +36,12 @@
        inkscape:collect="always"
        xlink:href="#linearGradient3791"
        id="linearGradient3797"
-       x1="8.1015253"
-       y1="1.1091254"
-       x2="36.471447"
-       y2="37.348347"
-       gradientUnits="userSpaceOnUse" />
+       x1="235.98018"
+       y1="3.3819678"
+       x2="243.63385"
+       y2="45.808376"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(0.14018897,0,0,1,-0.1996765,1012.3622)" />
   </defs>
   <sodipodi:namedview
      id="base"
@@ -51,7 +52,7 @@
      inkscape:pageshadow="2"
      inkscape:zoom="7.9195959"
      inkscape:cx="16.017039"
-     inkscape:cy="33.800734"
+     inkscape:cy="8.86108"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -79,11 +80,10 @@
      transform="translate(0,-1012.3622)">
     <path
        style="fill:url(#linearGradient3797);fill-opacity:1;stroke:none"
-       d="m -0.232233,0.0989744 40.133253,0 C 39.40572,17.397836 41.128422,26.362939 38.51206,39.494921 l -38.744293,0 c 1.548381,-12.248099 -0.13618549,-21.086932 0,-39.3959466 z"
+       d="m -0.232233,1012.4612 40.097695,0 c -0.06944,17.2988 0.172068,26.2639 -0.194717,39.3959 l -39.902978,0 c 0.21706593,-12.2481 -0.0190917,-21.0869 0,-39.3959 z"
        id="rect2985"
        inkscape:connector-curvature="0"
        sodipodi:nodetypes="ccccc"
-       transform="translate(0,1012.3622)"
        inkscape:export-filename="/Users/chris/note.png"
        inkscape:export-xdpi="90"
        inkscape:export-ydpi="90" />

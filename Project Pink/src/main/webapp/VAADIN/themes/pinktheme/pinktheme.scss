@@ -21,4 +21,16 @@
 		font-style: italic;
 		padding-bottom: 0.6em;
 	}
+
+	.v-slot-p-note .v-label {
+		white-space: pre-wrap;
+	}
+
+	.v-slot-p-note .v-button {
+		float: right;
+		width: 2em;
+		height: 2em;
+		background: url(img/delete.png) no-repeat;
+		background-size: 100% 100%;
+	}
 }

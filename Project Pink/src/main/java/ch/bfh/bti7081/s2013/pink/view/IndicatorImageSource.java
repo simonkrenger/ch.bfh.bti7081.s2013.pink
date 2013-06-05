@@ -50,15 +50,22 @@ public class IndicatorImageSource implements StreamSource {
 		g2d.setRenderingHint(RenderingHints.KEY_FRACTIONALMETRICS,
 				RenderingHints.VALUE_FRACTIONALMETRICS_ON);
 		g2d.drawImage(baseImage, null, 0, 0);
-		g2d.setColor(new Color(255, 73, 150));
-		g2d.fillOval(22, 0, 18, 18);
-		g2d.setColor(Color.white);
-		g2d.drawOval(22, 0, 18, 18);
-		Font f = g2d.getFont();
-		f = f.deriveFont(12f);
-		g2d.setFont(f);
-		g2d.drawString(String.valueOf(indicator), 27, 14);
 
+		if (indicator > 0) {
+			g2d.setColor(new Color(255, 73, 150));
+			g2d.fillOval(22, 0, 18, 18);
+			g2d.setColor(Color.white);
+			g2d.drawOval(22, 0, 18, 18);
+			Font f = g2d.getFont();
+			f = f.deriveFont(12f);
+			g2d.setFont(f);
+			String i;
+			if (indicator < 10)
+				i = String.valueOf(indicator);
+			else
+				i = "∞";
+			g2d.drawString(i, 27, 14);
+		}
 		try {
 			/* Write the image to a buffer. */
 			imagebuffer = new ByteArrayOutputStream();
