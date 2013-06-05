@@ -8,7 +8,7 @@ package ch.bfh.bti7081.s2013.pink.model;
 public class Context {
 	private static Context context;
 
-	private Doctor doctor;
+	private ThreadLocal<Doctor> doctor = new ThreadLocal<Doctor>();
 
 	/**
 	 * Private constructor for singleton pattern.
@@ -17,7 +17,8 @@ public class Context {
 	 */
 	private Context() {
 		// TODO: Login - static context won't work then, must be thread local
-		doctor = HibernateDataSource.getInstance().findAll(Doctor.class).get(0);
+		// doctor =
+		// HibernateDataSource.getInstance().findAll(Doctor.class).get(0);
 	}
 
 	/**
@@ -37,6 +38,10 @@ public class Context {
 	 * @return the currently logged in {@link Doctor}
 	 */
 	public Doctor getDoctor() {
-		return doctor;
+		return doctor.get();
+	}
+
+	public void setDoctor(Doctor doctor) {
+		this.doctor.set(doctor);
 	}
 }

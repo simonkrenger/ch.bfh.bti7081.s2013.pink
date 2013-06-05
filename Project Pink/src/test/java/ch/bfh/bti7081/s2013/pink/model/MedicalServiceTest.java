@@ -1,14 +1,17 @@
 package ch.bfh.bti7081.s2013.pink.model;
 
-import ch.bfh.bti7081.s2013.pink.medication.IMedicalService;
-import ch.bfh.bti7081.s2013.pink.medication.LocalMedicalService;
-import junit.extensions.TestSetup;
-import junit.framework.Assert;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
+
+import java.util.Date;
+
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import java.util.Date;
+import ch.bfh.bti7081.s2013.pink.medication.IMedicalService;
+import ch.bfh.bti7081.s2013.pink.medication.LocalMedicalService;
 
 /**
  * Created with IntelliJ IDEA.
@@ -45,6 +48,9 @@ public class MedicalServiceTest
         mars = new Medication("MARS (TM)");
         snickers = new Medication("SNICKER (TM)");
         snickers.addIngredient(nuts);
+
+		Context.getCurrent().setDoctor(
+				new Doctor("Gregory", "House", "/images/mascot.png"));
     }
 
     @Before
@@ -63,8 +69,8 @@ public class MedicalServiceTest
                                     new Date(),
                                     new Date());
 
-        Assert.assertFalse(result);
-        Assert.assertNull(mockPatientDataSource.getLastSavedPatient());
+		assertFalse(result);
+		assertNull(mockPatientDataSource.getLastSavedPatient());
     }
 
     @Test
@@ -77,8 +83,9 @@ public class MedicalServiceTest
                 new Date(),
                 new Date());
 
-        Assert.assertTrue(result);
-        Assert.assertFalse(mockPatientDataSource.getLastSavedPatient().getPrescriptions().isEmpty());
+		assertTrue(result);
+		assertFalse(mockPatientDataSource.getLastSavedPatient()
+				.getPrescriptions().isEmpty());
     }
 
     @Test
@@ -92,8 +99,9 @@ public class MedicalServiceTest
                 new Date(),
                 new Date());
 
-        Assert.assertTrue(result);
-        Assert.assertFalse(mockPatientDataSource.getLastSavedPatient().getPrescriptions().isEmpty());
+		assertTrue(result);
+		assertFalse(mockPatientDataSource.getLastSavedPatient()
+				.getPrescriptions().isEmpty());
     }
 
     @Test
@@ -107,7 +115,7 @@ public class MedicalServiceTest
                 new Date(),
                 new Date());
 
-        Assert.assertFalse(result);
-        Assert.assertNull(mockPatientDataSource.getLastSavedPatient());
+		assertFalse(result);
+		assertNull(mockPatientDataSource.getLastSavedPatient());
     }
 }
