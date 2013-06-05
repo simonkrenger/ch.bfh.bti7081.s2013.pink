@@ -9,7 +9,7 @@ import ch.bfh.bti7081.s2013.pink.model.Note;
 import ch.bfh.bti7081.s2013.pink.model.Patient;
 import ch.bfh.bti7081.s2013.pink.model.Session;
 import ch.bfh.bti7081.s2013.pink.model.SessionState;
-import ch.bfh.bti7081.s2013.pink.view.PatientDetailView;
+import ch.bfh.bti7081.s2013.pink.view.SessionNotesView;
 import ch.bfh.bti7081.s2013.pink.view.SessionOverView;
 
 import com.vaadin.addon.touchkit.ui.VerticalComponentGroup;
@@ -77,7 +77,6 @@ public class SessionWindow extends CustomComponent {
 		Layout buttons1 = new HorizontalLayout();
 		Layout buttons2 = new HorizontalLayout();
 		Layout buttons3 = new HorizontalLayout();
-
 
 		// set patient picture
 		if (patient.getImageUrl() != null)
@@ -204,8 +203,7 @@ public class SessionWindow extends CustomComponent {
 						// Open Search
 						MedicalPrescriptionView view = new MedicalPrescriptionView(
 								session);
-						MyVaadinUI.getNavigationManager().navigateTo(
-view);
+						MyVaadinUI.getNavigationManager().navigateTo(view);
 					}
 				});
 		if (((session.getSessionState() == SessionState.STARTED) || (session
@@ -220,10 +218,9 @@ view);
 					@Override
 					public void buttonClick(ClickEvent event) {
 						// Open Search
-						PatientDetailView detailedPatientView = new PatientDetailView(
-								patient);
+						SessionNotesView view = new SessionNotesView(session);
 						MyVaadinUI.getNavigationManager().navigateTo(
-								detailedPatientView);
+view);
 					}
 				});
 		// set edit notes button to disabled if there are no notes
@@ -241,7 +238,7 @@ view);
 		Button warnings = new Button("Show warnings");
 		warnings.setIcon(new ThemeResource("img/warning.png"));
 		opener.extend(warnings);
-		buttons2.addComponent(warnings);
+		buttons3.addComponent(warnings);
 		// back to home button
 		Button backButton = new Button("Back to overview",
 				new Button.ClickListener() {
@@ -255,14 +252,15 @@ view);
 				.getSessionState() == SessionState.REOPENED))) {
 			backButton.setEnabled(false);
 		}
-		buttons2.addComponent(backButton);
+		buttons3.addComponent(backButton);
 
 		mainLayout.addComponent(text);
 		mainLayout.addComponent(buttons1);
 		mainLayout.addComponent(buttons2);
+		mainLayout.addComponent(buttons3);
 		// Create title field
 		tf = new TextArea("Session notes");
-		tf.setWidth("550px");
+		tf.setWidth("100%");
 		tf.setHeight("320px");
 		tf.setTextChangeTimeout(300);
 		tf.setTextChangeEventMode(AbstractTextField.TextChangeEventMode.TIMEOUT);
@@ -289,8 +287,7 @@ view);
 				// Open Search
 				Note note = new Note(noteValue);
 				session.addNote(note);
-				SessionView sessionView = new SessionView(session, patient);
-				MyVaadinUI.getNavigationManager().navigateTo(sessionView);
+				tf.setValue("");
 			}
 		});
 		mainLayout.addComponent(addNote);
