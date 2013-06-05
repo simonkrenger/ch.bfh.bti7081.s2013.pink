@@ -149,6 +149,7 @@ public class SessionWindow extends CustomComponent {
 						session.changeState(SessionState.REOPENED);
 						SessionView view = new SessionView(session, patient);
 						MyVaadinUI.getNavigationManager().navigateTo(view);
+
 					}
 				});
 		if (session.getSessionState() == SessionState.ARCHIVED) {
@@ -207,10 +208,12 @@ public class SessionWindow extends CustomComponent {
 						MyVaadinUI.getNavigationManager().navigateTo(view);
 					}
 				});
-		if (((session.getSessionState() == SessionState.STARTED) || (session
+		/*
+		 * if (((session.getSessionState() == SessionState.STARTED) || (session
 				.getSessionState() == SessionState.REOPENED))) {
-			addMedicationButton.setEnabled(false);
-		}
+				*/
+		addMedicationButton.setEnabled(true);
+		// }
 		buttons2.addComponent(addMedicationButton);
 
 		// add edit notes button
