@@ -5,7 +5,7 @@ import java.util.List;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
-import ch.bfh.bti7081.s2013.pink.MyVaadinUI;
+import ch.bfh.bti7081.s2013.pink.model.Doctor;
 import ch.bfh.bti7081.s2013.pink.model.HibernateDataSource;
 import ch.bfh.bti7081.s2013.pink.model.Session;
 import ch.bfh.bti7081.s2013.pink.model.TestDataSource;
@@ -51,39 +51,23 @@ public class SessionOverView extends NavigationView {
 		setContent(layout);
 
 		// Toolbar
-		Button test = new Button(null, new Button.ClickListener() {
-			private static final long serialVersionUID = -261072762324902276L;
-
-			@Override
-			public void buttonClick(ClickEvent event) {
-				new TestDataSource().clearTableAndCreateTestData();
-			}
-		});
-		test.setIcon(new ClassResource("/images/mascot.png"));
-		Toolbar toolbar = new Toolbar();
-
-		List<Session> sessions = HibernateDataSource.getInstance().findAll(
-				Session.class);
-		if (sessions.size() == 0) {
+		List<Doctor> doctors = HibernateDataSource.getInstance().findAll(
+				Doctor.class);
+		if (doctors.size() == 0) {
 			// allow creating test data
-			toolbar.addComponent(test);
-		} else {
-			final Session dummySession = sessions.get(0);
-			Button prescriptionDummy = new Button("Medical Prescription Dummy",
-					new Button.ClickListener() {
-						private static final long serialVersionUID = 5381750326390188015L;
+			Button test = new Button(null, new Button.ClickListener() {
+				private static final long serialVersionUID = -261072762324902276L;
 
-						@Override
-						public void buttonClick(ClickEvent event) {
-							// Open Search
-							MedicalPrescriptionView mpv = new MedicalPrescriptionView(
-									dummySession);
-							MyVaadinUI.getNavigationManager().navigateTo(mpv);
-						}
-					});
-			prescriptionDummy.setIcon(new ClassResource("/images/mascot.png"));
-			toolbar.addComponent(prescriptionDummy);
+				@Override
+				public void buttonClick(ClickEvent event) {
+					new TestDataSource().clearTableAndCreateTestData();
+				}
+			});
+			test.setIcon(new ClassResource("/images/mascot.png"));
+			Toolbar toolbar = new Toolbar();
+
+			toolbar.addComponent(test);
+			setToolbar(toolbar);
 		}
-		setToolbar(toolbar);
 	}
 }

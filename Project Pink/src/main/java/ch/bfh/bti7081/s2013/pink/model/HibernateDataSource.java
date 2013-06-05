@@ -107,30 +107,28 @@ public class HibernateDataSource {
 		return result;
 	}
 
-    public List<ch.bfh.bti7081.s2013.pink.model.Session> getSessionsByName(String name)
-    {
-        Session session = sessionFactory.openSession();
-        session.beginTransaction();
+	public List<ch.bfh.bti7081.s2013.pink.model.Session> getSessionsByName(
+			String name) {
+		Session session = sessionFactory.openSession();
+		session.beginTransaction();
 
-        Criteria crit = session.createCriteria(ch.bfh.bti7081.s2013.pink.model.Session.class);
-        if (name != null)
-        {
-            crit = crit
-                    .createCriteria("patient")
-                    .add(
-                        Restrictions.or(
-                            Restrictions.ilike("name", name, MatchMode.ANYWHERE),
-                            Restrictions.ilike("firstName", name, MatchMode.ANYWHERE)));
+		Criteria crit = session
+				.createCriteria(ch.bfh.bti7081.s2013.pink.model.Session.class);
+		if (name != null) {
+			crit = crit.createCriteria("patient").add(
+					Restrictions.or(Restrictions.ilike("name", name,
+							MatchMode.ANYWHERE), Restrictions.ilike(
+							"firstName", name, MatchMode.ANYWHERE)));
 
-        }
-        @SuppressWarnings("unchecked")
-        List<ch.bfh.bti7081.s2013.pink.model.Session> result = crit.list();
+		}
+		@SuppressWarnings("unchecked")
+		List<ch.bfh.bti7081.s2013.pink.model.Session> result = crit.list();
 
-        session.getTransaction().commit();
-        session.close();
+		session.getTransaction().commit();
+		session.close();
 
-        return result;
-    }
+		return result;
+	}
 
 	/**
 	 * @param name
@@ -172,6 +170,27 @@ public class HibernateDataSource {
 		session.getTransaction().commit();
 		session.close();
 		return entity;
+	}
+
+	public <T> T reload(T entity) {
+		Session session = sessionFactory.openSession();
+		session.beginTransaction();
+		
+		session.refresh(entity);
+		
+		session.getTransaction().commit();
+		session.close();
+		return entity;
+	}
+
+	public void remove(Object entity) {
+		Session session = sessionFactory.openSession();
+		session.beginTransaction();
+
+		session.delete(entity);
+
+		session.getTransaction().commit();
+		session.close();
 	}
 
 	/**

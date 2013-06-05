@@ -2,6 +2,7 @@ package ch.bfh.bti7081.s2013.pink.view;
 
 import ch.bfh.bti7081.s2013.pink.MyVaadinUI;
 import ch.bfh.bti7081.s2013.pink.model.Allergy;
+import ch.bfh.bti7081.s2013.pink.model.HibernateDataSource;
 import ch.bfh.bti7081.s2013.pink.model.MedicationPrescription;
 import ch.bfh.bti7081.s2013.pink.model.Patient;
 import ch.bfh.bti7081.s2013.pink.model.Warning;
@@ -117,6 +118,7 @@ public class PatientDetailView extends NavigationView {
 	@Override
 	protected void onBecomingVisible() {
 		super.onBecomingVisible();
+		patient = HibernateDataSource.getInstance().reload(patient);
 		for (Warning warning : patient.getWarnings()) {
 			Notification.show(warning.getText(), Type.WARNING_MESSAGE);
 		}

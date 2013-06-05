@@ -85,7 +85,8 @@ public class PatientOverview extends CustomComponent {
 		sessionBegin.setCaption("Session begin:");
 		sessionBegin.setImmediate(false);
 		String startTime = dateFormat.format(session.getTimeStart());
-		sessionBegin.setValue(startTime);
+		sessionBegin.setValue(startTime + " (" + session.getSessionState()
+				+ ")");
 		text.addComponent(sessionBegin);
 
 		// Adds the button to start the patient session

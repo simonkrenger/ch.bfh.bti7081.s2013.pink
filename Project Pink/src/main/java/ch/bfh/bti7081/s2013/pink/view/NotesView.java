@@ -10,10 +10,13 @@ import ch.bfh.bti7081.s2013.pink.model.NoteHolder;
 import com.vaadin.addon.touchkit.ui.NavigationView;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
+import com.vaadin.ui.Button.ClickListener;
+import com.vaadin.ui.CustomComponent;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Layout;
 import com.vaadin.ui.TextArea;
 import com.vaadin.ui.VerticalLayout;
+import com.vaadin.ui.themes.BaseTheme;
 
 public class NotesView extends NavigationView {
 	private static final long serialVersionUID = -6257562003847635377L;
@@ -46,6 +49,7 @@ public class NotesView extends NavigationView {
 				Note note = ds.saveOrUpdate(new Note(noteText.getValue()));
 				noteHolder.addNote(note);
 				ds.saveOrUpdate(noteHolder);
+				noteText.setValue("");
 				notes.removeAllComponents();
 				updateNotes();
 			}
@@ -63,13 +67,34 @@ public class NotesView extends NavigationView {
 
 	private DateFormat df = new SimpleDateFormat();
 
-	private class NoteView extends Label {
+	private class NoteView extends CustomComponent {
 		private static final long serialVersionUID = -6439006060532901266L;
 
-		public NoteView(Note note) {
+		public NoteView(final Note note) {
 			setStyleName("p-note");
-			setCaption(df.format(note.getTimestamp()));
-			setValue(note.getText());
+			Label label = new Label();
+			label.setCaption(df.format(note.getTimestamp()));
+			label.setValue(note.getText());
+			VerticalLayout layout = new VerticalLayout();
+			layout.addComponent(label);
+			Button removeButton = new Button();
+			removeButton.setWidth("20px");
+			removeButton.setHeight("20px");
+			removeButton.setStyleName(BaseTheme.BUTTON_LINK);
+			removeButton.addClickListener(new ClickListener() {
+				private static final long serialVersionUID = 5650763451236883119L;
+
+				@Override
+				public void buttonClick(ClickEvent event) {
+					noteHolder.getNotes().remove(note);
+					noteHolder = ds.saveOrUpdate(noteHolder);
+					ds.remove(note);
+					notes.removeAllComponents();
+					updateNotes();
+				}
+			});
+			layout.addComponent(removeButton);
+			setCompositionRoot(layout);
 		}
 	}
 }
