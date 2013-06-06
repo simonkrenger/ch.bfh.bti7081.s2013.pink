@@ -5,6 +5,7 @@
  */
 package ch.bfh.bti7081.s2013.pink;
 
+import ch.bfh.bti7081.s2013.pink.model.HibernateDataSource;
 import ch.bfh.bti7081.s2013.pink.model.Note;
 import ch.bfh.bti7081.s2013.pink.model.Patient;
 import ch.bfh.bti7081.s2013.pink.model.Session;
@@ -42,6 +43,7 @@ public class SessionWindow extends CustomComponent {
 	private Patient patient;
 	private Session session;
 	private String noteValue;
+	private HibernateDataSource ds = HibernateDataSource.getInstance();
 
 	// private List<Warning> warnings;
 
@@ -75,9 +77,9 @@ public class SessionWindow extends CustomComponent {
 		setHeight("100%");
 
 		VerticalLayout text = new VerticalLayout();
-		Layout buttons1 = new HorizontalLayout();
-		Layout buttons2 = new HorizontalLayout();
-		Layout buttons3 = new HorizontalLayout();
+		Layout stateButtons = new HorizontalLayout();
+		Layout mediNoteButtons = new HorizontalLayout();
+		Layout warningBackButtons = new HorizontalLayout();
 
 		// set patient picture
 		if (patient.getImageUrl() != null)
@@ -112,7 +114,7 @@ public class SessionWindow extends CustomComponent {
 				});
 		if ((session.getSessionState() == SessionState.FINISHED)
 				|| (session.getSessionState() == SessionState.ABORTED)) {
-			buttons1.addComponent(startSessionButton);
+			stateButtons.addComponent(startSessionButton);
 		}
 
 		// add finish session button
@@ -126,7 +128,7 @@ public class SessionWindow extends CustomComponent {
 					}
 				});
 		if (session.getSessionState() == SessionState.STARTED) {
-			buttons1.addComponent(finishSessionButton);
+			stateButtons.addComponent(finishSessionButton);
 		}
 		// add abort session button
 		Button abortSessionButton = new Button("Abort session",
@@ -139,7 +141,7 @@ public class SessionWindow extends CustomComponent {
 					}
 				});
 		if ((session.getSessionState() == SessionState.STARTED)) {
-			buttons1.addComponent(abortSessionButton);
+			stateButtons.addComponent(abortSessionButton);
 		}
 		// add reopen session button
 		Button reopenSessionButton = new Button("Reopen session",
@@ -152,7 +154,7 @@ public class SessionWindow extends CustomComponent {
 					}
 				});
 		if (session.getSessionState() == SessionState.ARCHIVED) {
-			buttons1.addComponent(reopenSessionButton);
+			stateButtons.addComponent(reopenSessionButton);
 		}
 		// add cancel session button
 		Button cancelSessionButton = new Button("Cancel session",
@@ -165,7 +167,7 @@ public class SessionWindow extends CustomComponent {
 					}
 				});
 		if (session.getSessionState() == SessionState.PLANNED) {
-			buttons1.addComponent(cancelSessionButton);
+			stateButtons.addComponent(cancelSessionButton);
 		}
 		// add archive session button
 		Button archiveSessionButton = new Button("Archive session",
@@ -180,7 +182,7 @@ public class SessionWindow extends CustomComponent {
 		if ((session.getSessionState() == SessionState.FINISHED)
 				|| (session.getSessionState() == SessionState.REOPENED)
 				|| (session.getSessionState() == SessionState.CANCELLED)) {
-			buttons1.addComponent(archiveSessionButton);
+			stateButtons.addComponent(archiveSessionButton);
 		}
 		// add planned session button
 		Button plannedSessionButton = new Button("Archive session",
@@ -193,7 +195,7 @@ public class SessionWindow extends CustomComponent {
 					}
 				});
 		if (session.getSessionState() == SessionState.ABORTED) {
-			buttons1.addComponent(plannedSessionButton);
+			stateButtons.addComponent(plannedSessionButton);
 		}
 
 		// add add medication button
@@ -207,8 +209,11 @@ public class SessionWindow extends CustomComponent {
 						MyVaadinUI.getNavigationManager().navigateTo(view);
 					}
 				});
-		addMedicationButton.setEnabled(session.getSessionState().isEditable());
-		buttons2.addComponent(addMedicationButton);
+		if (((session.getSessionState() == SessionState.STARTED) || (session
+				.getSessionState() == SessionState.REOPENED))) {
+			addMedicationButton.setEnabled(false);
+		}
+		mediNoteButtons.addComponent(addMedicationButton);
 
 		// add edit notes button
 		Button editNotesButton = new Button("Edit notes",
@@ -224,7 +229,7 @@ public class SessionWindow extends CustomComponent {
 		if (session.getNotes().isEmpty()) {
 			addMedicationButton.setEnabled(false);
 		}
-		buttons2.addComponent(editNotesButton);
+		mediNoteButtons.addComponent(editNotesButton);
 
 		// Create an opener extension
 		BrowserWindowOpener opener = new BrowserWindowOpener(
@@ -235,7 +240,7 @@ public class SessionWindow extends CustomComponent {
 		Button warnings = new Button("Show warnings");
 		warnings.setIcon(new ThemeResource("img/warning.png"));
 		opener.extend(warnings);
-		buttons3.addComponent(warnings);
+		warningBackButtons.addComponent(warnings);
 		// back to home button
 		Button backButton = new Button("Back to overview",
 				new Button.ClickListener() {
@@ -249,12 +254,12 @@ public class SessionWindow extends CustomComponent {
 				.getSessionState() == SessionState.REOPENED))) {
 			backButton.setEnabled(false);
 		}
-		buttons3.addComponent(backButton);
+		warningBackButtons.addComponent(backButton);
 
 		mainLayout.addComponent(text);
-		mainLayout.addComponent(buttons1);
-		mainLayout.addComponent(buttons2);
-		mainLayout.addComponent(buttons3);
+		mainLayout.addComponent(stateButtons);
+		mainLayout.addComponent(mediNoteButtons);
+		mainLayout.addComponent(warningBackButtons);
 		// Create title field
 		tf = new TextArea("Session notes");
 		tf.setWidth("100%");
@@ -273,17 +278,15 @@ public class SessionWindow extends CustomComponent {
 				.getSessionState() == SessionState.REOPENED))) {
 			tf.setEnabled(false);
 		}
-		// tf.setValue(session.getNotes().get(0).getText()); // TODO: Which note
-		// is
-		// the session note?
+
 		mainLayout.addComponent(tf);
 		// add add Note button
 		Button addNote = new Button("Add note", new Button.ClickListener() {
 			@Override
 			public void buttonClick(ClickEvent event) {
-				// Open Search
-				Note note = new Note(noteValue);
+				Note note = ds.saveOrUpdate(new Note(tf.getValue()));
 				session.addNote(note);
+				session = ds.saveOrUpdate(session);
 				tf.setValue("");
 			}
 		});
