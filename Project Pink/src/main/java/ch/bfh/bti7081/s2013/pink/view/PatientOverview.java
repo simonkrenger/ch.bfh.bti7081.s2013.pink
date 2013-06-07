@@ -90,7 +90,7 @@ public class PatientOverview extends CustomComponent {
 		text.addComponent(sessionBegin);
 
 		// Adds the button to start the patient session
-		NavigationButton startSession = new NavigationButton("Begin Session");
+		NavigationButton startSession = new NavigationButton("Show Session");
 		startSession.addClickListener(new NavigationButtonClickListener() {
 
 			@Override
