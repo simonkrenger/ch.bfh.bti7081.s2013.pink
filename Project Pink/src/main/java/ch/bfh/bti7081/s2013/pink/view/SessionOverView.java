@@ -23,6 +23,7 @@ public class SessionOverView extends NavigationView {
 		setCaption("Upcoming");
 
 		final VerticalLayout layout = new VerticalLayout();
+		layout.setMargin(true);
 
 		SessionList sessionList = new SessionList(HibernateDataSource
 				.getInstance().findAll(Session.class));

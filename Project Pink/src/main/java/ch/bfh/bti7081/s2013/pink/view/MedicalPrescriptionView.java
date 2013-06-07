@@ -19,6 +19,7 @@ import com.vaadin.event.FieldEvents.TextChangeListener;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.DateField;
+import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.NativeSelect;
 import com.vaadin.ui.TextField;
@@ -30,6 +31,7 @@ import com.vaadin.ui.VerticalLayout;
  * @author Christoph Seiler (Christoph Seiler) Date: 22.05.13 Time: 18:40
  */
 public class MedicalPrescriptionView extends NavigationView {
+	private static final long serialVersionUID = -7838749079897250776L;
 
 	private Session privateSession;
 
@@ -59,7 +61,6 @@ public class MedicalPrescriptionView extends NavigationView {
 	 * 
 	 * @return a View
 	 */
-
 	public MedicalPrescriptionView(Session patientSession) {
 
 		/**
@@ -86,6 +87,7 @@ public class MedicalPrescriptionView extends NavigationView {
 		medicineSel.setValue("enter medicine name");
 
 		medicineSel.addValueChangeListener(new ValueChangeListener() {
+			private static final long serialVersionUID = 3289141036055777064L;
 
 			@Override
 			public void valueChange(ValueChangeEvent event) {
@@ -106,22 +108,24 @@ public class MedicalPrescriptionView extends NavigationView {
 		 * 
 		 * @default = 0
 		 */
-		NumberField doseAmount = new NumberField("Amount");
+		HorizontalLayout doseGroup = new HorizontalLayout();
+		group.addComponent(doseGroup);
+		NumberField doseAmount = new NumberField();
 
 		// Handle changes in the value
 		doseAmount.setValue("0");
-		doseAmount.setWidth(30, Unit.PIXELS);
+		doseAmount.setWidth("3em");
 		doseAmount.addTextChangeListener(new TextChangeListener() {
+			private static final long serialVersionUID = 4376224365227823135L;
 
 			@Override
 			public void textChange(TextChangeEvent event) {
 				amout = Integer.parseInt(event.getText());
 			}
-
 		});
-		doseAmount.setWidth("100%");
+		doseGroup.addComponent(doseAmount);
 
-		group.addComponent(doseAmount);
+		doseGroup.addComponent(new Label(" Pills, "));
 
 		/**
 		 * Add a TextField to enter the dose Multiplier Set the dose Multiplier
@@ -129,21 +133,21 @@ public class MedicalPrescriptionView extends NavigationView {
 		 * 
 		 * @default = 0
 		 */
-		NumberField doseMultiplier = new NumberField("Multiplier");
+		NumberField doseMultiplier = new NumberField();
 		doseMultiplier.setValue("0");
-		doseMultiplier.setWidth(30, Unit.PIXELS);
+		doseMultiplier.setWidth("3em");
 		// Handle changes in the value
 		doseMultiplier.addTextChangeListener(new TextChangeListener() {
+			private static final long serialVersionUID = -7622388979175553469L;
 
 			@Override
 			public void textChange(TextChangeEvent event) {
 				multiplier = Integer.parseInt(event.getText());
 			}
-
 		});
-		doseMultiplier.setWidth("100%");
+		doseGroup.addComponent(doseMultiplier);
 
-		group.addComponent(doseMultiplier);
+		doseGroup.addComponent(new Label(" times per "));
 
 		/**
 		 * Add a Native Select to enter choose a Period Set the dose Period to
@@ -151,11 +155,13 @@ public class MedicalPrescriptionView extends NavigationView {
 		 * 
 		 * @default = 0
 		 */
-		NativeSelect dosePeriod = new NativeSelect("Period");
+		NativeSelect dosePeriod = new NativeSelect();
 		for (Period periods : Period.values()) {
 			dosePeriod.addItem(periods.name());
 		}
 		dosePeriod.addValueChangeListener(new ValueChangeListener() {
+			private static final long serialVersionUID = -6657351913129873449L;
+
 			@Override
 			public void valueChange(ValueChangeEvent event) {
 				period = Period
@@ -164,7 +170,7 @@ public class MedicalPrescriptionView extends NavigationView {
 		});
 		dosePeriod.setWidth("100%");
 
-		group.addComponent(dosePeriod);
+		doseGroup.addComponent(dosePeriod);
 
 		/**
 		 * Add a Date Field to enter the beginning of the prescription Set the
@@ -175,6 +181,7 @@ public class MedicalPrescriptionView extends NavigationView {
 		DateField dateFrom = new DateField("From");
 		dateFrom.setValue(new Date());
 		dateFrom.addValueChangeListener(new ValueChangeListener() {
+			private static final long serialVersionUID = -6042814295914237555L;
 
 			@Override
 			public void valueChange(ValueChangeEvent event) {
@@ -194,6 +201,7 @@ public class MedicalPrescriptionView extends NavigationView {
 		DateField dateTo = new DateField("To");
 		dateTo.setValue(new Date());
 		dateTo.addValueChangeListener(new ValueChangeListener() {
+			private static final long serialVersionUID = 5607231465260025486L;
 
 			@Override
 			public void valueChange(ValueChangeEvent event) {
@@ -214,6 +222,8 @@ public class MedicalPrescriptionView extends NavigationView {
 		reason.setValue("");
 
 		reason.addTextChangeListener(new TextChangeListener() {
+			private static final long serialVersionUID = 557853181333568046L;
+
 			@Override
 			public void textChange(TextChangeEvent event) {
 				valueReason = event.getText();
@@ -246,6 +256,8 @@ public class MedicalPrescriptionView extends NavigationView {
 		 * @Param doctor = doctor from the session
 		 */
 		btnPrescribe = new Button("Prescribe", new Button.ClickListener() {
+			private static final long serialVersionUID = 6264139734209239541L;
+
 			@Override
 			public void buttonClick(Button.ClickEvent clickEvent) {
 				localMedicalService.prescribeMedicament(privateSession

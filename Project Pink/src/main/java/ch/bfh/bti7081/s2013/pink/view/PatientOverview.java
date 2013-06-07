@@ -9,13 +9,14 @@ import ch.bfh.bti7081.s2013.pink.model.Patient;
 import ch.bfh.bti7081.s2013.pink.model.Session;
 import ch.bfh.bti7081.s2013.pink.model.SessionState;
 
+import com.vaadin.addon.touchkit.ui.NavigationButton;
+import com.vaadin.addon.touchkit.ui.NavigationButton.NavigationButtonClickEvent;
+import com.vaadin.addon.touchkit.ui.NavigationButton.NavigationButtonClickListener;
 import com.vaadin.addon.touchkit.ui.VerticalComponentGroup;
-import com.vaadin.ui.Button;
-import com.vaadin.ui.Button.ClickEvent;
+import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.CustomComponent;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
-import com.vaadin.ui.Layout;
 import com.vaadin.ui.VerticalLayout;
 
 /**
@@ -45,22 +46,21 @@ public class PatientOverview extends CustomComponent {
 	public PatientOverview(Session session) {
 		this.patient = session.getPatient();
 		this.session = session;
-		buildMainLayout();
-		VerticalComponentGroup box = new VerticalComponentGroup();
-		box.addComponent(mainLayout);
-		setCompositionRoot(box);
+		setCompositionRoot(buildMainLayout());
 	}
 
 	@SuppressWarnings("serial")
-	private Layout buildMainLayout() {
+	private ComponentContainer buildMainLayout() {
+		VerticalComponentGroup box = new VerticalComponentGroup();
 		// common part: create layout
 		mainLayout = new HorizontalLayout();
+		box.addComponent(mainLayout);
 		mainLayout.setWidth("100%");
 
 		// VerticalLayout content = new VerticalLayout();
 
 		VerticalLayout text = new VerticalLayout();
-		Layout buttons = new VerticalLayout();
+		// Layout buttons = new VerticalLayout();
 
 		// Name
 		name = new Label();
@@ -68,9 +68,11 @@ public class PatientOverview extends CustomComponent {
 		text.addComponent(name);
 
 		// Adds the button to start the patient session
-		Button showDetails = new Button("Patient", new Button.ClickListener() {
+		NavigationButton showDetails = new NavigationButton(
+				"Show Patient Details");
+		showDetails.addClickListener(new NavigationButtonClickListener() {
 			@Override
-			public void buttonClick(ClickEvent event) {
+			public void buttonClick(NavigationButtonClickEvent event) {
 				PatientDetailView detailedPatientView = new PatientDetailView(
 						patient);
 				MyVaadinUI.getNavigationManager().navigateTo(
@@ -78,21 +80,21 @@ public class PatientOverview extends CustomComponent {
 			}
 		});
 		showDetails.setWidth("100%");
-		buttons.addComponent(showDetails);
+		box.addComponent(showDetails);
 
 		// SessionBegin
 		sessionBegin = new Label();
-		sessionBegin.setCaption("Session begin:");
-		sessionBegin.setImmediate(false);
 		String startTime = dateFormat.format(session.getTimeStart());
-		sessionBegin.setValue(startTime + " (" + session.getSessionState()
-				+ ")");
+		sessionBegin.setValue("Session begin: " + startTime + " ("
+				+ session.getSessionState() + ")");
 		text.addComponent(sessionBegin);
 
 		// Adds the button to start the patient session
-		Button startSession = new Button("Begin", new Button.ClickListener() {
+		NavigationButton startSession = new NavigationButton("Begin Session");
+		startSession.addClickListener(new NavigationButtonClickListener() {
+
 			@Override
-			public void buttonClick(ClickEvent event) {
+			public void buttonClick(NavigationButtonClickEvent event) {
 				session.changeState(SessionState.STARTED);
 				HibernateDataSource.getInstance().saveOrUpdate(session);
 				SessionView sessionView = new SessionView(session, patient);
@@ -100,7 +102,7 @@ public class PatientOverview extends CustomComponent {
 			}
 		});
 		startSession.setWidth("100%");
-		buttons.addComponent(startSession);
+		box.addComponent(startSession);
 
 		// if (patient.getImageUrl() != null)
 		// mainLayout.addComponent(new Image(null, new ClassResource(patient
@@ -108,10 +110,8 @@ public class PatientOverview extends CustomComponent {
 		text.setExpandRatio(name, 1.0f);
 		text.setExpandRatio(sessionBegin, 1.0f);
 		mainLayout.addComponent(text);
-		mainLayout.addComponent(buttons);
 		mainLayout.setExpandRatio(text, 2.0f);
-		mainLayout.setExpandRatio(buttons, 1.0f);
 
-		return mainLayout;
+		return box;
 	}
 }

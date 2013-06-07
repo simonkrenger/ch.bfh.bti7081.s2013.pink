@@ -210,10 +210,7 @@ public class SessionWindow extends CustomComponent {
 						MyVaadinUI.getNavigationManager().navigateTo(view);
 					}
 				});
-		if (((session.getSessionState() == SessionState.STARTED) || (session
-				.getSessionState() == SessionState.REOPENED))) {
-			addMedicationButton.setEnabled(false);
-		}
+		addMedicationButton.setEnabled(session.getSessionState().isEditable());
 		mediNoteButtons.addComponent(addMedicationButton);
 
 		// add edit notes button
