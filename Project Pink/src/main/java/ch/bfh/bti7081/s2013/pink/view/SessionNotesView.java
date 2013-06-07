@@ -28,10 +28,13 @@ public class SessionNotesView extends NavigationView {
 	private Layout notes;
 	private Layout layout;
 	public String[] text;
+	private Note[] editableNote;
 	private int count;
+	private int noteId;
 
 	public SessionNotesView(NoteHolder holder) {
 		noteHolder = holder;
+		editableNote = new Note[50];
 		text = new String[50];
 		setCaption("Notes");
 		layout = new VerticalLayout();
@@ -48,20 +51,30 @@ public class SessionNotesView extends NavigationView {
 			public void buttonClick(ClickEvent event) {
 				Note note = ds.saveOrUpdate(new Note(noteText.getValue()));
 				noteHolder.addNote(note);
-				ds.saveOrUpdate(noteHolder);
 				notes.removeAllComponents();
 				updateNotes();
 			}
 		}));
+		layout.addComponent(new Button("Save", new Button.ClickListener() {
+			private static final long serialVersionUID = 2366787821082710668L;
 
+			@Override
+			public void buttonClick(ClickEvent event) {
+				editableNote[noteId].updateText(noteText.getValue());
+				editableNote[noteId] = ds.saveOrUpdate(editableNote[noteId]);
+				notes.removeAllComponents();
+				updateNotes();
+			}
+		}));
 		updateNotes();
 		layout.addComponent(notes);
 		setContent(layout);
 	}
 
 	private void updateNotes() {
-		for (Note n : noteHolder.getNotes()) {
+		for (final Note n : noteHolder.getNotes()) {
 			text[count] = n.getText();
+			editableNote[count] = n;
 			notes.addComponent(new NoteView(n));
 			notes.addComponent(new Button("Edit Note",
 					new Button.ClickListener() {
@@ -70,25 +83,13 @@ public class SessionNotesView extends NavigationView {
 
 						@Override
 						public void buttonClick(ClickEvent event) {
+							noteId = noteCount;
 							noteText.setValue(text[noteCount]);
 							notes.removeAllComponents();
 							updateNotes();
+
 						}
 					}));
-			notes.addComponent(new Button("Save", new Button.ClickListener() {
-				private static final long serialVersionUID = 2366787821082710668L;
-
-				@Override
-				public void buttonClick(ClickEvent event) {
-					Note note = ds.saveOrUpdate(new Note(noteText.getValue()));
-					noteHolder.addNote(note);
-
-					ds.saveOrUpdate(noteHolder);
-					notes.removeAllComponents();
-					updateNotes();
-				}
-			}));
-
 			count++;
 		}
 	}
@@ -105,3 +106,4 @@ public class SessionNotesView extends NavigationView {
 		}
 	}
 }
+

@@ -1,3 +1,4 @@
+
 package ch.bfh.bti7081.s2013.pink.model;
 
 import java.io.Serializable;
@@ -6,8 +7,6 @@ import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-
-import org.hibernate.annotations.Type;
 
 /**
  * Class to represent a note that can be added to another entity (for example to
@@ -29,7 +28,6 @@ public class Note implements Serializable {
 	/**
 	 * Text in the note
 	 */
-	@Type(type = "text")
 	private String text;
 
 	public Note(String text) {
@@ -60,6 +58,13 @@ public class Note implements Serializable {
 		return text;
 	}
 
+	/**
+	 * Update the text of the note
+	 * 
+	 */
+	public void updateText(String newText) {
+		this.text = newText;
+	}
 	@Override
 	public String toString() {
 		return timestamp + ": " + text;
