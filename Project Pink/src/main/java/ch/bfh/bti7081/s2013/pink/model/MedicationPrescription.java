@@ -40,14 +40,14 @@ public class MedicationPrescription implements Serializable, NoteHolder {
 	@ManyToOne(cascade = { CascadeType.PERSIST })
 	private Medication medicine;
 
-    private Date startDate;
+	private Date startDate;
 
-    private Date endDate;
+	private Date endDate;
 
-	@OneToOne(cascade = { CascadeType.PERSIST })
+	@OneToOne(cascade = CascadeType.ALL)
 	private Dose dose;
 
-	@ManyToOne(cascade = { CascadeType.PERSIST })
+	@ManyToOne
 	private Doctor prescriber;
 
 	@Fetch(FetchMode.SUBSELECT)
@@ -65,19 +65,19 @@ public class MedicationPrescription implements Serializable, NoteHolder {
 	 *            Dosage of the medication
 	 * @param prescriber
 	 *            {@link Doctor} that makes the prescription
-     * @param startDate
-     *            Start date of the prescription.
-     * @param endDate
-     *            End date of the prescription.
+	 * @param startDate
+	 *            Start date of the prescription.
+	 * @param endDate
+	 *            End date of the prescription.
 	 */
-	public MedicationPrescription(String reason, Medication medicine, Dose dose,
-			Doctor prescriber, Date startDate, Date endDate) {
+	public MedicationPrescription(String reason, Medication medicine,
+			Dose dose, Doctor prescriber, Date startDate, Date endDate) {
 		this.reason = reason;
 		this.medicine = medicine;
 		this.dose = dose;
 		this.prescriber = prescriber;
-        this.startDate = startDate;
-        this.endDate = endDate;
+		this.startDate = startDate;
+		this.endDate = endDate;
 	}
 
 	@SuppressWarnings("unused")
@@ -85,25 +85,21 @@ public class MedicationPrescription implements Serializable, NoteHolder {
 		// needed for Hibernate
 	}
 
-    public Date getStartDate()
-    {
-        return startDate;
-    }
+	public Date getStartDate() {
+		return startDate;
+	}
 
-    public void setStartDate(Date date)
-    {
-        this.startDate = date;
-    }
+	public void setStartDate(Date date) {
+		this.startDate = date;
+	}
 
-    public Date getEndDate()
-    {
-        return endDate;
-    }
+	public Date getEndDate() {
+		return endDate;
+	}
 
-    public void setEndDate(Date date)
-    {
-        this.endDate = date;
-    }
+	public void setEndDate(Date date) {
+		this.endDate = date;
+	}
 
 	public String getReason() {
 		return reason;

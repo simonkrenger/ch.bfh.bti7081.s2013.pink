@@ -44,9 +44,9 @@ public class MedicalPrescriptionView extends NavigationView {
 	private Date valueDateFrom, valueDateTo;
 	private String valueReason;
 	// private Dose valueDose = new Dose(amount, multiplier, period);
-	private int amout;
-	private int multiplier;
-	private Period period;
+	private int amount = 1;
+	private int multiplier = 1;
+	private Period period = Period.DAY;
 
 	/**
 	 * not used anymore Delete before Finisehing // private int valueDoseAmount;
@@ -114,7 +114,7 @@ public class MedicalPrescriptionView extends NavigationView {
 		NumberField doseAmount = new NumberField();
 
 		// Handle changes in the value
-		doseAmount.setValue("0");
+		doseAmount.setValue(String.valueOf(amount));
 		doseAmount.setWidth("3em");
 		doseAmount.addTextChangeListener(new TextChangeListener() {
 			private static final long serialVersionUID = 4376224365227823135L;
@@ -122,12 +122,12 @@ public class MedicalPrescriptionView extends NavigationView {
 			@Override
 			public void textChange(TextChangeEvent event) {
 				if (event.getText().length() > 0)
-					amout = Integer.parseInt(event.getText());
+					amount = Integer.parseInt(event.getText());
 			}
 		});
 		doseGroup.addComponent(doseAmount);
 
-		doseGroup.addComponent(new Label(" Pills, "));
+		doseGroup.addComponent(new Label(" unit(s), "));
 
 		/**
 		 * Add a TextField to enter the dose Multiplier Set the dose Multiplier
@@ -136,7 +136,7 @@ public class MedicalPrescriptionView extends NavigationView {
 		 * @default = 0
 		 */
 		NumberField doseMultiplier = new NumberField();
-		doseMultiplier.setValue("0");
+		doseMultiplier.setValue(String.valueOf(multiplier));
 		doseMultiplier.setWidth("3em");
 		// Handle changes in the value
 		doseMultiplier.addTextChangeListener(new TextChangeListener() {
@@ -159,16 +159,16 @@ public class MedicalPrescriptionView extends NavigationView {
 		 * @default = 0
 		 */
 		NativeSelect dosePeriod = new NativeSelect();
-		for (Period periods : Period.values()) {
-			dosePeriod.addItem(periods.name());
+		for (Period period : Period.values()) {
+			dosePeriod.addItem(period);
 		}
+		dosePeriod.setValue(period);
 		dosePeriod.addValueChangeListener(new ValueChangeListener() {
 			private static final long serialVersionUID = -6657351913129873449L;
 
 			@Override
 			public void valueChange(ValueChangeEvent event) {
-				period = Period
-						.valueOf((String) event.getProperty().getValue());
+				period = (Period) event.getProperty().getValue();
 			}
 		});
 		dosePeriod.setWidth("100%");
@@ -265,8 +265,9 @@ public class MedicalPrescriptionView extends NavigationView {
 			@Override
 			public void buttonClick(Button.ClickEvent clickEvent) {
 				localMedicalService.prescribeMedicament(privateSession
-						.getPatient(), valueMedication, new Dose(amout,
-						multiplier, period), valueDateFrom, valueDateTo);
+						.getPatient(), valueMedication, new Dose(amount,
+						multiplier, period), valueReason, valueDateFrom,
+						valueDateTo);
 			}
 		});
 

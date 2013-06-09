@@ -124,12 +124,19 @@ public class Dose implements Serializable, NoteHolder {
 	 */
 	public static enum Period {
 		HOUR, DAY, WEEK, MONTH, YEAR;
+		public String toString() {
+			return name().toLowerCase();
+		};
 	}
 
 	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder("Take ");
-		sb.append(amount).append(" units, ");
+		sb.append(amount);
+		if (amount == 1)
+			sb.append(" unit, ");
+		else
+			sb.append(" units, ");
 		if (multiplier == 1)
 			sb.append(" once a ");
 		else

@@ -8,9 +8,13 @@ import javax.persistence.CollectionTable;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
+
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 /**
  * Class to represent a medication
@@ -25,20 +29,24 @@ public class Medication implements Serializable {
 	@Id
 	private String name;
 
-	@ManyToMany
+	@Fetch(FetchMode.SUBSELECT)
+	@ManyToMany(fetch = FetchType.EAGER)
 	private List<Ingredient> ingredients = new LinkedList<Ingredient>();
 
-	@ElementCollection
+	@Fetch(FetchMode.SUBSELECT)
+	@ElementCollection(fetch = FetchType.EAGER)
 	@CollectionTable(name = "MedicineUses", joinColumns = @JoinColumn(name = "name"))
 	@Column(name = "use")
 	private List<String> uses = new LinkedList<String>();
 
-	@ElementCollection
+	@Fetch(FetchMode.SUBSELECT)
+	@ElementCollection(fetch = FetchType.EAGER)
 	@CollectionTable(name = "MedicineEffects", joinColumns = @JoinColumn(name = "name"))
 	@Column(name = "effect")
 	private List<String> effects = new LinkedList<String>();
 
-	@ElementCollection
+	@Fetch(FetchMode.SUBSELECT)
+	@ElementCollection(fetch = FetchType.EAGER)
 	@CollectionTable(name = "MedicineSideeffects", joinColumns = @JoinColumn(name = "name"))
 	@Column(name = "sideeffect")
 	private List<String> sideeffects = new LinkedList<String>();
@@ -87,7 +95,6 @@ public class Medication implements Serializable {
 	public void addSideeffect(String sideeffect) {
 		sideeffects.add(sideeffect);
 	}
-
 
 	@Override
 	public String toString() {
