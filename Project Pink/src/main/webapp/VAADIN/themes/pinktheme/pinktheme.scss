@@ -33,6 +33,8 @@
 		background: url(img/delete.png) no-repeat;
 		background-size: 100% 100%;
 	}
+	
+	/* Make stuff pink! */
 
 	.v-touchkit-verticalcomponentgroup {
 		background-color: #ef9cc2;
@@ -45,5 +47,10 @@
 
 	.rightaligned {
 		text-align: right;
+	}
+
+	.v-touchkit-navbutton:after {
+		background-image: url('img/arrow.png');
+		-webkit-background-size: 9px 13px;
 	}
 }
