@@ -23,10 +23,6 @@ public class PatientOverview extends CustomComponent {
 	private static final long serialVersionUID = -6396971132171425883L;
 
 	private SimpleDateFormat dateFormat = new SimpleDateFormat();
-	private HorizontalLayout mainLayout;
-
-	private Label name;
-	private Label sessionBegin;
 
 	private Patient patient;
 	private Session session;
@@ -46,40 +42,48 @@ public class PatientOverview extends CustomComponent {
 
 	private ComponentContainer buildMainLayout() {
 		VerticalComponentGroup box = new VerticalComponentGroup();
-		// common part: create layout
-		mainLayout = new HorizontalLayout();
+
+		VerticalLayout mainLayout = new VerticalLayout();
 		box.addComponent(mainLayout);
-		mainLayout.setWidth("100%");
 
-		// VerticalLayout content = new VerticalLayout();
+		HorizontalLayout nameAndStatus = new HorizontalLayout();
+		mainLayout.addComponent(nameAndStatus);
+		nameAndStatus.setWidth("100%");
 
-		VerticalLayout text = new VerticalLayout();
-		// Layout buttons = new VerticalLayout();
-
-		// Name
-		name = new Label();
+		// Patient information
+		Label name = new Label();
 		name.setValue(patient.getFirstName() + " " + patient.getName());
-		text.addComponent(name);
+		nameAndStatus.addComponent(name);
+		nameAndStatus.setExpandRatio(name, 1.0f);
+
+		Label status = new Label(String.valueOf(session.getSessionState()));
+		status.setPrimaryStyleName("rightaligned");
+		nameAndStatus.addComponent(status);
+		nameAndStatus.setExpandRatio(status, 1.0f);
+
+		// Session time information
+		HorizontalLayout sessionInfo = new HorizontalLayout();
+		mainLayout.addComponent(sessionInfo);
+		sessionInfo.setWidth("100%");
+
+		// SessionBegin
+		Label sessionBegin = new Label("Session begin:");
+		sessionInfo.addComponent(sessionBegin);
+		sessionInfo.setExpandRatio(sessionBegin, 1.0f);
+
+		String startTime = dateFormat.format(session.getTimeStart());
+		Label sessionBeginTime = new Label(startTime);
+		sessionBeginTime.setPrimaryStyleName("rightaligned");
+		sessionInfo.addComponent(sessionBeginTime);
+		sessionInfo.setExpandRatio(sessionBeginTime, 1.0f);
 
 		// Adds the button to start the patient session
 		box.addComponent(new NavigationButton("Show Patient Details",
 				new PatientDetailView(patient)));
 
-		// SessionBegin
-		sessionBegin = new Label();
-		String startTime = dateFormat.format(session.getTimeStart());
-		sessionBegin.setValue("Session begin: " + startTime + " ("
-				+ session.getSessionState() + ")");
-		text.addComponent(sessionBegin);
-
 		// Adds the button to start the patient session
 		box.addComponent(new NavigationButton("Show Session", new SessionView(
 				session, patient)));
-
-		text.setExpandRatio(name, 1.0f);
-		text.setExpandRatio(sessionBegin, 1.0f);
-		mainLayout.addComponent(text);
-		mainLayout.setExpandRatio(text, 2.0f);
 
 		return box;
 	}
