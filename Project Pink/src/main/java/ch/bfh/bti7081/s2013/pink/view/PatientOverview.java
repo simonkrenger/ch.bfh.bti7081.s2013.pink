@@ -2,16 +2,11 @@ package ch.bfh.bti7081.s2013.pink.view;
 
 import java.text.SimpleDateFormat;
 
-import ch.bfh.bti7081.s2013.pink.MyVaadinUI;
 import ch.bfh.bti7081.s2013.pink.SessionView;
-import ch.bfh.bti7081.s2013.pink.model.HibernateDataSource;
 import ch.bfh.bti7081.s2013.pink.model.Patient;
 import ch.bfh.bti7081.s2013.pink.model.Session;
-import ch.bfh.bti7081.s2013.pink.model.SessionState;
 
 import com.vaadin.addon.touchkit.ui.NavigationButton;
-import com.vaadin.addon.touchkit.ui.NavigationButton.NavigationButtonClickEvent;
-import com.vaadin.addon.touchkit.ui.NavigationButton.NavigationButtonClickListener;
 import com.vaadin.addon.touchkit.ui.VerticalComponentGroup;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.CustomComponent;
@@ -49,7 +44,6 @@ public class PatientOverview extends CustomComponent {
 		setCompositionRoot(buildMainLayout());
 	}
 
-	@SuppressWarnings("serial")
 	private ComponentContainer buildMainLayout() {
 		VerticalComponentGroup box = new VerticalComponentGroup();
 		// common part: create layout
@@ -68,19 +62,8 @@ public class PatientOverview extends CustomComponent {
 		text.addComponent(name);
 
 		// Adds the button to start the patient session
-		NavigationButton showDetails = new NavigationButton(
-				"Show Patient Details");
-		showDetails.addClickListener(new NavigationButtonClickListener() {
-			@Override
-			public void buttonClick(NavigationButtonClickEvent event) {
-				PatientDetailView detailedPatientView = new PatientDetailView(
-						patient);
-				MyVaadinUI.getNavigationManager().navigateTo(
-						detailedPatientView);
-			}
-		});
-		showDetails.setWidth("100%");
-		box.addComponent(showDetails);
+		box.addComponent(new NavigationButton("Show Patient Details",
+				new PatientDetailView(patient)));
 
 		// SessionBegin
 		sessionBegin = new Label();
@@ -90,23 +73,9 @@ public class PatientOverview extends CustomComponent {
 		text.addComponent(sessionBegin);
 
 		// Adds the button to start the patient session
-		NavigationButton startSession = new NavigationButton("Show Session");
-		startSession.addClickListener(new NavigationButtonClickListener() {
+		box.addComponent(new NavigationButton("Show Session", new SessionView(
+				session, patient)));
 
-			@Override
-			public void buttonClick(NavigationButtonClickEvent event) {
-				session.changeState(SessionState.STARTED);
-				HibernateDataSource.getInstance().saveOrUpdate(session);
-				SessionView sessionView = new SessionView(session, patient);
-				MyVaadinUI.getNavigationManager().navigateTo(sessionView);
-			}
-		});
-		startSession.setWidth("100%");
-		box.addComponent(startSession);
-
-		// if (patient.getImageUrl() != null)
-		// mainLayout.addComponent(new Image(null, new ClassResource(patient
-		// .getImageUrl())));
 		text.setExpandRatio(name, 1.0f);
 		text.setExpandRatio(sessionBegin, 1.0f);
 		mainLayout.addComponent(text);

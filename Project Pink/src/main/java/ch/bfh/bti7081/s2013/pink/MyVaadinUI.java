@@ -4,7 +4,6 @@ import ch.bfh.bti7081.s2013.pink.view.LoginView;
 
 import com.vaadin.addon.touchkit.ui.NavigationManager;
 import com.vaadin.annotations.Theme;
-import com.vaadin.server.ThemeResource;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.ui.UI;
 
@@ -22,8 +21,7 @@ public class MyVaadinUI extends UI {
 
 	@Override
 	protected void init(VaadinRequest request) {
-		getPage().setTitle("The Cool Project Pink");
-		setIcon(new ThemeResource("icon.png"));
+		getPage().setTitle("Project Pink");
 
 		navigationManager = new NavigationManager(new LoginView());
 		setContent(navigationManager);
