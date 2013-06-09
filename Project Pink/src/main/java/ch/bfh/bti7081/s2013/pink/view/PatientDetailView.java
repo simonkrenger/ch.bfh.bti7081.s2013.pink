@@ -17,7 +17,6 @@ import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Image;
 import com.vaadin.ui.Label;
-import com.vaadin.ui.Layout;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.Notification.Type;
 import com.vaadin.ui.VerticalLayout;
@@ -48,7 +47,8 @@ public class PatientDetailView extends NavigationView {
 		setSizeFull();
 		this.patient = patient;
 
-		Layout layout = new VerticalLayout();
+		VerticalLayout layout = new VerticalLayout();
+		layout.setMargin(true);
 
 		setCaption(patient.getFirstName() + " " + patient.getName());
 

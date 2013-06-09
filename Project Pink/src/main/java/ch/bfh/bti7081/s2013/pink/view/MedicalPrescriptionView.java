@@ -70,6 +70,7 @@ public class MedicalPrescriptionView extends NavigationView {
 		setCaption("Prescription");
 		setSizeFull();
 
+		layout.setMargin(true);
 		layout.addComponent(new Label(privateSession.getTimeEnd().toString()));
 
 		VerticalComponentGroup group = new VerticalComponentGroup();
@@ -120,7 +121,8 @@ public class MedicalPrescriptionView extends NavigationView {
 
 			@Override
 			public void textChange(TextChangeEvent event) {
-				amout = Integer.parseInt(event.getText());
+				if (event.getText().length() > 0)
+					amout = Integer.parseInt(event.getText());
 			}
 		});
 		doseGroup.addComponent(doseAmount);
@@ -142,7 +144,8 @@ public class MedicalPrescriptionView extends NavigationView {
 
 			@Override
 			public void textChange(TextChangeEvent event) {
-				multiplier = Integer.parseInt(event.getText());
+				if (event.getText().length() > 0)
+					multiplier = Integer.parseInt(event.getText());
 			}
 		});
 		doseGroup.addComponent(doseMultiplier);
@@ -241,11 +244,12 @@ public class MedicalPrescriptionView extends NavigationView {
 		/**
 		 * Add a Label to show the doctor from the Session
 		 */
-		Label doctor = new Label("the doctor");
-		doctor.setValue(privateSession.getDoctor().getName());
-		doctor.setWidth("100%");
-
-		group.addComponent(doctor);
+		// Does this make sense?
+		// Label doctor = new Label("the doctor");
+		// doctor.setValue(privateSession.getDoctor().getName());
+		// doctor.setWidth("100%");
+		//
+		// group.addComponent(doctor);
 
 		/**
 		 * Add a Button to Prescribe a medication

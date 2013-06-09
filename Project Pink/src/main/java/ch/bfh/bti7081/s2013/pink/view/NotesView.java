@@ -35,7 +35,9 @@ public class NotesView extends NavigationView {
 
 		setCaption("Notes");
 
-		Layout layout = new VerticalLayout();
+		VerticalLayout layout = new VerticalLayout();
+		layout.setMargin(true);
+
 		notes = new VerticalLayout();
 
 		noteText = new TextArea();
