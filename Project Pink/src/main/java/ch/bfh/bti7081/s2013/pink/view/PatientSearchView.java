@@ -9,8 +9,6 @@ import javax.swing.event.ChangeListener;
 import com.vaadin.event.FieldEvents;
 import com.vaadin.ui.AbstractTextField;
 import com.vaadin.ui.CustomComponent;
-import com.vaadin.ui.HorizontalLayout;
-import com.vaadin.ui.Layout;
 import com.vaadin.ui.TextField;
 
 /**
@@ -22,7 +20,6 @@ import com.vaadin.ui.TextField;
 public class PatientSearchView extends CustomComponent {
 	private static final long serialVersionUID = -4461318034316573467L;
 
-	private Layout mainLayout;
 	private List<ChangeListener> searchListener = new ArrayList<ChangeListener>();
 	private TextField searchBox;
 	private String searchValue;
@@ -45,17 +42,9 @@ public class PatientSearchView extends CustomComponent {
 	 * editor.
 	 */
 	public PatientSearchView() {
-		buildMainLayout();
-		setCompositionRoot(mainLayout);
-	}
-
-	private void buildMainLayout() {
-		// common part: create layout
-		mainLayout = new HorizontalLayout();
-		mainLayout.setWidth("100%");
-
 		// Create the search field
-		searchBox = new TextField("Search:");
+		searchBox = new TextField();
+		searchBox.setInputPrompt("Search");
 		searchBox.setWidth("100%");
 		searchBox.setTextChangeTimeout(300);
 		searchBox
@@ -71,8 +60,7 @@ public class PatientSearchView extends CustomComponent {
 			}
 		});
 
-		// Put some initial content in it
-		mainLayout.addComponent(searchBox);
+		setCompositionRoot(searchBox);
 	}
 
 	private void patientSearch() {
