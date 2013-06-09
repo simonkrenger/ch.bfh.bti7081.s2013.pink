@@ -6,7 +6,7 @@ package ch.bfh.bti7081.s2013.pink.model;
  * @author Christoph Seiler (christoph.seiler@gmail.com)
  */
 public class Context {
-	private static Context context;
+	private static Context context = null;
 
 	private ThreadLocal<Doctor> doctor = new ThreadLocal<Doctor>();
 
