@@ -18,7 +18,7 @@ public interface IMedicineDataSource {
      *
      * @return complete list of all medicine.
      */
-    List<Medication> GetAllMedicine();
+    List<Medication> getAllMedicine();
 
     /**
      * Gets all medicine with a specific text in the name.
@@ -26,5 +26,5 @@ public interface IMedicineDataSource {
      * @param text which has to be present in the name.
      * @return List of medicine matching the text.
      */
-    List<Medication> GetMedicineContainingText(String text);
+    List<Medication> getMedicineContainingText(String text);
 }

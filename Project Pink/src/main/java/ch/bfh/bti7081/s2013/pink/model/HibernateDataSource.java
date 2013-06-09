@@ -42,14 +42,27 @@ public class HibernateDataSource {
 	}
 
 	Configuration getConfiguration() {
+
 		Configuration conf = new Configuration();
 		conf.configure();
 
 		Properties prop = getProperties();
+		FileReader fr = null;
 		try {
-			prop.load(new FileReader(propFile));
+			fr = new FileReader(propFile);
+			prop.load(fr);
 		} catch (IOException e) {
 			LOG.warn("Error loading properties: " + e.getLocalizedMessage(), e);
+		} finally {
+			try {
+				if (fr != null) {
+					fr.close();
+				}
+			} catch (IOException e) {
+				LOG.warn(
+						"Error closing the FileReader for properties: "
+								+ e.getLocalizedMessage(), e);
+			}
 		}
 
 		String driverClass = prop.getProperty("db.driver");
@@ -65,13 +78,25 @@ public class HibernateDataSource {
 		if (dialect != null)
 			conf.setProperty("hibernate.dialect", dialect);
 
+		FileWriter fw = null;
 		try {
-			prop.store(new FileWriter(propFile), null);
+			fw = new FileWriter(propFile);
+			prop.store(fw, null);
 
 			LOG.info("Saved properties to " + propFile.getPath());
 		} catch (IOException e) {
 			throw new RuntimeException("Error saving properties: "
 					+ e.getLocalizedMessage(), e);
+		} finally {
+			try {
+				if (fw != null) {
+					fw.close();
+				}
+			} catch (IOException e) {
+				LOG.warn(
+						"Error closing the FileWriter for properties: "
+								+ e.getLocalizedMessage(), e);
+			}
 		}
 		return conf;
 	}

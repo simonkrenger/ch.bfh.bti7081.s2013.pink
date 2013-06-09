@@ -71,11 +71,11 @@ public class LocalMedicalService implements IMedicalService
     {
         if (text == null)
         {
-            return getMedicineDataSource().GetAllMedicine();
+            return getMedicineDataSource().getAllMedicine();
         }
         else
         {
-            return getMedicineDataSource().GetMedicineContainingText(text);
+            return getMedicineDataSource().getMedicineContainingText(text);
         }
     }
 
