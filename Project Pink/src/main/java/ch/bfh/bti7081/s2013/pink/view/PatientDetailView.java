@@ -54,6 +54,7 @@ public class PatientDetailView extends NavigationView {
 
 		HorizontalLayout horizontalLayout = new HorizontalLayout();
 		horizontalLayout.setWidth("100%");
+		horizontalLayout.setSpacing(true);
 
 		Image patientPortrait = new Image(null, new ClassResource(
 				patient.getImageUrl()));
@@ -61,6 +62,7 @@ public class PatientDetailView extends NavigationView {
 
 		VerticalComponentGroup basicInfo = new VerticalComponentGroup(
 				"Basic information");
+		basicInfo.setWidth("100%");
 
 		Label firstName = new Label("<b>First name:</b> "
 				+ patient.getFirstName(), ContentMode.HTML);
@@ -72,6 +74,7 @@ public class PatientDetailView extends NavigationView {
 		basicInfo.addComponent(lastName);
 
 		horizontalLayout.addComponent(basicInfo);
+		horizontalLayout.setExpandRatio(basicInfo, 0.7f);
 		layout.addComponent(horizontalLayout);
 
 		// Only display allergies if there are any
@@ -87,9 +90,11 @@ public class PatientDetailView extends NavigationView {
 
 		VerticalComponentGroup prescriptions = new VerticalComponentGroup(
 				"Prescriptions");
+		prescriptions.setWidth("100%");
 		for (MedicationPrescription p : patient.getPrescriptions()) {
-			Label prescr = new Label(p.getDose() + " " + p.getMedicine());
-			prescr.setCaption("Prescription");
+			Label prescr = new Label();
+			prescr.setCaption(p.getMedicine().getName());
+			prescr.setValue(String.valueOf(p.getDose()));
 			prescriptions.addComponent(prescr);
 		}
 		layout.addComponent(prescriptions);
