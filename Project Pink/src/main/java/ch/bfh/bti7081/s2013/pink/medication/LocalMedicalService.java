@@ -66,9 +66,9 @@ public class LocalMedicalService implements IMedicalService {
 	 */
 	public List<Medication> searchForMedicaments(String text) {
 		if (text == null) {
-			return getMedicineDataSource().GetAllMedicine();
+			return getMedicineDataSource().getAllMedicine();
 		} else {
-			return getMedicineDataSource().GetMedicineContainingText(text);
+			return getMedicineDataSource().getMedicineContainingText(text);
 		}
 	}
 

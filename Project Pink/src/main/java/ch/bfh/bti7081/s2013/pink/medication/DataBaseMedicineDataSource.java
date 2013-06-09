@@ -22,7 +22,7 @@ public class DataBaseMedicineDataSource extends HibernateDataSource implements I
      *
      * @return complete list of all medicine.
      */
-    public List<Medication> GetAllMedicine()
+    public List<Medication> getAllMedicine()
     {
         Session session = sessionFactory.openSession();
         session.beginTransaction();
@@ -42,7 +42,7 @@ public class DataBaseMedicineDataSource extends HibernateDataSource implements I
      * @param text which has to be present in the name.
      * @return List of medicine matching the text.
      */
-    public List<Medication> GetMedicineContainingText(String text) {
+    public List<Medication> getMedicineContainingText(String text) {
         if (text == null) {
             throw new IllegalArgumentException("text");
         }
