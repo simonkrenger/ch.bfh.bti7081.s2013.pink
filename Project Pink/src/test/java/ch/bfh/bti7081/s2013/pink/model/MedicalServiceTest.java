@@ -60,7 +60,7 @@ public class MedicalServiceTest
     }
 
     @Test
-    public void TestAllergyConflict()
+    public void testAllergyConflict()
     {
         boolean result = medicalService.prescribeMedicament(
                                     patient,
@@ -74,7 +74,7 @@ public class MedicalServiceTest
     }
 
     @Test
-    public void TestNoAllergyConflict()
+    public void testNoAllergyConflict()
     {
         boolean result = medicalService.prescribeMedicament(
                 patient,
@@ -89,7 +89,7 @@ public class MedicalServiceTest
     }
 
     @Test
-    public void TestUnsafePrescription()
+    public void testUnsafePrescription()
     {
         boolean result = medicalService.prescribeUnsafeMedicament(
                 patient,
@@ -105,7 +105,7 @@ public class MedicalServiceTest
     }
 
     @Test
-    public void TestUnsafePrescriptionFail()
+    public void testUnsafePrescriptionFail()
     {
         boolean result = medicalService.prescribeUnsafeMedicament(
                 patient,
