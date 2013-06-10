@@ -1,7 +1,7 @@
 @import "../mobiletheme/mobiletheme.scss";
 
 @mixin pinktheme {
-	@include reindeer;
+	@include mobiletheme;
 
 	/* An actual theme rule */
 	.v-slot-p-note {
