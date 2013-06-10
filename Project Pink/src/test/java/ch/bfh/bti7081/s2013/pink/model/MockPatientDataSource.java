@@ -52,4 +52,9 @@ public class MockPatientDataSource implements IPatientDataSource {
 		lastSavedPatient = patient;
 		return true;
 	}
+
+	@Override
+	public <T> T saveOrUpdate(T entity) {
+		return entity;
+	}
 }

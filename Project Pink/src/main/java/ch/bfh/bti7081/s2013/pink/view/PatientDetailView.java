@@ -17,6 +17,8 @@ import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Image;
 import com.vaadin.ui.Label;
+import com.vaadin.ui.Notification;
+import com.vaadin.ui.Notification.Type;
 import com.vaadin.ui.VerticalLayout;
 
 /**
@@ -158,9 +160,13 @@ public class PatientDetailView extends NavigationView {
 	protected void onBecomingVisible() {
 		super.onBecomingVisible();
 		patient = df.reload(patient);
-		// for (Warning warning : patient.getWarnings()) {
-		// Notification.show(warning.getText(), Type.WARNING_MESSAGE);
-		// }
+		int warnings = patient.getWarnings().size();
+		if (warnings == 1)
+			Notification.show("The patient has a warning!",
+					Type.WARNING_MESSAGE);
+		else if (warnings > 1)
+			Notification.show("The patient has " + warnings + " warnings!",
+					Type.WARNING_MESSAGE);
 
 		int size = patient.getNotes().size();
 		IndicatorImageSource image = new IndicatorImageSource(

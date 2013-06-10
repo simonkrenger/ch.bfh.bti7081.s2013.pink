@@ -7,7 +7,6 @@ import ch.bfh.bti7081.s2013.pink.model.Allergy;
 import ch.bfh.bti7081.s2013.pink.model.Context;
 import ch.bfh.bti7081.s2013.pink.model.DataBasePatientDataSource;
 import ch.bfh.bti7081.s2013.pink.model.Dose;
-import ch.bfh.bti7081.s2013.pink.model.HibernateDataSource;
 import ch.bfh.bti7081.s2013.pink.model.IPatientDataSource;
 import ch.bfh.bti7081.s2013.pink.model.Medication;
 import ch.bfh.bti7081.s2013.pink.model.MedicationPrescription;
@@ -132,8 +131,7 @@ public class LocalMedicalService implements IMedicalService {
 		MedicationPrescription prescription = new MedicationPrescription(
 				reason, medicine, dose, Context.getCurrent().getDoctor(),
 				startDate, endDate);
-		prescription = HibernateDataSource.getInstance().saveOrUpdate(
-				prescription);
+		prescription = getPatientDataSource().saveOrUpdate(prescription);
 		patient.addPrescription(prescription);
 		return getPatientDataSource().savePatient(patient);
 	}
