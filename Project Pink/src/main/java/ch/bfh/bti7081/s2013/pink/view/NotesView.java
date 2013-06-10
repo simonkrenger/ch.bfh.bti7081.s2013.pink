@@ -50,7 +50,7 @@ public class NotesView extends NavigationView {
 			public void buttonClick(ClickEvent event) {
 				Note note = ds.saveOrUpdate(new Note(noteText.getValue()));
 				noteHolder.addNote(note);
-				ds.saveOrUpdate(noteHolder);
+				noteHolder = ds.saveOrUpdate(noteHolder);
 				noteText.setValue("");
 				notes.removeAllComponents();
 				updateNotes();
