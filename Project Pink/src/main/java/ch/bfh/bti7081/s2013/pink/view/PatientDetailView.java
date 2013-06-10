@@ -5,7 +5,7 @@ import ch.bfh.bti7081.s2013.pink.model.Allergy;
 import ch.bfh.bti7081.s2013.pink.model.HibernateDataSource;
 import ch.bfh.bti7081.s2013.pink.model.MedicationPrescription;
 import ch.bfh.bti7081.s2013.pink.model.Patient;
-import ch.bfh.bti7081.s2013.pink.model.Warning;
+import ch.bfh.bti7081.s2013.pink.view.WarningPopover.UpdateListener;
 
 import com.vaadin.addon.touchkit.ui.NavigationView;
 import com.vaadin.addon.touchkit.ui.Toolbar;
@@ -17,8 +17,6 @@ import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Image;
 import com.vaadin.ui.Label;
-import com.vaadin.ui.Notification;
-import com.vaadin.ui.Notification.Type;
 import com.vaadin.ui.VerticalLayout;
 
 /**
@@ -27,8 +25,11 @@ import com.vaadin.ui.VerticalLayout;
  * @author Christian Meyer
  * @author Simon Krenger
  */
-@SuppressWarnings("serial")
 public class PatientDetailView extends NavigationView {
+	private static final long serialVersionUID = 740064506465249030L;
+
+	private HibernateDataSource df = HibernateDataSource.getInstance();
+
 	private Button notesButton;
 
 	/**
@@ -60,8 +61,7 @@ public class PatientDetailView extends NavigationView {
 				patient.getImageUrl()));
 		horizontalLayout.addComponent(patientPortrait);
 
-		VerticalComponentGroup basicInfo = new VerticalComponentGroup(
-				"Basic information");
+		VerticalComponentGroup basicInfo = new VerticalComponentGroup();
 		basicInfo.setWidth("100%");
 
 		Label firstName = new Label("<b>First name:</b> "
@@ -88,23 +88,28 @@ public class PatientDetailView extends NavigationView {
 			layout.addComponent(allergies);
 		}
 
-		VerticalComponentGroup prescriptions = new VerticalComponentGroup(
-				"Prescriptions");
-		prescriptions.setWidth("100%");
-		for (MedicationPrescription p : patient.getPrescriptions()) {
-			Label prescr = new Label();
-			prescr.setCaption(p.getMedicine().getName());
-			prescr.setValue(String.valueOf(p.getDose()));
-			prescriptions.addComponent(prescr);
+		if (!patient.getPrescriptions().isEmpty()) {
+			VerticalComponentGroup prescriptions = new VerticalComponentGroup(
+					"Prescriptions");
+			prescriptions.setWidth("100%");
+			for (MedicationPrescription p : patient.getPrescriptions()) {
+				Label prescr = new Label();
+				prescr.setCaption(p.getMedicine().getName());
+				prescr.setValue(String.valueOf(p.getDose()));
+				prescriptions.addComponent(prescr);
+			}
+			layout.addComponent(prescriptions);
 		}
-		layout.addComponent(prescriptions);
 
 		setContent(layout);
 
 		// Create Toolbar
-		Toolbar toolbar = new Toolbar();
+		final Toolbar toolbar = new Toolbar();
 
+		// Notes
 		notesButton = new Button(null, new Button.ClickListener() {
+			private static final long serialVersionUID = 7701758595488212194L;
+
 			@Override
 			public void buttonClick(ClickEvent event) {
 				NotesView notesView = new NotesView(patient);
@@ -115,18 +120,47 @@ public class PatientDetailView extends NavigationView {
 		IndicatorImageSource image = new IndicatorImageSource(
 				"/images/note.png", size);
 		notesButton.setIcon(image.getResource());
-
 		toolbar.addComponent(notesButton);
+
+		// Warnings
+		final Button warningsButton = new Button();
+		warningsButton.addClickListener(new Button.ClickListener() {
+			private static final long serialVersionUID = -332160668612432938L;
+
+			@Override
+			public void buttonClick(ClickEvent event) {
+				WarningPopover popover = new WarningPopover(patient);
+
+				// Show it relative to the navigation bar of
+				// the current NavigationView.
+				popover.showRelativeTo(warningsButton);
+				popover.addUpdateListener(new UpdateListener() {
+					@Override
+					public void update(int size) {
+						IndicatorImageSource image = new IndicatorImageSource(
+								"/images/warning.png", size);
+						warningsButton.setIcon(image.getResource());
+						PatientDetailView.this.patient = df
+								.reload(PatientDetailView.this.patient);
+					}
+				});
+			}
+		});
+		size = patient.getWarnings().size();
+		image = new IndicatorImageSource("/images/warning.png", size);
+		warningsButton.setIcon(image.getResource());
+		toolbar.addComponent(warningsButton);
+
 		setToolbar(toolbar);
 	}
 
 	@Override
 	protected void onBecomingVisible() {
 		super.onBecomingVisible();
-		patient = HibernateDataSource.getInstance().reload(patient);
-		for (Warning warning : patient.getWarnings()) {
-			Notification.show(warning.getText(), Type.WARNING_MESSAGE);
-		}
+		patient = df.reload(patient);
+		// for (Warning warning : patient.getWarnings()) {
+		// Notification.show(warning.getText(), Type.WARNING_MESSAGE);
+		// }
 
 		int size = patient.getNotes().size();
 		IndicatorImageSource image = new IndicatorImageSource(
