@@ -78,6 +78,7 @@ public class NotesPopover extends Popover {
 			@Override
 			public void buttonClick(ClickEvent event) {
 				noteText.setVisible(true);
+				noteText.focus();
 				addBtn.setVisible(false);
 				saveBtn.setVisible(true);
 			}
