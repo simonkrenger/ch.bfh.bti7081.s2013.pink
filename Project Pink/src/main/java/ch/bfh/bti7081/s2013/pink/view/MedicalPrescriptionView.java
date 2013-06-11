@@ -265,7 +265,6 @@ public class MedicalPrescriptionView extends NavigationView {
 		btnPrescribe = new Button("Prescribe", new Button.ClickListener() {
 			private static final long serialVersionUID = 6264139734209239541L;
 
-			@SuppressWarnings("deprecation")
 			@Override
 			public void buttonClick(Button.ClickEvent clickEvent) {
 				

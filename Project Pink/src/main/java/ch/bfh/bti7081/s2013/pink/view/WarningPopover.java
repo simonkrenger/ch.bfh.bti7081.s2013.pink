@@ -7,6 +7,7 @@ import ch.bfh.bti7081.s2013.pink.model.HibernateDataSource;
 import ch.bfh.bti7081.s2013.pink.model.Patient;
 import ch.bfh.bti7081.s2013.pink.model.Warning;
 
+import com.vaadin.addon.touchkit.ui.HorizontalButtonGroup;
 import com.vaadin.addon.touchkit.ui.Popover;
 import com.vaadin.addon.touchkit.ui.VerticalComponentGroup;
 import com.vaadin.ui.Button;
@@ -32,8 +33,16 @@ public class WarningPopover extends Popover {
 		VerticalLayout verticalLayout = new VerticalLayout();
 
 		final TextArea warningTxt = new TextArea();
+
+		HorizontalButtonGroup buttons = new HorizontalButtonGroup();
+
 		final Button saveBtn = new Button("Save Warning");
+		buttons.addComponent(saveBtn);
 		final Button addBtn = new Button("Add Warning");
+		buttons.addComponent(addBtn);
+		final Button closeBtn = new Button("Close");
+		buttons.addComponent(closeBtn);
+
 		final VerticalLayout warningContainer = new VerticalLayout();
 
 		warningTxt.setWidth("100%");
@@ -41,7 +50,10 @@ public class WarningPopover extends Popover {
 		warningTxt.setVisible(false);
 		verticalLayout.addComponent(warningTxt);
 
-		saveBtn.setWidth("100%");
+		buttons.setWidth("100%");
+		verticalLayout.addComponent(buttons);
+
+		saveBtn.setWidth("50%");
 		saveBtn.setVisible(false);
 		saveBtn.addClickListener(new ClickListener() {
 			private static final long serialVersionUID = 1L;
@@ -66,9 +78,8 @@ public class WarningPopover extends Popover {
 					listener.update(size);
 			}
 		});
-		verticalLayout.addComponent(saveBtn);
 
-		addBtn.setWidth("100%");
+		addBtn.setWidth("50%");
 		addBtn.addClickListener(new ClickListener() {
 			private static final long serialVersionUID = -6222381946564353326L;
 
@@ -80,7 +91,16 @@ public class WarningPopover extends Popover {
 				addBtn.setVisible(false);
 			}
 		});
-		verticalLayout.addComponent(addBtn);
+
+		closeBtn.setWidth("50%");
+		closeBtn.addClickListener(new ClickListener() {
+			private static final long serialVersionUID = 4225570178497797852L;
+
+			@Override
+			public void buttonClick(ClickEvent event) {
+				close();
+			}
+		});
 
 		updateWarnings(warningContainer);
 		verticalLayout.addComponent(warningContainer);

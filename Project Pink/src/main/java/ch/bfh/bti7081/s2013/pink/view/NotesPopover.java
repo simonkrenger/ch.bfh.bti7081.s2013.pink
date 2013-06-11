@@ -7,7 +7,8 @@ import ch.bfh.bti7081.s2013.pink.model.HibernateDataSource;
 import ch.bfh.bti7081.s2013.pink.model.Note;
 import ch.bfh.bti7081.s2013.pink.model.NoteHolder;
 
-import com.vaadin.addon.touchkit.ui.NavigationView;
+import com.vaadin.addon.touchkit.ui.HorizontalButtonGroup;
+import com.vaadin.addon.touchkit.ui.Popover;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
@@ -18,7 +19,7 @@ import com.vaadin.ui.TextArea;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.themes.BaseTheme;
 
-public class NotesView extends NavigationView {
+public class NotesPopover extends Popover {
 	private static final long serialVersionUID = -6257562003847635377L;
 
 	private HibernateDataSource ds = HibernateDataSource.getInstance();
@@ -30,7 +31,8 @@ public class NotesView extends NavigationView {
 	private TextArea noteText;
 	private Layout notes;
 
-	public NotesView(NoteHolder holder) {
+	public NotesPopover(NoteHolder holder) {
+		setWidth("350px");
 		noteHolder = holder;
 
 		setCaption("Notes");
@@ -42,12 +44,53 @@ public class NotesView extends NavigationView {
 
 		noteText = new TextArea();
 		noteText.setWidth("100%");
+		noteText.setVisible(false);
 		layout.addComponent(noteText);
-		layout.addComponent(new Button("Add Note", new Button.ClickListener() {
+
+		HorizontalButtonGroup buttons = new HorizontalButtonGroup();
+		buttons.setWidth("100%");
+		layout.addComponent(buttons);
+
+		final Button addBtn = new Button("Add Note");
+		addBtn.setWidth("50%");
+		buttons.addComponent(addBtn);
+
+		final Button saveBtn = new Button("Save Note");
+		saveBtn.setWidth("50%");
+		saveBtn.setVisible(false);
+		buttons.addComponent(saveBtn);
+
+		final Button closeBtn = new Button("Close");
+		closeBtn.setWidth("50%");
+		buttons.addComponent(closeBtn);
+
+		closeBtn.addClickListener(new ClickListener() {
 			private static final long serialVersionUID = 2366787821082710668L;
 
 			@Override
 			public void buttonClick(ClickEvent event) {
+				close();
+			}
+		});
+		addBtn.addClickListener(new ClickListener() {
+			private static final long serialVersionUID = -5450856216156209254L;
+
+			@Override
+			public void buttonClick(ClickEvent event) {
+				noteText.setVisible(true);
+				addBtn.setVisible(false);
+				saveBtn.setVisible(true);
+			}
+		});
+		saveBtn.addClickListener(new ClickListener() {
+			private static final long serialVersionUID = 2366787821082710668L;
+
+			@Override
+			public void buttonClick(ClickEvent event) {
+				noteText.setVisible(false);
+				addBtn.setVisible(true);
+				saveBtn.setVisible(false);
+
 				Note note = ds.saveOrUpdate(new Note(noteText.getValue()));
 				noteHolder.addNote(note);
 				noteHolder = ds.saveOrUpdate(noteHolder);
@@ -55,7 +98,7 @@ public class NotesView extends NavigationView {
 				notes.removeAllComponents();
 				updateNotes();
 			}
-		}));
+		});
 		updateNotes();
 		layout.addComponent(notes);
 		setContent(layout);
