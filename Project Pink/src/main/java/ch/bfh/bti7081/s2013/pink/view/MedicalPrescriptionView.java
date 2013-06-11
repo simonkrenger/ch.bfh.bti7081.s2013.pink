@@ -16,12 +16,14 @@ import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;
 import com.vaadin.event.FieldEvents.TextChangeEvent;
 import com.vaadin.event.FieldEvents.TextChangeListener;
+import com.vaadin.server.Page;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.DateField;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.NativeSelect;
+import com.vaadin.ui.Notification;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 
@@ -237,7 +239,7 @@ public class MedicalPrescriptionView extends NavigationView {
 		group.addComponent(reason);
 
 		/**
-		 * TO DO It should be possoble to add notes here
+		 * TO DO It should be possible to add notes here
 		 * 
 		 */
 
@@ -259,18 +261,87 @@ public class MedicalPrescriptionView extends NavigationView {
 		 * @Param dose = selected dose by amount, multiplier and period
 		 * @Param doctor = doctor from the session
 		 */
+
 		btnPrescribe = new Button("Prescribe", new Button.ClickListener() {
 			private static final long serialVersionUID = 6264139734209239541L;
 
+			@SuppressWarnings("deprecation")
 			@Override
 			public void buttonClick(Button.ClickEvent clickEvent) {
-				localMedicalService.prescribeMedicament(privateSession
-						.getPatient(), valueMedication, new Dose(amount,
-						multiplier, period), valueReason, valueDateFrom,
-						valueDateTo);
+				
+				if (
+						localMedicalService.prescribeMedicament(privateSession
+								.getPatient(), valueMedication, new Dose(amount,
+								multiplier, period), valueReason, valueDateFrom,
+								valueDateTo) == true)
+
+						{
+					
+				Notification prescriptionOk = new Notification("Medicament prescribed");
+				
+				prescriptionOk.show(Page.getCurrent());
+				
+						}
+				
+				else
+				{		}		
+					/**
+				 * PopupView prescriptionPop = new PopupView() { }
+				 * 
+				 * Label prescribePopTexNoK = new
+				 * Label("Medication prescirption unsafe, prescribe anyway?");
+				 * 
+				 * TextField reasonUnsafe = new TextField(valueReason);
+				 * reasonUnsafe.addTextChangeListener(new TextChangeListener() {
+				 * 
+				 * @Override public void textChange(TextChangeEvent event) {
+				 *           valueReason = event.getText();
+				 * 
+				 *           } });
+				 * 
+				 * 
+				 *           Button yesButton = new Button("yes", new
+				 *           Button.ClickListener() {
+				 * @Override public void buttonClick(ClickEvent event) {
+				 *           localMedicalService
+				 *           .prescribeUnsafeMedicament((privateSession
+				 *           .getPatient()), valueMedication, new
+				 *           Dose(amount,multiplier, period), valueReason,
+				 *           valueDateFrom, valueDateTo);
+				 * 
+				 *           } }); yesButton.setEnabled(false);
+				 * 
+				 * 
+				 *           Button noButton = new Button("no", new
+				 *           Button.ClickListener() {
+				 * @Override public void buttonClick(ClickEvent event) { // Go
+				 *           Back
+				 * 
+				 *           } });
+				 * 
+				 * 
+				 *           if (valueReason != ""){ yesButton.setEnabled(true);
+				 *           }
+				 * 
+				 * 
+				 * 
+				 *           }
+				 * 
+				 *           }
+				 **/
 			}
+
 		});
 
+		
+		
+		
+
+		
+		
+		
+		
+		
 		layout.addComponent(btnPrescribe);
 
 		/**
