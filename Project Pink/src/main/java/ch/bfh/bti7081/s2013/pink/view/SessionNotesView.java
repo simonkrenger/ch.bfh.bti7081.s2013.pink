@@ -1,3 +1,8 @@
+/**
+ * Class that shows the notes of a session and they can be edited
+ *
+ * @author	Marco Berger	<lostchall@gmail.com>
+ */
 package ch.bfh.bti7081.s2013.pink.view;
 
 import java.text.DateFormat;
