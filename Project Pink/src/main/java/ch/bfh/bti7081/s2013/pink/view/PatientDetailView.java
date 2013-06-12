@@ -31,7 +31,7 @@ import com.vaadin.ui.VerticalLayout;
 public class PatientDetailView extends NavigationView {
 	private static final long serialVersionUID = 740064506465249030L;
 
-	private HibernateDataSource df = HibernateDataSource.getInstance();
+	private HibernateDataSource ds = HibernateDataSource.getInstance();
 
 	private Button notesButton;
 	private Button warningsButton;
@@ -51,7 +51,7 @@ public class PatientDetailView extends NavigationView {
 	 */
 	public PatientDetailView(final Patient p) {
 		setSizeFull();
-		this.patient = df.reload(p);
+		this.patient = ds.reload(p);
 
 		VerticalLayout layout = new VerticalLayout();
 		layout.setMargin(true);
@@ -139,7 +139,7 @@ public class PatientDetailView extends NavigationView {
 						IndicatorImageSource image = new IndicatorImageSource(
 								"/images/warning.png", size);
 						warningsButton.setIcon(image.getResource());
-						PatientDetailView.this.patient = df
+						PatientDetailView.this.patient = ds
 								.reload(PatientDetailView.this.patient);
 					}
 				});
@@ -169,7 +169,7 @@ public class PatientDetailView extends NavigationView {
 	@Override
 	protected void onBecomingVisible() {
 		super.onBecomingVisible();
-		patient = df.reload(patient);
+		patient = ds.reload(patient);
 
 		// Update data that might have changed:
 		int size;

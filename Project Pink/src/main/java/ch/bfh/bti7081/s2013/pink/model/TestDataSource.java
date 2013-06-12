@@ -120,8 +120,8 @@ public class TestDataSource {
 				"Findet Dilbert lustig.", "Mag Visual Basic." };
 		List<Patient> patients = new LinkedList<Patient>();
 		for (int i = 0; i < names.length; i++) {
-			Patient p = new Patient(firstNames[i], names[i],
-					"/images/mascot.png");
+			Patient p = new Patient(firstNames[i], names[i], "/images/patient"
+					+ (random.nextInt(7) + 1) + ".png");
 			// Several allergies are possible, so there are three chances
 			for (int j = 0; j < 3; j++) {
 				if (random.nextBoolean() && random.nextBoolean()) {

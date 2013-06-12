@@ -89,7 +89,7 @@ public enum SessionState {
 	public Collection<SessionState> getPossibleNextStateType() {
 		switch (this) {
 		case PLANNED:
-			return Arrays.asList(STARTED, CANCELLED, PLANNED);
+			return Arrays.asList(STARTED, CANCELLED);
 
 		case STARTED:
 			return Arrays.asList(FINISHED, ABORTED);
