@@ -325,6 +325,7 @@ public class MedicalPrescriptionView extends NavigationView {
 						privateSession.getPatient(), valueMedication, dose,
 						valueReason, valueDateFrom, valueDateTo);
 
+				prescriptionPop.close();
 				MyVaadinUI.getNavigationManager().navigateBack();
 			}
 		});

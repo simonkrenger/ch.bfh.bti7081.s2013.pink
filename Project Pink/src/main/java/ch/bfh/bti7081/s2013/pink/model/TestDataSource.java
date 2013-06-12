@@ -151,6 +151,8 @@ public class TestDataSource {
 			m.addIngredient(getRandom(ingredients));
 			if (random.nextBoolean() && random.nextBoolean())
 				m.addIngredient(getRandom(ingredients));
+			m.addUse("nothing at all");
+			m.addEffect("dizziness");
 
 			session.persist(m);
 		}
