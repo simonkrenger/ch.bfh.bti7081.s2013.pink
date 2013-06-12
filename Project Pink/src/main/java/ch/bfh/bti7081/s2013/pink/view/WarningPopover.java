@@ -31,6 +31,7 @@ public class WarningPopover extends Popover {
 		this.patient = p;
 
 		VerticalLayout verticalLayout = new VerticalLayout();
+		verticalLayout.setSpacing(true);
 
 		final TextArea warningTxt = new TextArea();
 

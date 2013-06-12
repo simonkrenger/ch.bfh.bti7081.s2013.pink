@@ -53,4 +53,9 @@
 		background-image: url('img/arrow.png');
 		-webkit-background-size: 9px 13px;
 	}
+
+	.v-touchkit-horizontalbuttongroup .v-button-caption {
+		color: #ef9cc2;
+		text-shadow: 0 1px 0 rgba(0, 0, 0, 0.5);
+	}
 }
