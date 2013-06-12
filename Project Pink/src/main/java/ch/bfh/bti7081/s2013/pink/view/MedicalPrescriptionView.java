@@ -3,14 +3,18 @@ package ch.bfh.bti7081.s2013.pink.view;
 import java.util.Date;
 import java.util.List;
 
+import ch.bfh.bti7081.s2013.pink.MyVaadinUI;
 import ch.bfh.bti7081.s2013.pink.medication.LocalMedicalService;
 import ch.bfh.bti7081.s2013.pink.model.Dose;
 import ch.bfh.bti7081.s2013.pink.model.Dose.Period;
+import ch.bfh.bti7081.s2013.pink.model.HibernateDataSource;
 import ch.bfh.bti7081.s2013.pink.model.Medication;
 import ch.bfh.bti7081.s2013.pink.model.Session;
 
+import com.vaadin.addon.touchkit.ui.HorizontalButtonGroup;
 import com.vaadin.addon.touchkit.ui.NavigationView;
 import com.vaadin.addon.touchkit.ui.NumberField;
+import com.vaadin.addon.touchkit.ui.Popover;
 import com.vaadin.addon.touchkit.ui.VerticalComponentGroup;
 import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;
@@ -18,12 +22,15 @@ import com.vaadin.event.FieldEvents.TextChangeEvent;
 import com.vaadin.event.FieldEvents.TextChangeListener;
 import com.vaadin.server.Page;
 import com.vaadin.ui.Button;
+import com.vaadin.ui.Button.ClickEvent;
+import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.DateField;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.NativeSelect;
 import com.vaadin.ui.Notification;
+import com.vaadin.ui.TextArea;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 
@@ -68,7 +75,8 @@ public class MedicalPrescriptionView extends NavigationView {
 		/**
 		 * get the active Session and set the Windows initials
 		 */
-		this.privateSession = patientSession;
+		this.privateSession = HibernateDataSource.getInstance().reload(
+				patientSession);
 		setCaption("Prescription");
 		setSizeFull();
 
@@ -191,7 +199,6 @@ public class MedicalPrescriptionView extends NavigationView {
 			@Override
 			public void valueChange(ValueChangeEvent event) {
 				valueDateFrom = (Date) event.getProperty().getValue();
-
 			}
 		});
 		dateFrom.setWidth("100%");
@@ -262,102 +269,92 @@ public class MedicalPrescriptionView extends NavigationView {
 		 * @Param doctor = doctor from the session
 		 */
 
-		btnPrescribe = new Button("Prescribe", new Button.ClickListener() {
+		btnPrescribe = new Button("Prescribe", new ClickListener() {
 			private static final long serialVersionUID = 6264139734209239541L;
 
 			@Override
 			public void buttonClick(Button.ClickEvent clickEvent) {
-				
-				if (
-						localMedicalService.prescribeMedicament(privateSession
-								.getPatient(), valueMedication, new Dose(amount,
-								multiplier, period), valueReason, valueDateFrom,
-								valueDateTo) == true)
+				Dose dose = new Dose(amount, multiplier, period);
 
-						{
-					
-				Notification prescriptionOk = new Notification("Medicament prescribed");
-				
-				prescriptionOk.show(Page.getCurrent());
-				
-						}
-				
-				else
-				{		}		
-					/**
-				 * PopupView prescriptionPop = new PopupView() { }
-				 * 
-				 * Label prescribePopTexNoK = new
-				 * Label("Medication prescirption unsafe, prescribe anyway?");
-				 * 
-				 * TextField reasonUnsafe = new TextField(valueReason);
-				 * reasonUnsafe.addTextChangeListener(new TextChangeListener() {
-				 * 
-				 * @Override public void textChange(TextChangeEvent event) {
-				 *           valueReason = event.getText();
-				 * 
-				 *           } });
-				 * 
-				 * 
-				 *           Button yesButton = new Button("yes", new
-				 *           Button.ClickListener() {
-				 * @Override public void buttonClick(ClickEvent event) {
-				 *           localMedicalService
-				 *           .prescribeUnsafeMedicament((privateSession
-				 *           .getPatient()), valueMedication, new
-				 *           Dose(amount,multiplier, period), valueReason,
-				 *           valueDateFrom, valueDateTo);
-				 * 
-				 *           } }); yesButton.setEnabled(false);
-				 * 
-				 * 
-				 *           Button noButton = new Button("no", new
-				 *           Button.ClickListener() {
-				 * @Override public void buttonClick(ClickEvent event) { // Go
-				 *           Back
-				 * 
-				 *           } });
-				 * 
-				 * 
-				 *           if (valueReason != ""){ yesButton.setEnabled(true);
-				 *           }
-				 * 
-				 * 
-				 * 
-				 *           }
-				 * 
-				 *           }
-				 **/
+				if (localMedicalService.prescribeMedicament(
+						privateSession.getPatient(), valueMedication, dose,
+						valueReason, valueDateFrom, valueDateTo)) {
+					MyVaadinUI.getNavigationManager().navigateBack();
+
+					Notification prescriptionOk = new Notification(
+							"Medicament prescribed");
+
+					prescriptionOk.show(Page.getCurrent());
+				} else {
+					showUnsavePrescriptionWarning();
+				}
 			}
-
 		});
 
-		
-		
-		
-
-		
-		
-		
-		
-		
 		layout.addComponent(btnPrescribe);
 
-		/**
-		 * btnUnsafePrescribe = new Button("Prescribe Unsafe", new
-		 * Button.ClickListener() {
-		 * 
-		 * @Override public void buttonClick(Button.ClickEvent clickEvent) { //
-		 *           To change body of implemented methods use File | //
-		 *           Settings | File Templates. } });
-		 *           btnUnsafePrescribe.setEnabled(false);
-		 * 
-		 *           layout.addComponent(btnUnsafePrescribe);
-		 * 
-		 *           /**
-		 * 
-		 */
-
 		setContent(layout);
+	}
+
+	private void showUnsavePrescriptionWarning() {
+		final VerticalLayout layout = new VerticalLayout();
+
+		layout.addComponent(new Label(
+				"Medication prescription unsafe, prescribe anyway?"));
+
+		final Popover prescriptionPop = new Popover(layout);
+		prescriptionPop.setClosable(false);
+
+		TextArea reasonUnsafe = new TextArea(valueReason);
+		reasonUnsafe.setWidth("100%");
+		reasonUnsafe.setHeight("5em");
+		layout.addComponent(reasonUnsafe);
+
+		reasonUnsafe
+				.setInputPrompt("I'm sorry, it is necessary that you describe your reason for describing unsafe mecication.");
+
+		HorizontalButtonGroup buttons = new HorizontalButtonGroup();
+		buttons.setWidth("100%");
+		final Button yesButton = new Button("yes", new ClickListener() {
+			private static final long serialVersionUID = 1714674963399344483L;
+
+			@Override
+			public void buttonClick(ClickEvent event) {
+				Dose dose = new Dose(amount, multiplier, period);
+				localMedicalService.prescribeUnsafeMedicament(
+						privateSession.getPatient(), valueMedication, dose,
+						valueReason, valueDateFrom, valueDateTo);
+
+				MyVaadinUI.getNavigationManager().navigateBack();
+			}
+		});
+		yesButton.setEnabled(false);
+		yesButton.setWidth("50%");
+		buttons.addComponent(yesButton);
+
+		reasonUnsafe.addTextChangeListener(new TextChangeListener() {
+			private static final long serialVersionUID = -7004381989700248250L;
+
+			@Override
+			public void textChange(TextChangeEvent event) {
+				valueReason = event.getText();
+				yesButton.setEnabled(valueReason.length() > 3);
+			}
+		});
+
+		Button noButton = new Button("no", new ClickListener() {
+			private static final long serialVersionUID = 8334025041353339910L;
+
+			@Override
+			public void buttonClick(ClickEvent event) { //
+				// Go Back
+				prescriptionPop.close();
+			}
+		});
+		noButton.setWidth("50%");
+		buttons.addComponent(noButton);
+		layout.addComponent(buttons);
+
+		prescriptionPop.showRelativeTo(btnPrescribe);
 	}
 }

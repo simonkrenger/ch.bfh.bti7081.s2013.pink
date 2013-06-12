@@ -2,7 +2,6 @@ package ch.bfh.bti7081.s2013.pink.view;
 
 import java.text.SimpleDateFormat;
 
-import ch.bfh.bti7081.s2013.pink.SessionView;
 import ch.bfh.bti7081.s2013.pink.model.Patient;
 import ch.bfh.bti7081.s2013.pink.model.Session;
 

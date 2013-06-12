@@ -3,21 +3,18 @@
  *
  * @author	Marco Berger	<lostchall@gmail.com>
  */
-package ch.bfh.bti7081.s2013.pink;
+package ch.bfh.bti7081.s2013.pink.view;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Collection;
 
+import ch.bfh.bti7081.s2013.pink.MyVaadinUI;
 import ch.bfh.bti7081.s2013.pink.model.HibernateDataSource;
 import ch.bfh.bti7081.s2013.pink.model.Note;
 import ch.bfh.bti7081.s2013.pink.model.Patient;
 import ch.bfh.bti7081.s2013.pink.model.Session;
 import ch.bfh.bti7081.s2013.pink.model.SessionState;
-import ch.bfh.bti7081.s2013.pink.view.IndicatorImageSource;
-import ch.bfh.bti7081.s2013.pink.view.MedicalPrescriptionView;
-import ch.bfh.bti7081.s2013.pink.view.NotesPopover;
-import ch.bfh.bti7081.s2013.pink.view.WarningPopover;
 import ch.bfh.bti7081.s2013.pink.view.WarningPopover.UpdateListener;
 
 import com.vaadin.addon.touchkit.ui.HorizontalButtonGroup;
@@ -52,12 +49,13 @@ public class SessionView extends NavigationView {
 	private HibernateDataSource ds = HibernateDataSource.getInstance();
 
 	private DateFormat df = new SimpleDateFormat();
-	private Button startSessionButton;
-	private Button finishSessionButton;
-	private Button abortSessionButton;
-	private Button reopenSessionButton;
-	private Button cancelSessionButton;
-	private Button archiveSessionButton;
+	private HorizontalButtonGroup startSessionHBG = new HorizontalButtonGroup();
+	private HorizontalButtonGroup finishSessionHBG = new HorizontalButtonGroup();
+	private HorizontalButtonGroup abortSessionHBG = new HorizontalButtonGroup();
+	private HorizontalButtonGroup reopenSessionHBG = new HorizontalButtonGroup();
+	private HorizontalButtonGroup cancelSessionHBG = new HorizontalButtonGroup();
+	private HorizontalButtonGroup archiveSessionHBG = new HorizontalButtonGroup();
+	private Button addMedicationButton;
 
 	/**
 	 * The constructor should first build the main layout, set the composition
@@ -180,75 +178,83 @@ public class SessionView extends NavigationView {
 	}
 
 	private void buildButtons(AbstractComponentContainer group) {
-		HorizontalButtonGroup stateButtons = new HorizontalButtonGroup();
-		stateButtons.setWidth("100%");
-		group.addComponent(stateButtons);
-		HorizontalButtonGroup mediNoteButtons = new HorizontalButtonGroup();
-		mediNoteButtons.setWidth("100%");
-		group.addComponent(mediNoteButtons);
-
 		// add start session button
-		startSessionButton = new Button("Start Session", new ClickListener() {
-			@Override
-			public void buttonClick(ClickEvent event) {
-				session.changeState(SessionState.STARTED);
-				session = ds.saveOrUpdate(session);
-				updateButtons();
-			}
-		});
+		Button startSessionButton = new Button("Start Session",
+				new ClickListener() {
+					@Override
+					public void buttonClick(ClickEvent event) {
+						session.changeState(SessionState.STARTED);
+						session = ds.saveOrUpdate(session);
+						updateButtons();
+					}
+				});
 		startSessionButton.setWidth("100%");
-		stateButtons.addComponent(startSessionButton);
+		startSessionHBG.addComponent(startSessionButton);
+		startSessionHBG.setWidth("100%");
+		group.addComponent(startSessionHBG);
 
 		// add finish session button
-		finishSessionButton = new Button("Finish session", new ClickListener() {
-			@Override
-			public void buttonClick(ClickEvent event) {
-				session.changeState(SessionState.FINISHED);
-				session = ds.saveOrUpdate(session);
-				updateButtons();
-			}
-		});
+		Button finishSessionButton = new Button("Finish session",
+				new ClickListener() {
+					@Override
+					public void buttonClick(ClickEvent event) {
+						session.changeState(SessionState.FINISHED);
+						session = ds.saveOrUpdate(session);
+						updateButtons();
+					}
+				});
 		finishSessionButton.setWidth("100%");
-		stateButtons.addComponent(finishSessionButton);
+		finishSessionHBG.addComponent(finishSessionButton);
+		finishSessionHBG.setWidth("100%");
+		group.addComponent(finishSessionHBG);
 
 		// add abort session button
-		abortSessionButton = new Button("Abort session", new ClickListener() {
-			@Override
-			public void buttonClick(ClickEvent event) {
-				session.changeState(SessionState.ABORTED);
-				session = ds.saveOrUpdate(session);
-				updateButtons();
-			}
-		});
+		Button abortSessionButton = new Button("Abort session",
+				new ClickListener() {
+					@Override
+					public void buttonClick(ClickEvent event) {
+						session.changeState(SessionState.ABORTED);
+						session = ds.saveOrUpdate(session);
+						updateButtons();
+					}
+				});
 		abortSessionButton.setWidth("100%");
-		stateButtons.addComponent(abortSessionButton);
+		abortSessionHBG.addComponent(abortSessionButton);
+		abortSessionHBG.setWidth("100%");
+		group.addComponent(abortSessionHBG);
 
 		// add reopen session button
-		reopenSessionButton = new Button("Reopen session", new ClickListener() {
-			@Override
-			public void buttonClick(ClickEvent event) {
-				session.changeState(SessionState.REOPENED);
-				session = ds.saveOrUpdate(session);
-				updateButtons();
-			}
-		});
+		Button reopenSessionButton = new Button("Reopen session",
+				new ClickListener() {
+					@Override
+					public void buttonClick(ClickEvent event) {
+						session.changeState(SessionState.REOPENED);
+						session = ds.saveOrUpdate(session);
+						updateButtons();
+					}
+				});
 		reopenSessionButton.setWidth("100%");
-		stateButtons.addComponent(reopenSessionButton);
+		reopenSessionHBG.addComponent(reopenSessionButton);
+		reopenSessionHBG.setWidth("100%");
+		group.addComponent(reopenSessionHBG);
 
 		// add cancel session button
-		cancelSessionButton = new Button("Cancel session", new ClickListener() {
-			@Override
-			public void buttonClick(ClickEvent event) {
-				session.changeState(SessionState.CANCELLED);
-				session = ds.saveOrUpdate(session);
-				updateButtons();
-			}
-		});
+		Button cancelSessionButton = new Button("Cancel session",
+				new ClickListener() {
+					@Override
+					public void buttonClick(ClickEvent event) {
+						session.changeState(SessionState.CANCELLED);
+						session = ds.saveOrUpdate(session);
+						updateButtons();
+					}
+				});
 		cancelSessionButton.setWidth("100%");
-		stateButtons.addComponent(cancelSessionButton);
+		cancelSessionHBG.addComponent(cancelSessionButton);
+		cancelSessionHBG.setWidth("100%");
+		group.addComponent(cancelSessionHBG);
 
 		// add archive session button
-		archiveSessionButton = new Button("Archive session",
+		Button archiveSessionButton = new Button("Archive session",
 				new ClickListener() {
 					@Override
 					public void buttonClick(ClickEvent event) {
@@ -258,12 +264,19 @@ public class SessionView extends NavigationView {
 					}
 				});
 		archiveSessionButton.setWidth("100%");
-		stateButtons.addComponent(archiveSessionButton);
+		archiveSessionHBG.addComponent(archiveSessionButton);
+		archiveSessionHBG.setWidth("100%");
+		group.addComponent(archiveSessionHBG);
 
 		// And now for something completely different:
 		// add add medication button
 		// TODO: Should this be in the toolbar?
-		Button addMedicationButton = new Button("Add medication",
+
+		HorizontalButtonGroup mediNoteHBG = new HorizontalButtonGroup();
+		mediNoteHBG.setWidth("100%");
+		group.addComponent(mediNoteHBG);
+
+		addMedicationButton = new Button("Add medication",
 				new Button.ClickListener() {
 					@Override
 					public void buttonClick(ClickEvent event) {
@@ -273,8 +286,9 @@ public class SessionView extends NavigationView {
 						MyVaadinUI.getNavigationManager().navigateTo(view);
 					}
 				});
+		addMedicationButton.setWidth("100%");
 		addMedicationButton.setEnabled(session.getSessionState().isEditable());
-		mediNoteButtons.addComponent(addMedicationButton);
+		mediNoteHBG.addComponent(addMedicationButton);
 
 		updateButtons();
 	}
@@ -283,45 +297,14 @@ public class SessionView extends NavigationView {
 		Collection<SessionState> states = session.getSessionState()
 				.getPossibleNextStateType();
 
-		int componentCount = 0;
+		startSessionHBG.setVisible(states.contains(SessionState.STARTED));
+		finishSessionHBG.setVisible(states.contains(SessionState.FINISHED));
+		abortSessionHBG.setVisible(states.contains(SessionState.ABORTED));
+		reopenSessionHBG.setVisible(states.contains(SessionState.REOPENED));
+		cancelSessionHBG.setVisible(states.contains(SessionState.CANCELLED));
+		archiveSessionHBG.setVisible(states.contains(SessionState.ARCHIVED));
 
-		boolean started = states.contains(SessionState.STARTED);
-		if (started)
-			componentCount++;
-		startSessionButton.setVisible(started);
-
-		boolean finished = states.contains(SessionState.FINISHED);
-		if (finished)
-			componentCount++;
-		finishSessionButton.setVisible(finished);
-
-		boolean aborted = states.contains(SessionState.ABORTED);
-		if (aborted)
-			componentCount++;
-		abortSessionButton.setVisible(aborted);
-
-		boolean reopened = states.contains(SessionState.REOPENED);
-		if (reopened)
-			componentCount++;
-		reopenSessionButton.setVisible(reopened);
-
-		boolean cancelled = states.contains(SessionState.CANCELLED);
-		if (cancelled)
-			componentCount++;
-		cancelSessionButton.setVisible(cancelled);
-
-		boolean archived = states.contains(SessionState.ARCHIVED);
-		if (archived)
-			componentCount++;
-		archiveSessionButton.setVisible(archived);
-
-		String width = (100 / componentCount) + "%";
-		startSessionButton.setWidth(width);
-		finishSessionButton.setWidth(width);
-		abortSessionButton.setWidth(width);
-		reopenSessionButton.setWidth(width);
-		cancelSessionButton.setWidth(width);
-		archiveSessionButton.setWidth(width);
+		addMedicationButton.setEnabled(session.getSessionState().isEditable());
 	}
 
 	private void buildMainLayout() {
