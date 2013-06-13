@@ -2,10 +2,13 @@ package ch.bfh.bti7081.s2013.pink.view;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.LinkedList;
+import java.util.List;
 
 import ch.bfh.bti7081.s2013.pink.model.HibernateDataSource;
 import ch.bfh.bti7081.s2013.pink.model.Note;
 import ch.bfh.bti7081.s2013.pink.model.NoteHolder;
+import ch.bfh.bti7081.s2013.pink.view.WarningPopover.UpdateListener;
 
 import com.vaadin.addon.touchkit.ui.HorizontalButtonGroup;
 import com.vaadin.addon.touchkit.ui.Popover;
@@ -28,6 +31,8 @@ public class NotesPopover extends Popover {
 	private boolean addingEnabled = true;
 	private boolean editable = false;
 	private Note editingNote;
+
+	private List<UpdateListener> listeners = new LinkedList<UpdateListener>();
 
 	/**
 	 * Can be a person, session, ... anything that has notes
@@ -120,6 +125,8 @@ public class NotesPopover extends Popover {
 				noteText.setValue("");
 				notes.removeAllComponents();
 				updateNotes();
+				for (UpdateListener listener : listeners)
+					listener.update(notes.getComponentCount());
 			}
 		});
 		updateNotes();
@@ -209,5 +216,9 @@ public class NotesPopover extends Popover {
 
 			setCompositionRoot(layout);
 		}
+	}
+
+	public void addUpdateListener(UpdateListener listener) {
+		listeners.add(listener);
 	}
 }

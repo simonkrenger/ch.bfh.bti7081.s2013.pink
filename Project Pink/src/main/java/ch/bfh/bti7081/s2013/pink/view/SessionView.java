@@ -56,6 +56,9 @@ public class SessionView extends NavigationView {
 	private HorizontalButtonGroup cancelSessionHBG = new HorizontalButtonGroup();
 	private HorizontalButtonGroup archiveSessionHBG = new HorizontalButtonGroup();
 	private Button addMedicationButton;
+	private Button notesButton;
+	private Button warningsButton;
+	private Label sessionStateText;
 
 	/**
 	 * The constructor should first build the main layout, set the composition
@@ -73,13 +76,13 @@ public class SessionView extends NavigationView {
 		setCaption(patient.getFirstName() + "'s Session");
 		setContent(mainLayout);
 		setToolbar(createToolbar());
-		updateButtons();
+		updateData();
 	}
 
 	private Toolbar createToolbar() {
 		Toolbar toolbar = new Toolbar();
 
-		final Button notesButton = new Button();
+		notesButton = new Button();
 		notesButton.addClickListener(new ClickListener() {
 			private static final long serialVersionUID = 7701758595488212194L;
 
@@ -90,6 +93,15 @@ public class SessionView extends NavigationView {
 						.isEditable());
 				notesView.setEditable(session.getSessionState().isEditable());
 				notesView.showRelativeTo(notesButton);
+				notesView.addUpdateListener(new UpdateListener() {
+					@Override
+					public void update(int size) {
+						IndicatorImageSource image = new IndicatorImageSource(
+								"/images/note.png", size);
+						notesButton.setIcon(image.getResource());
+						session = ds.reload(session);
+					}
+				});
 			}
 		});
 		int size = session.getNotes().size();
@@ -98,7 +110,7 @@ public class SessionView extends NavigationView {
 		notesButton.setIcon(image.getResource());
 		toolbar.addComponent(notesButton);
 
-		final Button warningsButton = new Button();
+		warningsButton = new Button();
 		warningsButton.addClickListener(new Button.ClickListener() {
 			private static final long serialVersionUID = -332160668612432938L;
 
@@ -156,10 +168,12 @@ public class SessionView extends NavigationView {
 		// TODO: Show Session State!
 
 		// Patient information
-		Label title = new Label();
-		title.setValue("Session of " + patient.getFirstName() + " "
-				+ patient.getName());
-		vl.addComponent(title);
+		sessionStateText = new Label();
+		sessionStateText.setValue(session.getSessionState().toString());
+		vl.addComponent(sessionStateText);
+
+		vl.addComponent(new Label(patient.getFirstName() + " "
+				+ patient.getName()));
 
 		// Buttons
 		buildButtons(vl);
@@ -186,7 +200,7 @@ public class SessionView extends NavigationView {
 					public void buttonClick(ClickEvent event) {
 						session.changeState(SessionState.STARTED);
 						session = ds.saveOrUpdate(session);
-						updateButtons();
+						updateData();
 					}
 				});
 		startSessionButton.setWidth("100%");
@@ -201,7 +215,7 @@ public class SessionView extends NavigationView {
 					public void buttonClick(ClickEvent event) {
 						session.changeState(SessionState.FINISHED);
 						session = ds.saveOrUpdate(session);
-						updateButtons();
+						updateData();
 					}
 				});
 		finishSessionButton.setWidth("100%");
@@ -216,7 +230,7 @@ public class SessionView extends NavigationView {
 					public void buttonClick(ClickEvent event) {
 						session.changeState(SessionState.ABORTED);
 						session = ds.saveOrUpdate(session);
-						updateButtons();
+						updateData();
 					}
 				});
 		abortSessionButton.setWidth("100%");
@@ -231,7 +245,7 @@ public class SessionView extends NavigationView {
 					public void buttonClick(ClickEvent event) {
 						session.changeState(SessionState.REOPENED);
 						session = ds.saveOrUpdate(session);
-						updateButtons();
+						updateData();
 					}
 				});
 		reopenSessionButton.setWidth("100%");
@@ -246,7 +260,7 @@ public class SessionView extends NavigationView {
 					public void buttonClick(ClickEvent event) {
 						session.changeState(SessionState.CANCELLED);
 						session = ds.saveOrUpdate(session);
-						updateButtons();
+						updateData();
 					}
 				});
 		cancelSessionButton.setWidth("100%");
@@ -261,7 +275,7 @@ public class SessionView extends NavigationView {
 					public void buttonClick(ClickEvent event) {
 						session.changeState(SessionState.ARCHIVED);
 						session = ds.saveOrUpdate(session);
-						updateButtons();
+						updateData();
 					}
 				});
 		archiveSessionButton.setWidth("100%");
@@ -292,7 +306,10 @@ public class SessionView extends NavigationView {
 		mediNoteHBG.addComponent(addMedicationButton);
 	}
 
-	private void updateButtons() {
+	private void updateData() {
+		session = ds.reload(session);
+		patient = ds.reload(session.getPatient());
+
 		Collection<SessionState> states = session.getSessionState()
 				.getPossibleNextStateType();
 
@@ -306,6 +323,18 @@ public class SessionView extends NavigationView {
 		addMedicationButton.setEnabled(session.getSessionState().isEditable());
 
 		tf.setEnabled(session.getSessionState().isEditable());
+
+		int size = patient.getWarnings().size();
+		IndicatorImageSource image = new IndicatorImageSource(
+				"/images/warning.png", size);
+		warningsButton.setIcon(image.getResource());
+		patient = ds.reload(patient);
+
+		size = session.getNotes().size();
+		image = new IndicatorImageSource("/images/note.png", size);
+		notesButton.setIcon(image.getResource());
+
+		sessionStateText.setValue(session.getSessionState().toString());
 	}
 
 	private void buildMainLayout() {

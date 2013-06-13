@@ -1,5 +1,7 @@
 package ch.bfh.bti7081.s2013.pink.view;
 
+import java.util.LinkedList;
+
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
@@ -17,16 +19,16 @@ import com.vaadin.ui.VerticalLayout;
 public class SessionOverView extends NavigationView {
 	private static final long serialVersionUID = 371245835932429111L;
 
-	SessionList sessionList;
+	private SessionList sessionList;
+	private VerticalLayout layout;
 
 	public SessionOverView() {
 		setCaption("Upcoming");
 
-		final VerticalLayout layout = new VerticalLayout();
+		layout = new VerticalLayout();
 		layout.setMargin(true);
 
-		SessionList sessionList = new SessionList(HibernateDataSource
-				.getInstance().findAll(Session.class));
+		sessionList = new SessionList(new LinkedList<Session>());
 
 		final PatientSearchView searchView = new PatientSearchView();
 		searchView.addSearchListener(new ChangeListener() {
@@ -42,5 +44,14 @@ public class SessionOverView extends NavigationView {
 		layout.addComponent(searchView);
 		layout.addComponent(sessionList);
 		setContent(layout);
+	}
+
+	@Override
+	protected void onBecomingVisible() {
+		super.onBecomingVisible();
+		layout.removeComponent(sessionList);
+		sessionList = new SessionList(HibernateDataSource.getInstance()
+				.findAll(Session.class));
+		layout.addComponent(sessionList);
 	}
 }

@@ -299,8 +299,10 @@ public class MedicalPrescriptionView extends NavigationView {
 	private void showUnsavePrescriptionWarning() {
 		final VerticalLayout layout = new VerticalLayout();
 
-		layout.addComponent(new Label(
-				"Medication prescription unsafe, prescribe anyway?"));
+		Label label = new Label(
+				"Medication prescription unsafe, prescribe anyway?");
+		label.setStyleName("brightText");
+		layout.addComponent(label);
 
 		final Popover prescriptionPop = new Popover(layout);
 		prescriptionPop.setClosable(false);
