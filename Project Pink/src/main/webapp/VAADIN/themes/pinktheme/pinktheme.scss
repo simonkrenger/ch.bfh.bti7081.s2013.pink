@@ -25,15 +25,21 @@
 	.v-slot-p-note .v-label {
 		white-space: pre-wrap;
 	}
-
-	.v-slot-p-note .v-button {
-		float: right;
-		width: 2em;
-		height: 2em;
+	
+	.v-slot-p-note .deleteButton {
 		background: url(img/delete.png) no-repeat;
 		background-size: 100% 100%;
 	}
-	
+
+	.v-slot-p-note .editButton {
+		background: url(img/edit.png) no-repeat;
+		background-size: 100% 100%;
+	}
+
+	.noteButtons {
+		float: right;
+	}
+
 	/* Make stuff pink! */
 
 	.v-touchkit-verticalcomponentgroup {

@@ -65,16 +65,15 @@ public class SessionView extends NavigationView {
 	 * editor.
 	 */
 	public SessionView(Session session, Patient patient) {
-		setCaption(patient.getFirstName() + "'s Session");
-
 		this.session = session;
 		this.patient = patient;
 
 		buildMainLayout();
 
+		setCaption(patient.getFirstName() + "'s Session");
 		setContent(mainLayout);
-
 		setToolbar(createToolbar());
+		updateButtons();
 	}
 
 	private Toolbar createToolbar() {
@@ -291,8 +290,6 @@ public class SessionView extends NavigationView {
 		addMedicationButton.setWidth("100%");
 		addMedicationButton.setEnabled(session.getSessionState().isEditable());
 		mediNoteHBG.addComponent(addMedicationButton);
-
-		updateButtons();
 	}
 
 	private void updateButtons() {

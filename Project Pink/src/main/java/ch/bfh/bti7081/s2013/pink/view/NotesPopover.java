@@ -13,6 +13,7 @@ import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.CustomComponent;
+import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Layout;
 import com.vaadin.ui.TextArea;
@@ -24,12 +25,22 @@ public class NotesPopover extends Popover {
 
 	private HibernateDataSource ds = HibernateDataSource.getInstance();
 
+	private boolean addingEnabled = true;
+	private boolean editable = false;
+	private Note editingNote;
+
 	/**
 	 * Can be a person, session, ... anything that has notes
 	 */
 	private NoteHolder noteHolder;
 	private TextArea noteText;
 	private Layout notes;
+
+	private Button closeBtn;
+
+	private Button addBtn;
+
+	private Button saveBtn;
 
 	public NotesPopover(NoteHolder holder) {
 		setWidth("350px");
@@ -51,16 +62,20 @@ public class NotesPopover extends Popover {
 		buttons.setWidth("100%");
 		layout.addComponent(buttons);
 
-		final Button addBtn = new Button("Add Note");
+		addBtn = new Button("Add Note");
 		addBtn.setWidth("50%");
-		buttons.addComponent(addBtn);
+		if (addingEnabled)
+			buttons.addComponent(addBtn);
 
-		final Button saveBtn = new Button("Save Note");
-		saveBtn.setWidth("50%");
+		saveBtn = new Button("Save Note");
+		if (addingEnabled)
+			saveBtn.setWidth("50%");
+		else
+			saveBtn.setWidth("100%");
 		saveBtn.setVisible(false);
 		buttons.addComponent(saveBtn);
 
-		final Button closeBtn = new Button("Close");
+		closeBtn = new Button("Close");
 		closeBtn.setWidth("50%");
 		buttons.addComponent(closeBtn);
 
@@ -92,9 +107,16 @@ public class NotesPopover extends Popover {
 				addBtn.setVisible(true);
 				saveBtn.setVisible(false);
 
-				Note note = ds.saveOrUpdate(new Note(noteText.getValue()));
-				noteHolder.addNote(note);
-				noteHolder = ds.saveOrUpdate(noteHolder);
+				if (editingNote != null) {
+					editingNote.updateText(noteText.getValue());
+					ds.saveOrUpdate(editingNote);
+					editingNote = null;
+					noteHolder = ds.reload(noteHolder);
+				} else {
+					Note note = ds.saveOrUpdate(new Note(noteText.getValue()));
+					noteHolder.addNote(note);
+					noteHolder = ds.saveOrUpdate(noteHolder);
+				}
 				noteText.setValue("");
 				notes.removeAllComponents();
 				updateNotes();
@@ -112,11 +134,13 @@ public class NotesPopover extends Popover {
 	}
 
 	public void setAddingEnabled(boolean enabled) {
-		// TODO
+		addingEnabled = enabled;
 	}
 
 	public void setEditable(boolean editable) {
-		// TODO
+		this.editable = editable;
+		notes.removeAllComponents();
+		updateNotes();
 	}
 
 	private DateFormat df = new SimpleDateFormat();
@@ -131,10 +155,12 @@ public class NotesPopover extends Popover {
 			label.setValue(note.getText());
 			VerticalLayout layout = new VerticalLayout();
 			layout.addComponent(label);
+
 			Button removeButton = new Button();
 			removeButton.setWidth("20px");
 			removeButton.setHeight("20px");
 			removeButton.setStyleName(BaseTheme.BUTTON_LINK);
+			removeButton.addStyleName("deleteButton");
 			removeButton.addClickListener(new ClickListener() {
 				private static final long serialVersionUID = 5650763451236883119L;
 
@@ -147,7 +173,40 @@ public class NotesPopover extends Popover {
 					updateNotes();
 				}
 			});
-			layout.addComponent(removeButton);
+
+			Button editButton = new Button();
+			editButton.setWidth("20px");
+			editButton.setHeight("20px");
+			editButton.setStyleName(BaseTheme.BUTTON_LINK);
+			editButton.addStyleName("editButton");
+			editButton.addClickListener(new ClickListener() {
+				private static final long serialVersionUID = 5650763451236883119L;
+
+				@Override
+				public void buttonClick(ClickEvent event) {
+					// Don't overwrite text if there's a note in the making
+					if (noteText.isVisible()
+							&& noteText.getValue().length() > 0)
+						return;
+
+					editingNote = note;
+					noteText.setValue(note.getText());
+					noteText.setVisible(true);
+					noteText.focus();
+					saveBtn.setVisible(true);
+					addBtn.setVisible(false);
+				}
+			});
+
+			HorizontalLayout hl = new HorizontalLayout();
+			hl.setSpacing(true);
+			hl.setStyleName("noteButtons");
+			if (editable)
+				hl.addComponent(editButton);
+			hl.addComponent(removeButton);
+
+			layout.addComponent(hl);
+
 			setCompositionRoot(layout);
 		}
 	}
