@@ -87,7 +87,9 @@ public class SessionView extends NavigationView {
 			@Override
 			public void buttonClick(ClickEvent event) {
 				NotesPopover notesView = new NotesPopover(session);
-				// MyVaadinUI.getNavigationManager().navigateTo(notesView);
+				notesView.setAddingEnabled(session.getSessionState()
+						.isEditable());
+				notesView.setEditable(session.getSessionState().isEditable());
 				notesView.showRelativeTo(notesButton);
 			}
 		});
@@ -305,6 +307,8 @@ public class SessionView extends NavigationView {
 		archiveSessionHBG.setVisible(states.contains(SessionState.ARCHIVED));
 
 		addMedicationButton.setEnabled(session.getSessionState().isEditable());
+
+		tf.setEnabled(session.getSessionState().isEditable());
 	}
 
 	private void buildMainLayout() {
@@ -332,10 +336,7 @@ public class SessionView extends NavigationView {
 		});
 
 		// only enable the note field if the session is started
-		if (!((session.getSessionState() == SessionState.STARTED) || (session
-				.getSessionState() == SessionState.REOPENED))) {
-			tf.setEnabled(false);
-		}
+		tf.setEnabled(session.getSessionState().isEditable());
 
 		mainLayout.addComponent(tf);
 		// add add Note button

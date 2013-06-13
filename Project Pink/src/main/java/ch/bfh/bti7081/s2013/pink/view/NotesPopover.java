@@ -111,6 +111,14 @@ public class NotesPopover extends Popover {
 		}
 	}
 
+	public void setAddingEnabled(boolean enabled) {
+		// TODO
+	}
+
+	public void setEditable(boolean editable) {
+		// TODO
+	}
+
 	private DateFormat df = new SimpleDateFormat();
 
 	private class NoteView extends CustomComponent {
